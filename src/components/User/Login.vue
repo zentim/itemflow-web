@@ -74,7 +74,7 @@
     watch: {
       user (value) {
         if (value !== null && value !== undefined) {
-          if (this.$route.name === 'Signin') {
+          if (this.$route.name === 'Login') {
             this.$router.push('/items')
           }
         }
@@ -83,6 +83,7 @@
     methods: {
       onSignin () {
         this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+        this.$router.push('/items')
       },
       onDismissed () {
         this.$store.dispatch('clearError')

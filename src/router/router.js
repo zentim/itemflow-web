@@ -1,5 +1,3 @@
-import AuthGuard from './auth-guard'
-
 // 登陸頁面
 export const signupRouter = {
   path: '/signup',
@@ -23,46 +21,39 @@ export const appRouter = [
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('@/components/User/Profile'),
-    beforeEnter: AuthGuard
+    component: () => import('@/components/User/Profile')
   },
   {
     path: '/item/new',
     name: 'CreateItem',
-    component: () => import('@/components/Item/CreateItem'),
-    beforeEnter: AuthGuard
+    component: () => import('@/components/Item/CreateItem')
   },
   {
     path: '/items',
     name: 'Items',
-    component: () => import('@/components/Item/Items'),
-    beforeEnter: AuthGuard
+    component: () => import('@/components/Item/Items')
   },
   {
     path: '/items/:id',
     name: 'Item',
     props: true,
-    component: () => import('@/components/Item/Item'),
-    beforeEnter: AuthGuard
+    component: () => import('@/components/Item/Item')
   },
   {
     path: '/flow/new',
     name: 'CreateFlow',
-    component: () => import('@/components/Flow/CreateFlow'),
-    beforeEnter: AuthGuard
+    component: () => import('@/components/Flow/CreateFlow')
   },
   {
     path: '/flows',
     name: 'Flows',
-    component: () => import('@/components/Flow/Flows'),
-    beforeEnter: AuthGuard
+    component: () => import('@/components/Flow/Flows')
   },
   {
     path: '/flows/:id',
     name: 'Flow',
     props: true,
-    component: () => import('@/components/Flow/Flow'),
-    beforeEnter: AuthGuard
+    component: () => import('@/components/Flow/Flow')
   }
 ]
 

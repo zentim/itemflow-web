@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import * as firebase from 'firebase'
@@ -25,6 +23,7 @@ Vue.use(Vuetify,
       info: '#2196F3',
       success: '#4CAF50',
       warning: '#FFC107',
+
       // logo color
       LogoItemColor: '#5FB878',
       LogoFlowColor: '#1E9FFF'
@@ -40,9 +39,6 @@ Vue.component('flow-content', FlowContent)
 Vue.component('right-drawer-content', RightDrawerContent)
 Vue.component('app-labels', Labels)
 Vue.component('app-alert', Alert)
-// Vue.component('editor', TinymceVue)
-// Vue.conponent('editer', TinyMce)
-// Vue.component('tiny-mce', TinyMCE)
 Vue.component('tinymce', tinymce)
 
 /* eslint-disable no-new */

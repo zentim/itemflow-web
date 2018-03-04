@@ -91,7 +91,7 @@
       user (value) {
         if (value !== null && value !== undefined) {
           if (this.$route.name === 'Signup') {
-            this.$router.push('/')
+            this.$router.push('/items')
           }
         }
       }
