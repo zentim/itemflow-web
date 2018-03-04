@@ -25,7 +25,12 @@
           </v-card-title>
 
           <v-card-text>
-            <tinymce id="d1" v-model="item.content" :other_options="editerOptions"></tinymce>
+            <tinymce
+              id="d1"
+              v-model="itemContent"
+              v-on:editorInit="initCallBack"
+              ref="tm"
+              :other_options="editerOptions"></tinymce>
           </v-card-text>
 
           <v-card-text>
@@ -46,6 +51,7 @@
     props: ['id'],
     data () {
       return {
+        itemContent: '',
         editerOptions: {
           height: 300
         }
@@ -58,6 +64,32 @@
       loading () {
         return this.$store.getters.loadingItem
       }
+    },
+    mounted () {
+      this.itemContent = this.item.content
+    },
+    methods: {
+      initCallBack (e) {
+        // console.log(this.$refs.tm.editor)
+        // console.log('init', e)
+        e.setContent(this.itemContent)
+        // this.$refs.tm.editor.setContent(this.itemContent)
+      }
     }
+    // methods: {
+    //   init () {
+    //     this.$nextTick(() => {
+    //       console.log('init')
+    //       let content = this.item.content
+    //       this.itemContent = content
+    //     })
+    //   }
+    // },
+    // mounted () {
+    //   this.init()
+    // },
+    // activated () {
+    //   this.init()
+    // }
   }
 </script>
