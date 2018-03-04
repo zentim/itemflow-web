@@ -23,10 +23,17 @@
           </v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat color="primary" :to="'/items/' + item.id">
+            <router-link
+              :to="'/items/' + item.id"
+              tag="span"
+              style="cursor: pointer"
+              :key="item.id">
+              View Item
+            </router-link>
+            <!-- <v-btn flat color="primary" >
               <v-icon left light>arrow_forward</v-icon>
               View Item
-            </v-btn>
+            </v-btn> -->
           </v-card-actions>
         </v-card>
       </v-flex>
