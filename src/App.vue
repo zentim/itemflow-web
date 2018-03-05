@@ -8,6 +8,7 @@
       dark
       fixed
       app
+      dense
       v-if="userIsAuthenticated"
     >
       <!-- nav - logo -->
@@ -38,7 +39,6 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-side-icon @click.stop="drawerRight = !drawerRight"></v-toolbar-side-icon>
     </v-toolbar>
 
 
@@ -47,6 +47,7 @@
       fixed
       stateless
       hide-overlay
+      clipped
       :mini-variant="mini"
       v-model="drawer"
       app
@@ -117,8 +118,8 @@
     <!-- right -->
     <v-navigation-drawer
       fixed
-      v-model="drawerRight"
       right
+      clipped
       app
       v-if="userIsAuthenticated"
     >
@@ -133,7 +134,6 @@
     data () {
       return {
         drawer: true,
-        drawerRight: true,
         mini: true
       }
     },
