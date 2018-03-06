@@ -11,14 +11,13 @@
       </v-flex>
     </v-layout>
 
-
     <draggable
-      v-model="labels"
+      v-model="itemflow"
       class="dragArea"
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
 
-      <v-flex xs12 v-for="(element, index) in items" :key="index" class="mb-2">
+      <v-flex xs12 v-for="(element, index) in itemflow" :key="index" class="mb-2">
         <v-card class="mr-2 d-flex" color="LogoItemColor">
           <v-card-title>
             <div>
@@ -42,7 +41,7 @@
     </draggable>
 
     <draggable
-      v-model="labels"
+      v-model="flows"
       class="dragArea"
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
@@ -78,7 +77,8 @@
   export default {
     data () {
       return {
-        labels: []
+        // labels: [],
+        itemflow: null
       }
     },
     computed: {
@@ -86,15 +86,42 @@
         return this.$store.getters.loading
       },
       items () {
-        let items = this.$store.getters.loadedItems
-        for (let index in items) {
-          this.labels.push(items[index].id)
-        }
-        return items
+        return this.$store.getters.loadedItems
       },
+      // items () {
+      //   let items = this.$store.getters.loadedItems
+      //   for (let index in items) {
+      //     if (!this.labels.includes(items[index].id)) {
+      //       this.labels.push(items[index].id)
+      //     } else {
+      //       console.log('already have')
+      //     }
+      //   }
+      //   var newObject = JSON.parse(JSON.stringify(items));
+      //   console.log(newObject)
+      //   return items
+      // },
       flows () {
         return this.$store.getters.loadedFlows
       }
+    },
+    watch: {
+      items (newVal) {
+        // for (let index in newVal) {
+        //   if (!this.labels.includes(newVal[index].id)) {
+        //     this.labels.push(newVal[index].id)
+        //   } else {
+        //     console.log('already have')
+        //   }
+        // }
+        this.itemflow = JSON.parse(JSON.stringify(newVal))
+        // console.log('new obj')
+        // console.log(this.itemflow)
+        // console.log('watch')
+        // console.log(newVal)
+      }
+    },
+    methods: {
     }
   }
 </script>
