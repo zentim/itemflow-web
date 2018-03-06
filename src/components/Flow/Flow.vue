@@ -13,9 +13,9 @@
 
     <!-- main -->
     <v-layout row wrap v-else>
-      <v-flex xs12 sm8 offset-sm2>
-        <v-card class="mr-3">
-          <v-card-title>
+      <v-flex xs12 sm4>
+        <v-card>
+           <v-card-title>
             <div>
               <h2>{{ flow.title }}</h2>
               <v-divider></v-divider>
@@ -23,18 +23,20 @@
               <v-divider></v-divider>
             </div>
           </v-card-title>
-
+          <v-card-text>
+            <v-divider class="my-3"></v-divider>
+            <h4>Labels:</h4>
+            <app-labels :labels="flow.labels" :key="flow.id"></app-labels>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm8>
+        <v-card>
           <v-card-text>
             <h4>Content:</h4>
             <v-flex xs12 sm6 offset-sm3>
               <flow-content :content="flow.content" :key="flow.id"></flow-content>
             </v-flex>
-          </v-card-text>
-
-          <v-card-text>
-            <v-divider class="my-3"></v-divider>
-            <h4>Labels:</h4>
-            <app-labels :labels="flow.labels" :key="flow.id"></app-labels>
           </v-card-text>
         </v-card>
       </v-flex>

@@ -13,8 +13,8 @@
 
     <!-- main -->
     <v-layout row wrap v-else>
-      <v-flex xs12 sm8 offset-sm2>
-        <v-card class="mr-3">
+      <v-flex xs12 sm4>
+        <v-card>
           <v-card-title>
             <div>
               <h2>{{ item.title }}</h2>
@@ -23,21 +23,21 @@
               <v-divider></v-divider>
             </div>
           </v-card-title>
-
-          <v-card-text>
-            <tinymce
-              id="d1"
-              v-model="itemContent"
-              v-on:editorInit="initCallBack"
-              ref="tm"
-              :other_options="editerOptions"></tinymce>
-          </v-card-text>
-
           <v-card-text>
             <v-divider class="my-3"></v-divider>
             <h4>Labels:</h4>
             <app-labels :labels.sync="item.labels" :key="item.id"></app-labels>
           </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm8>
+        <v-card>
+          <tinymce
+            id="d1"
+            v-model="itemContent"
+            v-on:editorInit="initCallBack"
+            ref="tm"
+            :other_options="editerOptions"></tinymce>
         </v-card>
       </v-flex>
     </v-layout>
