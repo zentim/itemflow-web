@@ -28,12 +28,8 @@
               tag="span"
               style="cursor: pointer"
               :key="item.id">
-              View Item
+              <v-btn flat color="primary">View</v-btn>
             </router-link>
-            <!-- <v-btn flat color="primary" >
-              <v-icon left light>arrow_forward</v-icon>
-              View Item
-            </v-btn> -->
           </v-card-actions>
         </v-card>
       </v-flex>

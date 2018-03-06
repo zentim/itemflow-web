@@ -27,10 +27,14 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="primary" :to="'/items/' + element.id">
-              <v-icon left light>arrow_forward</v-icon>
-              View
-            </v-btn>
+            <v-spacer></v-spacer>
+            <router-link
+              :to="'/items/' + element.id"
+              tag="span"
+              style="cursor: pointer"
+              :key="element.id">
+              <v-btn flat color="primary">View</v-btn>
+            </router-link>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -52,10 +56,14 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="primary" :to="'/flows/' + element.id">
-              <v-icon left light>arrow_forward</v-icon>
-              View
-            </v-btn>
+            <v-spacer></v-spacer>
+            <router-link
+              :to="'/flows/' + element.id"
+              tag="span"
+              style="cursor: pointer"
+              :key="element.id">
+              <v-btn flat color="primary">View</v-btn>
+            </router-link>
           </v-card-actions>
         </v-card>
       </v-flex>

@@ -4,7 +4,11 @@
       class="dragArea"
       :options="{group: 'itemflow'}">
 
-      <v-flex xs12 v-for="(flow, index) in flows" :key="index" class="mb-2">
+      <v-flex
+        xs12
+        v-for="(flow, index) in flows"
+        :key="index"
+        class="mb-2">
         <v-card class="mr-2 d-flex" :color="itemflowColor(flow.type)">
           <v-card-title>
             <div>
@@ -13,14 +17,23 @@
             </div>
           </v-card-title>
           <v-card-actions>
-            <v-btn flat color="primary" :to="'/items/' + flow.id" v-if="flow.type === 'item'">
-              <v-icon left light>arrow_forward</v-icon>
-              View
-            </v-btn>
-            <v-btn flat color="primary" :to="'/flows/' + flow.id" v-else>
-              <v-icon left light>arrow_forward</v-icon>
-              View
-            </v-btn>
+            <v-spacer></v-spacer>
+            <router-link
+              :to="'/items/' + flow.id"
+              tag="span"
+              style="cursor: pointer"
+              :key="flow.id"
+              v-if="flow.type === 'item'">
+              <v-btn flat color="primary">View</v-btn>
+            </router-link>
+            <router-link
+              :to="'/flows/' + flow.id"
+              tag="span"
+              style="cursor: pointer"
+              :key="flow.id"
+              v-else>
+              <v-btn flat color="primary">View</v-btn>
+            </router-link>
           </v-card-actions>
         </v-card>
       </v-flex>

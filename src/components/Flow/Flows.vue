@@ -23,10 +23,13 @@
           </v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn flat color="primary" :to="'/flows/' + flow.id">
-              <v-icon left light>arrow_forward</v-icon>
-              View Flow
-            </v-btn>
+            <router-link
+              :to="'/flows/' + flow.id"
+              tag="span"
+              style="cursor: pointer"
+              :key="flow.id">
+              <v-btn flat color="primary">View</v-btn>
+            </router-link>
           </v-card-actions>
         </v-card>
       </v-flex>

@@ -76,20 +76,5 @@
         // this.$refs.tm.editor.setContent(this.itemContent)
       }
     }
-    // methods: {
-    //   init () {
-    //     this.$nextTick(() => {
-    //       console.log('init')
-    //       let content = this.item.content
-    //       this.itemContent = content
-    //     })
-    //   }
-    // },
-    // mounted () {
-    //   this.init()
-    // },
-    // activated () {
-    //   this.init()
-    // }
   }
 </script>
