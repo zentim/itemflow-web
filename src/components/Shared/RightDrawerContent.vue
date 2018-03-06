@@ -13,7 +13,7 @@
 
 
     <draggable
-      v-model="items"
+      v-model="labels"
       class="dragArea"
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
@@ -42,7 +42,7 @@
     </draggable>
 
     <draggable
-      v-model="flows"
+      v-model="labels"
       class="dragArea"
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
@@ -76,12 +76,21 @@
 
 <script>
   export default {
+    data () {
+      return {
+        labels: []
+      }
+    },
     computed: {
       loading () {
         return this.$store.getters.loading
       },
       items () {
-        return this.$store.getters.loadedItems
+        let items = this.$store.getters.loadedItems
+        for (let index in items) {
+          this.labels.push(items[index].id)
+        }
+        return items
       },
       flows () {
         return this.$store.getters.loadedFlows
