@@ -4,9 +4,9 @@
 
     <!-- nav -->
     <v-toolbar
-      color="blue-grey"
       dark
       fixed
+      clipped-right
       app
       dense
       v-if="userIsAuthenticated"
@@ -39,16 +39,49 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+
+      <v-card class="px-4 mr-0" color="primary">
+        <v-text-field
+          flat
+          prepend-icon="search"
+          label="Search"
+          solo-inverted
+        ></v-text-field>
+      </v-card>
     </v-toolbar>
 
+
+
+
+
+    <!-- main -->
+    <v-content>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+
+
+
+
+    <!-- right -->
+    <v-navigation-drawer
+      fixed
+      right
+      clipped
+      app
+      v-if="userIsAuthenticated"
+    >
+      <right-drawer-content></right-drawer-content>
+    </v-navigation-drawer>
 
     <!-- left -->
     <v-navigation-drawer
       fixed
       stateless
       hide-overlay
-      clipped
       :mini-variant="mini"
+      mini-variant-width="65"
       v-model="drawer"
       app
     >
@@ -105,27 +138,6 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-
-
-    <!-- main -->
-    <v-content>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
-    </v-content>
-
-
-    <!-- right -->
-    <v-navigation-drawer
-      fixed
-      right
-      clipped
-      app
-      v-if="userIsAuthenticated"
-    >
-      <right-drawer-content></right-drawer-content>
-    </v-navigation-drawer>
-
   </v-app>
 </template>
 
