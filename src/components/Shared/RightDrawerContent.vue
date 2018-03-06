@@ -1,5 +1,5 @@
 <template>
-  <v-layout row wrap justify-center align-center>
+  <v-layout row wrap justify-center>
      <!-- loading -->
     <v-layout row wrap v-if="loading">
       <v-flex xs12 class="text-xs-center">
