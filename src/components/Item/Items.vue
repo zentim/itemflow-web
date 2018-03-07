@@ -14,24 +14,20 @@
     <!-- main -->
     <v-layout row wrap>
       <v-flex xs12 sm4 v-for="(item, index) in items" :key="index" class="mb-2">
-        <v-card class="mr-3" color="LogoItemColor">
-          <v-card-title>
-            <div>
-              <h3>{{ item.title || '未命名記事' }}</h3>
-              <div>{{ item.message || replaceEmptyMessage(item.content) }}</div>
-            </div>
-          </v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <router-link
-              :to="'/items/' + item.id"
-              tag="span"
-              style="cursor: pointer"
-              :key="item.id">
-              <v-btn flat color="primary">View</v-btn>
-            </router-link>
-          </v-card-actions>
-        </v-card>
+        <router-link
+          :to="'/items/' + item.id"
+          tag="span"
+          style="cursor: pointer"
+          :key="item.id">
+          <v-card class="mr-3" color="LogoItemColor">
+            <v-card-title>
+              <div>
+                <h3>{{ item.title || '未命名記事' }}</h3>
+                <div>{{ item.message || replaceEmptyMessage(item.content) }}</div>
+              </div>
+            </v-card-title>
+          </v-card>
+        </router-link>
       </v-flex>
     </v-layout>
 

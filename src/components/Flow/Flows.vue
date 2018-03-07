@@ -14,24 +14,20 @@
     <!-- main -->
     <v-layout row wrap>
       <v-flex xs12 sm4 v-for="flow in flows" :key="flow.id" class="mb-2">
-        <v-card class="mr-3" color="LogoFlowColor">
-          <v-card-title>
-            <div>
-              <h3>{{ flow.title }}</h3>
-              <div>{{ flow.message || 'no message' }}</div>
-            </div>
-          </v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <router-link
-              :to="'/flows/' + flow.id"
-              tag="span"
-              style="cursor: pointer"
-              :key="flow.id">
-              <v-btn flat color="primary">View</v-btn>
-            </router-link>
-          </v-card-actions>
-        </v-card>
+        <router-link
+          :to="'/flows/' + flow.id"
+          tag="span"
+          style="cursor: pointer"
+          :key="flow.id">
+          <v-card class="mr-3" color="LogoFlowColor">
+            <v-card-title>
+              <div>
+                <h3>{{ flow.title }}</h3>
+                <div>{{ flow.message || 'no message' }}</div>
+              </div>
+            </v-card-title>
+          </v-card>
+        </router-link>
       </v-flex>
     </v-layout>
 
