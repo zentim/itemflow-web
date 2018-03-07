@@ -1,59 +1,45 @@
 <template>
   <v-container>
-
     <v-layout row>
-      <h2>Create a new Flow</h2>
-      <v-flex xs12>
-        <form @submit.prevent="onCreateFlow">
+      <v-flex xs12 class="text-xs-center text-sm-right">
+        <v-btn
+          class="primary"
+          @click="onCreateFlow">Create</v-btn>
+      </v-flex>
+    </v-layout>
 
-          <v-layout row>
-            <v-flex xs12 sm8 offset-sm2>
-              <v-text-field
-                name="title"
-                label="Title"
-                id="title"
-                v-model="title"
-                required></v-text-field>
-            </v-flex>
-          </v-layout>
+    <v-layout row wrap>
+      <v-flex xs12 sm4>
+        <v-card>
+          <v-card-title>
+            <v-text-field
+              name="title"
+              label="Title"
+              autofocus
+              id="title"
+              v-model="title"></v-text-field>
+          </v-card-title>
 
-          <v-layout row>
-            <v-flex xs12 sm8 offset-sm2>
-              <v-text-field
-                name="message"
-                label="Message"
-                id="message"
-                v-model="message"></v-text-field>
-            </v-flex>
-          </v-layout>
+          <v-card-text>
+            <v-text-field
+              name="message"
+              label="Message"
+              id="message"
+              v-model="message"
+              multi-line
+              rows="3"></v-text-field>
+          </v-card-text>
 
-          <v-layout row>
-            <v-flex xs12 sm8 offset-sm2>
-              <h4>Content:</h4>
-              <v-flex xs12 sm6 offset-sm3>
-                <flow-content :content.sync="content"></flow-content>
-              </v-flex>
-            </v-flex>
-          </v-layout>
+          <v-card-text>
+            <v-divider class="my-3"></v-divider>
+            <h4>Labels:</h4>
+            <app-labels :labels.sync="labels"></app-labels>
+          </v-card-text>
+        </v-card>
+      </v-flex>
 
-          <v-layout row mt-5>
-            <v-flex xs12 sm8 offset-sm2>
-              <v-divider class="my-3"></v-divider>
-              <h4>Labels:</h4>
-              <app-labels :labels.sync="labels"></app-labels>
-            </v-flex>
-          </v-layout>
-
-          <v-layout mt-5>
-            <v-flex xs12 sm8 offset-sm2 class="text-xs-center text-sm-right">
-              <v-btn
-                class="primary"
-                :disabled="!formIsValid"
-                type="submit">Create Flow</v-btn>
-            </v-flex>
-          </v-layout>
-
-        </form>
+      <v-flex xs12 sm8>
+        <flow-content :content.sync="content"></flow-content>
       </v-flex>
     </v-layout>
   </v-container>
@@ -70,16 +56,8 @@
         onCreate: false
       }
     },
-    computed: {
-      formIsValid () {
-        return this.title !== ''
-      }
-    },
     methods: {
       onCreateFlow () {
-        if (!this.formIsValid) {
-          return
-        }
         let content = this.content
         let newContent = []
         for (let i = 0; i < content.length; i++) {

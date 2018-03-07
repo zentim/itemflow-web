@@ -31,14 +31,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 sm8>
-        <v-card>
-          <v-card-text>
-            <h4>Content:</h4>
-            <v-flex xs12 sm6 offset-sm3>
-              <flow-content :content="flow.content" :key="flow.id"></flow-content>
-            </v-flex>
-          </v-card-text>
-        </v-card>
+        <flow-content :content="flow.content" :key="flow.id"></flow-content>
       </v-flex>
     </v-layout>
 
