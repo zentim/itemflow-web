@@ -23,7 +23,7 @@
           tag="span"
           style="cursor: pointer"
           :key="element.id">
-          <v-card class="px-5" color="LogoItemColor">
+          <v-card color="LogoItemColor">
             <v-card-title>
               <div>
                 <div class="headline">{{ element.title }}</div>
