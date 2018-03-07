@@ -15,7 +15,7 @@
             style="cursor: pointer"
             :key="flow.id"
             v-if="flow.type === 'item'">
-          <v-card class="mr-2 d-flex" :color="itemflowColor(flow.type)">
+          <v-card class="d-flex" :color="itemflowColor(flow.type)">
             <v-card-title>
               <div>
                 <h3>{{ flow.title }}</h3>
@@ -32,7 +32,7 @@
           style="cursor: pointer"
           :key="flow.id"
           v-else>
-          <v-card class="mr-2 d-flex" :color="itemflowColor(flow.type)">
+          <v-card class="d-flex" :color="itemflowColor(flow.type)">
             <v-card-title>
               <div>
                 <h3>{{ flow.title }}</h3>
