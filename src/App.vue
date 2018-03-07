@@ -4,9 +4,10 @@
 
     <!-- nav -->
     <v-toolbar
-      dark
+      light
       fixed
       clipped-right
+      color="secondary"
       app
       dense
       v-if="userIsAuthenticated"
@@ -40,12 +41,13 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-card class="px-4 mr-0" color="primary">
+      <!-- search -->
+      <v-card class="pl-4 mr-0" color="secondary" flat>
         <v-text-field
-          flat
           prepend-icon="search"
           label="Search"
           solo-inverted
+          class="pr-5"
         ></v-text-field>
       </v-card>
     </v-toolbar>
@@ -79,9 +81,11 @@
     <v-navigation-drawer
       fixed
       stateless
-      hide-overlay
+      permanent
       :mini-variant="mini"
-      mini-variant-width="65"
+      mini-variant-width="70"
+      light
+      class="secondary"
       v-model="drawer"
       app
     >

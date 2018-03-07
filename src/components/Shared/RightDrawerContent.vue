@@ -17,7 +17,7 @@
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
 
-      <v-flex xs12 v-for="(element, index) in itemflow" :key="index" class="mb-2">
+      <v-flex v-for="(element, index) in itemflow" :key="index" class="mb-2">
         <router-link
           :to="'/items/' + element.id"
           tag="span"
@@ -42,7 +42,7 @@
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
 
-      <v-flex xs12 v-for="(element, index) in flows" :key="index" class="mb-2">
+      <v-flex v-for="(element, index) in flows" :key="index" class="mb-2">
         <router-link
           :to="'/flows/' + element.id"
           tag="span"
