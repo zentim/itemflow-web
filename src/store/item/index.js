@@ -3,66 +3,66 @@ import * as firebase from 'firebase'
 export default {
   state: {
     loadedItems: [
-      {
-        id: 'itemId001',
-        type: 'item',
-        title: 'this is itemId001 title',
-        message: 'itemId001 message',
-        content: 'itemId001 content',
-        labels: [
-          {
-            id: 'itemId002',
-            type: 'item',
-            title: 'this is itemId002 title',
-            message: 'itemId002 message'
-          },
-          {
-            id: 'itemId003',
-            type: 'item',
-            title: 'this is itemId003 title',
-            message: 'itemId003 message'
-          },
-          {
-            id: 'itemId004',
-            type: 'item',
-            title: 'this is itemId004 title',
-            message: 'itemId004 message'
-          }
-        ],
-        date: new Date()
-      },
-      {
-        id: 'itemId002',
-        type: 'item',
-        title: 'this is itemId002 title',
-        message: 'itemId002 message',
-        content: 'itemId002 content',
-        labels: [
-          {
-            id: 'itemId003',
-            type: 'item',
-            title: 'this is itemId003 title',
-            message: 'itemId003 message'
-          }
-        ],
-        date: new Date()
-      },
-      {
-        id: 'itemId003',
-        type: 'item',
-        title: 'this is itemId003 title',
-        message: 'itemId003 message',
-        content: 'itemId003 content',
-        labels: [
-          {
-            id: 'itemId004',
-            type: 'item',
-            title: 'this is itemId004 title',
-            message: 'itemId004 message'
-          }
-        ],
-        date: new Date()
-      }
+      // {
+      //   id: 'itemId001',
+      //   type: 'item',
+      //   title: 'this is itemId001 title',
+      //   message: 'itemId001 message',
+      //   content: 'itemId001 content',
+      //   labels: [
+      //     {
+      //       id: 'itemId002',
+      //       type: 'item',
+      //       title: 'this is itemId002 title',
+      //       message: 'itemId002 message'
+      //     },
+      //     {
+      //       id: 'itemId003',
+      //       type: 'item',
+      //       title: 'this is itemId003 title',
+      //       message: 'itemId003 message'
+      //     },
+      //     {
+      //       id: 'itemId004',
+      //       type: 'item',
+      //       title: 'this is itemId004 title',
+      //       message: 'itemId004 message'
+      //     }
+      //   ],
+      //   date: new Date()
+      // },
+      // {
+      //   id: 'itemId002',
+      //   type: 'item',
+      //   title: 'this is itemId002 title',
+      //   message: 'itemId002 message',
+      //   content: 'itemId002 content',
+      //   labels: [
+      //     {
+      //       id: 'itemId003',
+      //       type: 'item',
+      //       title: 'this is itemId003 title',
+      //       message: 'itemId003 message'
+      //     }
+      //   ],
+      //   date: new Date()
+      // },
+      // {
+      //   id: 'itemId003',
+      //   type: 'item',
+      //   title: 'this is itemId003 title',
+      //   message: 'itemId003 message',
+      //   content: 'itemId003 content',
+      //   labels: [
+      //     {
+      //       id: 'itemId004',
+      //       type: 'item',
+      //       title: 'this is itemId004 title',
+      //       message: 'itemId004 message'
+      //     }
+      //   ],
+      //   date: new Date()
+      // }
     ]
   },
   getters: {

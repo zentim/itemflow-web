@@ -3,70 +3,70 @@ import * as firebase from 'firebase'
 export default {
   state: {
     loadedFlows: [
-      {
-        id: 'flowIdxx1',
-        type: 'flow',
-        title: 'test title flowIdxx1',
-        message: 'there something else',
-        content: [
-          {
-            id: 'itemId001',
-            type: 'item',
-            title: 'this is itemId001 title',
-            message: 'itemId001 message'
-          }
-        ],
-        labels: [
-          {
-            id: 'itemId002',
-            type: 'item',
-            title: 'this is itemId002 title',
-            message: 'itemId002 message'
-          }
-        ],
-        date: new Date()
-      },
-      {
-        id: 'flowIdxx2',
-        type: 'flow',
-        title: 'test title flowIdxx2',
-        message: 'message flowIdxx2',
-        content: [
-          {
-            id: 'itemId001',
-            type: 'item',
-            title: 'this is itemId001 title',
-            message: 'itemId001 message'
-          },
-          {
-            id: 'itemId002',
-            type: 'item',
-            title: 'this is itemId002 title',
-            message: 'itemId002 message'
-          },
-          {
-            id: 'flowIdxx1',
-            type: 'flow',
-            title: 'test title flowIdxx1',
-            message: 'message flowIdxx1'
-          }
-        ],
-        labels: [
-          {
-            id: 'itemId002',
-            type: 'item',
-            title: 'this is itemId002 title',
-            message: 'itemId002 message'
-          },
-          {
-            id: 'itemId003',
-            type: 'item',
-            title: 'this is itemId003 title',
-            message: 'itemId003 message'
-          }
-        ],
-        date: new Date()
-      }
+      // {
+      //   id: 'flowIdxx1',
+      //   type: 'flow',
+      //   title: 'test title flowIdxx1',
+      //   message: 'there something else',
+      //   content: [
+      //     {
+      //       id: 'itemId001',
+      //       type: 'item',
+      //       title: 'this is itemId001 title',
+      //       message: 'itemId001 message'
+      //     }
+      //   ],
+      //   labels: [
+      //     {
+      //       id: 'itemId002',
+      //       type: 'item',
+      //       title: 'this is itemId002 title',
+      //       message: 'itemId002 message'
+      //     }
+      //   ],
+      //   date: new Date()
+      // },
+      // {
+      //   id: 'flowIdxx2',
+      //   type: 'flow',
+      //   title: 'test title flowIdxx2',
+      //   message: 'message flowIdxx2',
+      //   content: [
+      //     {
+      //       id: 'itemId001',
+      //       type: 'item',
+      //       title: 'this is itemId001 title',
+      //       message: 'itemId001 message'
+      //     },
+      //     {
+      //       id: 'itemId002',
+      //       type: 'item',
+      //       title: 'this is itemId002 title',
+      //       message: 'itemId002 message'
+      //     },
+      //     {
+      //       id: 'flowIdxx1',
+      //       type: 'flow',
+      //       title: 'test title flowIdxx1',
+      //       message: 'message flowIdxx1'
+      //     }
+      //   ],
+      //   labels: [
+      //     {
+      //       id: 'itemId002',
+      //       type: 'item',
+      //       title: 'this is itemId002 title',
+      //       message: 'itemId002 message'
+      //     },
+      //     {
+      //       id: 'itemId003',
+      //       type: 'item',
+      //       title: 'this is itemId003 title',
+      //       message: 'itemId003 message'
+      //     }
+      //   ],
+      //   date: new Date()
+      // }
     ]
   },
   getters: {
