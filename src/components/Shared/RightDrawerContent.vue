@@ -1,14 +1,8 @@
 <template>
   <v-layout row wrap justify-center>
-     <!-- loading -->
+    <!-- loading -->
     <v-layout row wrap v-if="loading">
-      <v-flex xs12 class="text-xs-center">
-        <v-progress-circular
-          indeterminate
-          class="primary--text"
-          :width="7"
-          :size="70"></v-progress-circular>
-      </v-flex>
+      <loading></loading>
     </v-layout>
 
     <draggable
@@ -74,9 +68,6 @@
       }
     },
     computed: {
-      loading () {
-        return this.$store.getters.loading
-      },
       items () {
         return this.$store.getters.loadedItems
       },

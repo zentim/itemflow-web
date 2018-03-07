@@ -14,6 +14,7 @@ import Labels from './components/Shared/Labels'
 import Alert from './components/Shared/Alert'
 import tinymce from 'vue-tinymce-editor'
 import RemoveItemFlow from './components/Shared/RemoveItemFlow'
+import Loading from './components/Shared/Loading'
 
 Vue.use(Vuetify,
   {
@@ -44,6 +45,7 @@ Vue.component('app-labels', Labels)
 Vue.component('app-alert', Alert)
 Vue.component('tinymce', tinymce)
 Vue.component('remove-item-flow', RemoveItemFlow)
+Vue.component('loading', Loading)
 
 /* eslint-disable no-new */
 new Vue({
