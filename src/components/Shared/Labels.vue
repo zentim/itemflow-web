@@ -16,15 +16,7 @@
           tag="span"
           style="cursor: pointer"
           :key="element.id">
-          {{ element.title }}
-        </router-link>
-        <router-link
-          :to="'/flows/' + element.id"
-          tag="span"
-          style="cursor: pointer"
-          :key="element.id"
-          v-if="element.type === 'flow'">
-          {{ element.title }}
+          {{ element.title || 'untitled' }}
         </router-link>
       </v-chip>
 
@@ -40,7 +32,7 @@
           style="cursor: pointer"
           :key="element.id"
           v-if="element.type === 'flow'">
-          {{ element.title }}
+          {{ element.title || 'untitled' }}
         </router-link>
       </v-chip>
     </div>

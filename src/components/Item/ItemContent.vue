@@ -1,14 +1,12 @@
 <template>
-  <v-layout>
-    <v-card>
-      <tinymce
-        id="d1"
-        v-model="data"
-        v-on:editorInit="initCallBack"
-        ref="tm"
-        :other_options="editerOptions"></tinymce>
-    </v-card>
-  </v-layout>
+  <v-card>
+    <tinymce
+      id="d1"
+      v-model="data"
+      v-on:editorInit="initCallBack"
+      ref="tm"
+      :other_options="editerOptions"></tinymce>
+  </v-card>
 </template>
 
 
@@ -19,7 +17,7 @@
       return {
         data: this.content,
         editerOptions: {
-          height: 300
+          height: 350
         }
       }
     },
