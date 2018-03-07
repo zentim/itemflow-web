@@ -13,6 +13,7 @@ import FlowContent from './components/Flow/FlowContent'
 import Labels from './components/Shared/Labels'
 import Alert from './components/Shared/Alert'
 import tinymce from 'vue-tinymce-editor'
+import RemoveItemFlow from './components/Shared/RemoveItemFlow'
 
 Vue.use(Vuetify,
   {
@@ -42,6 +43,7 @@ Vue.component('right-drawer-content', RightDrawerContent)
 Vue.component('app-labels', Labels)
 Vue.component('app-alert', Alert)
 Vue.component('tinymce', tinymce)
+Vue.component('remove-item-flow', RemoveItemFlow)
 
 /* eslint-disable no-new */
 new Vue({

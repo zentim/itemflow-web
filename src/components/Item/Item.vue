@@ -15,6 +15,7 @@
     <v-layout row wrap v-else>
       <v-flex xs12 sm4>
         <v-card>
+          <remove-item-flow :id="id" :type="item.type"></remove-item-flow>
           <v-card-title>
             <div>
               <div class="headline">{{ item.title || 'untitled' }}</div>

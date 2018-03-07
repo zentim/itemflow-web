@@ -1,3 +1,5 @@
+import * as firebase from 'firebase'
+
 export default {
   state: {
     loadingItem: false,
@@ -19,8 +21,14 @@ export default {
     }
   },
   actions: {
-    clearError ({commit}) {
+    clearError ({ commit }) {
       commit('clearError')
+    },
+    removeItemFlow ({ commit, getters }, payload) {
+      const userId = getters.user.id
+      const itemflowId = payload.id
+      const itemflowType = payload.type
+      firebase.database().ref(itemflowType + 's/' + userId).child(itemflowId).remove()
     }
   },
   getters: {
