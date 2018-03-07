@@ -68,6 +68,9 @@
       }
     },
     computed: {
+      loading () {
+        return this.$store.getters.loading
+      },
       items () {
         return this.$store.getters.loadedItems
       },
