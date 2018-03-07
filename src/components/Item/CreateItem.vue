@@ -46,7 +46,6 @@
             <v-flex xs12 sm8 offset-sm2 class="text-xs-center text-sm-right">
               <v-btn
                 class="primary"
-                :disabled="!formIsValid"
                 type="submit">Create Item</v-btn>
             </v-flex>
           </v-layout>
@@ -72,9 +71,6 @@
       }
     },
     computed: {
-      formIsValid () {
-        return this.content !== ''
-      }
     },
     methods: {
       onCreateItem () {
@@ -92,7 +88,7 @@
           })
         }
         const itemData = {
-          title: this.title || 'untitled',
+          title: this.title,
           message: this.message,
           content: this.content,
           labels: newLabels
