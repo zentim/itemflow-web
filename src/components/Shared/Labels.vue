@@ -4,7 +4,6 @@
     class="dragArea"
     :options="{group: 'itemflow'}"
     >
-    {{chips}}
     <div v-for="(element, index) in chips" :key="index" style="display: inline">
       <v-chip
         close
