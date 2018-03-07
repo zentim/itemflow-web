@@ -30,7 +30,7 @@
 
           <v-layout row>
             <v-flex xs12 sm8 offset-sm2>
-              <tinymce id="d1" v-model="content" :other_options="editerOptions"></tinymce>
+              <item-content :content.sync="content"></item-content>
             </v-flex>
           </v-layout>
 

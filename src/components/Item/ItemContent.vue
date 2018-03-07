@@ -1,10 +1,13 @@
 <template>
   <v-layout>
-    <div>
-      <!-- <tinymce id="d1" v-model="data" :other_options="editerOptions"></tinymce> -->
-      <div>data:</div>
-      <div>content:</div>
-    </div>
+    <v-card>
+      <tinymce
+        id="d1"
+        v-model="data"
+        v-on:editorInit="initCallBack"
+        ref="tm"
+        :other_options="editerOptions"></tinymce>
+    </v-card>
   </v-layout>
 </template>
 
@@ -20,21 +23,37 @@
         }
       }
     },
-    created: function () {
-      console.log('item content created')
-    },
-    destoryed: function () {
-      console.log('item content destoryed')
-    },
-    updated: function () {
-      console.log('item content updated')
-    },
-    mounted: function () {
-      console.log('item content mounted')
+    // created: function () {
+    //   console.log('item content created')
+    // },
+    // destoryed: function () {
+    //   console.log('item content destoryed')
+    // },
+    // updated: function () {
+    //   console.log('item content updated')
+    // },
+    // mounted: function () {
+    //   console.log('item content mounted')
+    // },
+    // watch: {
+    //   '$route': function () {
+    //     console.log('item content watch')
+    //   }
+    // },
+    methods: {
+      initCallBack (e) {
+        // console.log(this.$refs.tm.editor)
+        // console.log('init', e)
+        e.setContent(this.data)
+        // this.$refs.tm.editor.setContent(this.itemContent)
+      }
     },
     watch: {
-      '$route': function () {
-        console.log('item content watch')
+      content (newVal) {
+        this.data = newVal
+      },
+      data (newVal) {
+        this.$emit('update:content', newVal)
       }
     }
   }

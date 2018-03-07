@@ -31,14 +31,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 sm8>
-        <v-card>
-          <tinymce
-            id="d1"
-            v-model="itemContent"
-            v-on:editorInit="initCallBack"
-            ref="tm"
-            :other_options="editerOptions"></tinymce>
-        </v-card>
+        <item-content :content="itemContent"></item-content>
       </v-flex>
     </v-layout>
 
@@ -51,10 +44,8 @@
     props: ['id'],
     data () {
       return {
-        itemContent: '',
-        editerOptions: {
-          height: 300
-        }
+        data: {},
+        itemContent: ''
       }
     },
     computed: {
@@ -66,15 +57,15 @@
       }
     },
     mounted () {
-      this.itemContent = this.item.content
+      this.data = this.item
+      this.itemContent = this.data.content
     },
-    methods: {
-      initCallBack (e) {
-        // console.log(this.$refs.tm.editor)
-        // console.log('init', e)
-        e.setContent(this.itemContent)
-        // this.$refs.tm.editor.setContent(this.itemContent)
+    watch: {
+      item (newVal) {
+        this.data = JSON.parse(JSON.stringify(newVal))
+        this.itemContent = this.data.content
       }
     }
+
   }
 </script>
