@@ -26,7 +26,7 @@ export const appRouter = [
   {
     path: '/item/new',
     name: 'CreateItem',
-    component: () => import('@/components/Item/CreateItem')
+    component: () => import('@/components/Shared/CreateItemFlow')
   },
   {
     path: '/items',
@@ -42,7 +42,7 @@ export const appRouter = [
   {
     path: '/flow/new',
     name: 'CreateFlow',
-    component: () => import('@/components/Flow/CreateFlow')
+    component: () => import('@/components/Shared/CreateItemFlow')
   },
   {
     path: '/flows',

@@ -4,7 +4,7 @@
       <v-flex xs12 class="text-xs-center text-sm-right">
         <v-btn
           class="primary"
-          @click="onCreateFlow">Create</v-btn>
+          @click="onCreateItemFlow">Create</v-btn>
       </v-flex>
     </v-layout>
 
@@ -39,7 +39,8 @@
       </v-flex>
 
       <v-flex xs12 sm8>
-        <flow-content :content.sync="content"></flow-content>
+        <item-content :content.sync="itemContent" v-if="routeName === 'CreateItem'"></item-content>
+        <flow-content :content.sync="flowContent" v-if="routeName === 'CreateFlow'"></flow-content>
       </v-flex>
     </v-layout>
   </v-container>
@@ -51,23 +52,19 @@
       return {
         title: '',
         message: '',
-        content: [],
+        itemContent: '',
+        flowContent: [],
         labels: [],
-        onCreate: false
+        isCreated: false
+      }
+    },
+    computed: {
+      routeName () {
+        return this.$route.name
       }
     },
     methods: {
-      onCreateFlow () {
-        let content = this.content
-        let newContent = []
-        for (let i = 0; i < content.length; i++) {
-          newContent.push({
-            id: content[i].id,
-            type: content[i].type,
-            title: content[i].title,
-            message: content[i].message
-          })
-        }
+      onCreateItemFlow () {
         let labels = this.labels
         let newLabels = []
         for (let i = 0; i < labels.length; i++) {
@@ -78,23 +75,47 @@
             message: labels[i].message
           })
         }
-        const flowData = {
-          title: this.title,
-          message: this.message,
-          content: newContent,
-          labels: newLabels
+        if (this.routeName === 'CreateItem') {
+          const newObj = {
+            title: this.title,
+            message: this.message,
+            content: this.itemContent,
+            labels: newLabels
+          }
+          this.$store.dispatch('createItem', newObj)
+          this.isCreated = true
+          this.$router.push('/items')
+        } else if (this.routeName === 'CreateFlow') {
+          let content = this.flowContent
+          let newContent = []
+          for (let i = 0; i < content.length; i++) {
+            newContent.push({
+              id: content[i].id,
+              type: content[i].type,
+              title: content[i].title,
+              message: content[i].message
+            })
+          }
+          const newObj = {
+            title: this.title,
+            message: this.message,
+            content: newContent,
+            labels: newLabels
+          }
+          this.$store.dispatch('createFlow', newObj)
+          this.isCreated = true
+          this.$router.push('/flows')
         }
-        this.$store.dispatch('createFlow', flowData)
-        this.onCreate = true
-        this.$router.push('/flows')
       }
     },
     beforeRouteLeave (to, from, next) {
-      if (this.onCreate) {
+      if (this.isCreated) {
+        this.isCreated = false
         next()
       } else {
         const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
         if (answer) {
+          this.isCreated = false
           next()
         } else {
           next(false)
