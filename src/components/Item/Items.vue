@@ -22,8 +22,8 @@
           <v-card class="mr-3" color="LogoItemColor">
             <v-card-title>
               <div>
-                <h3>{{ item.title || '未命名記事' }}</h3>
-                <div>{{ item.message || replaceEmptyMessage(item.content) }}</div>
+                <div class="headline">{{ item.title }}</div>
+                <div>{{ item.message || replaceEmptyMessage(item.content) || 'no message' }}</div>
               </div>
             </v-card-title>
           </v-card>

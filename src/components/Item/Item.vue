@@ -17,7 +17,7 @@
         <v-card>
           <v-card-title>
             <div>
-              <h2>{{ item.title || 'untitled' }}</h2>
+              <div class="headline">{{ item.title || 'untitled' }}</div>
               <v-divider></v-divider>
               <div>{{ item.message }}</div>
               <v-divider></v-divider>

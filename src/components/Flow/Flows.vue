@@ -22,7 +22,7 @@
           <v-card class="mr-3" color="LogoFlowColor">
             <v-card-title>
               <div>
-                <h3>{{ flow.title }}</h3>
+                <div class="headline">{{ flow.title }}</div>
                 <div>{{ flow.message || 'no message' }}</div>
               </div>
             </v-card-title>

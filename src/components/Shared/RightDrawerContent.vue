@@ -17,16 +17,16 @@
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
 
-      <v-flex v-for="(element, index) in itemflow" :key="index" class="mb-2">
+      <v-flex v-for="(element, index) in itemflow" :key="index" class="mt-2">
         <router-link
           :to="'/items/' + element.id"
           tag="span"
           style="cursor: pointer"
           :key="element.id">
-          <v-card class="mr-2 d-flex" color="LogoItemColor">
+          <v-card class="px-5" color="LogoItemColor">
             <v-card-title>
               <div>
-                <h3>{{ element.title }}</h3>
+                <div class="headline">{{ element.title }}</div>
                 <div>{{ element.message || 'no message' }}</div>
               </div>
             </v-card-title>
@@ -42,16 +42,16 @@
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
 
-      <v-flex v-for="(element, index) in flows" :key="index" class="mb-2">
+      <v-flex v-for="(element, index) in flows" :key="index" class="mt-2">
         <router-link
           :to="'/flows/' + element.id"
           tag="span"
           style="cursor: pointer"
           :key="element.id">
-          <v-card class="mr-2 d-flex" color="LogoFlowColor">
+          <v-card color="LogoFlowColor">
             <v-card-title>
               <div>
-                <h3>{{ element.title }}</h3>
+                <div class="headline">{{ element.title }}</div>
                 <div>{{ element.message || 'no message' }}</div>
               </div>
             </v-card-title>

@@ -17,7 +17,7 @@
         <v-card>
            <v-card-title>
             <div>
-              <h2>{{ flow.title || 'untitled' }}</h2>
+              <div class="headline">{{ flow.title || 'untitled' }}</div>
               <v-divider></v-divider>
               <div>{{ flow.message }}</div>
               <v-divider></v-divider>
