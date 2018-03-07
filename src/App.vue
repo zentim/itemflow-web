@@ -42,7 +42,7 @@
       <v-spacer></v-spacer>
 
       <!-- search -->
-      <v-card class="pl-4 mr-0" color="secondary" flat>
+      <v-card class="pl-4 mr-0 hidden-md-and-down" color="secondary" flat>
         <v-text-field
           prepend-icon="search"
           label="Search"

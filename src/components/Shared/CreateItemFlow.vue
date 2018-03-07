@@ -9,7 +9,7 @@
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex xs12 sm4>
+      <v-flex xs12 md4>
         <v-card>
           <v-card-title>
             <v-text-field
@@ -38,7 +38,7 @@
         </v-card>
       </v-flex>
 
-      <v-flex xs12 sm8>
+      <v-flex xs12 md8>
         <item-content :content.sync="itemContent" v-if="routeName === 'CreateItem'"></item-content>
         <flow-content :content.sync="flowContent" v-if="routeName === 'CreateFlow'"></flow-content>
       </v-flex>
