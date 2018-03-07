@@ -16,8 +16,8 @@
           <v-card class="mr-3" color="LogoItemColor">
             <v-card-title>
               <div>
-                <div class="headline">{{ item.title }}</div>
-                <div>{{ item.message || replaceEmptyMessage(item.content) || 'no message' }}</div>
+                <div class="title">{{ newTitle(item.title) }}</div>
+                <div>{{ newMessage(item.message) || replaceEmptyMessage(item.content) }}</div>
               </div>
             </v-card-title>
           </v-card>
@@ -39,15 +39,44 @@
       }
     },
     methods: {
-      replaceEmptyMessage (content) {
-        let message = ''
-        let replaceLength = 25
-        if (content.length <= replaceLength) {
-          message = content
-        } else {
-          message = content.slice(0, replaceLength - 3) + '...'
+      newTitle (title) {
+        if (!title) {
+          return
         }
-        return message
+        let newTitle
+        let maxLength = 16
+        if (title.length <= maxLength) {
+          newTitle = title
+        } else {
+          newTitle = title.slice(0, maxLength - 3) + '...'
+        }
+        return newTitle
+      },
+      newMessage (message) {
+        if (!message) {
+          return ''
+        }
+        let newMessage
+        let maxLength = 47
+        if (message.length <= maxLength) {
+          newMessage = message
+        } else {
+          newMessage = message.slice(0, maxLength - 3) + '...'
+        }
+        return newMessage
+      },
+      replaceEmptyMessage (content) {
+        if (!content) {
+          return 'no message'
+        }
+        let newMessage = ''
+        let maxLength = 47
+        if (content.length <= maxLength) {
+          newMessage = content
+        } else {
+          newMessage = content.slice(0, maxLength - 3) + '...'
+        }
+        return newMessage
       }
     }
   }

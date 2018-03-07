@@ -12,7 +12,7 @@
           <remove-item-flow :id="id" :type="flow.type"></remove-item-flow>
           <v-card-title>
             <div>
-              <div class="headline">{{ flow.title || 'untitled' }}</div>
+              <div class="title">{{ flow.title || 'untitled' }}</div>
               <v-divider></v-divider>
               <div>{{ flow.message }}</div>
               <v-divider></v-divider>

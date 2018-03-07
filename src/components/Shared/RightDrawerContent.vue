@@ -20,8 +20,8 @@
           <v-card color="LogoItemColor">
             <v-card-title>
               <div>
-                <div class="headline">{{ element.title }}</div>
-                <div>{{ element.message || 'no message' }}</div>
+                <div class="title">{{ newTitle(element.title) }}</div>
+                <div>{{ newMessage(element.message) || replaceEmptyMessage(element.content) }}</div>
               </div>
             </v-card-title>
           </v-card>
@@ -45,8 +45,8 @@
           <v-card color="LogoFlowColor">
             <v-card-title>
               <div>
-                <div class="headline">{{ element.title }}</div>
-                <div>{{ element.message || 'no message' }}</div>
+                <div class="title">{{ newTitle(element.title) }}</div>
+                <div>{{ newMessage(element.message) || 'no message' }}</div>
               </div>
             </v-card-title>
           </v-card>
@@ -108,6 +108,46 @@
       }
     },
     methods: {
+      newTitle (title) {
+        if (!title) {
+          return
+        }
+        let newTitle
+        let maxLength = 16
+        if (title.length <= maxLength) {
+          newTitle = title
+        } else {
+          newTitle = title.slice(0, maxLength - 6) + '...'
+        }
+        return newTitle
+      },
+      newMessage (message) {
+        if (!message) {
+          return ''
+        }
+        let newMessage
+        let maxLength = 47
+        if (message.length <= maxLength) {
+          newMessage = message
+        } else {
+          newMessage = message.slice(0, maxLength - 15) + '...'
+        }
+        return newMessage
+      },
+      replaceEmptyMessage (content) {
+        if (!content) {
+          return 'no message'
+        }
+        let newMessage = ''
+        let maxLength = 47
+        if (content.length <= maxLength) {
+          newMessage = content
+        } else {
+          newMessage = content.slice(0, maxLength - 15) + '...'
+        }
+        return newMessage
+      }
+
     }
   }
 </script>
