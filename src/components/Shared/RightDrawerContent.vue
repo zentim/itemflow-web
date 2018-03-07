@@ -18,24 +18,20 @@
       v-if="!loading">
 
       <v-flex xs12 v-for="(element, index) in itemflow" :key="index" class="mb-2">
-        <v-card class="mr-2 d-flex" color="LogoItemColor">
-          <v-card-title>
-            <div>
-              <h3>{{ element.title }}</h3>
-              <div>{{ element.message || 'no message' }}</div>
-            </div>
-          </v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <router-link
-              :to="'/items/' + element.id"
-              tag="span"
-              style="cursor: pointer"
-              :key="element.id">
-              <v-btn flat color="primary">View</v-btn>
-            </router-link>
-          </v-card-actions>
-        </v-card>
+        <router-link
+          :to="'/items/' + element.id"
+          tag="span"
+          style="cursor: pointer"
+          :key="element.id">
+          <v-card class="mr-2 d-flex" color="LogoItemColor">
+            <v-card-title>
+              <div>
+                <h3>{{ element.title }}</h3>
+                <div>{{ element.message || 'no message' }}</div>
+              </div>
+            </v-card-title>
+          </v-card>
+        </router-link>
       </v-flex>
 
     </draggable>
@@ -47,24 +43,20 @@
       v-if="!loading">
 
       <v-flex xs12 v-for="(element, index) in flows" :key="index" class="mb-2">
-        <v-card class="mr-2 d-flex" color="LogoFlowColor">
-          <v-card-title>
-            <div>
-              <h3>{{ element.title }}</h3>
-              <div>{{ element.message || 'no message' }}</div>
-            </div>
-          </v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <router-link
-              :to="'/flows/' + element.id"
-              tag="span"
-              style="cursor: pointer"
-              :key="element.id">
-              <v-btn flat color="primary">View</v-btn>
-            </router-link>
-          </v-card-actions>
-        </v-card>
+        <router-link
+          :to="'/flows/' + element.id"
+          tag="span"
+          style="cursor: pointer"
+          :key="element.id">
+          <v-card class="mr-2 d-flex" color="LogoFlowColor">
+            <v-card-title>
+              <div>
+                <h3>{{ element.title }}</h3>
+                <div>{{ element.message || 'no message' }}</div>
+              </div>
+            </v-card-title>
+          </v-card>
+        </router-link>
       </v-flex>
 
     </draggable>

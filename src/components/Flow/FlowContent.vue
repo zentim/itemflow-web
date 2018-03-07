@@ -9,33 +9,38 @@
         v-for="(flow, index) in flows"
         :key="index"
         class="mb-2">
-        <v-card class="mr-2 d-flex" :color="itemflowColor(flow.type)">
-          <v-card-title>
-            <div>
-              <h3>{{ flow.title }}</h3>
-              <div>{{ flow.message || 'no message' }}</div>
-            </div>
-          </v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <router-link
-              :to="'/items/' + flow.id"
-              tag="span"
-              style="cursor: pointer"
-              :key="flow.id"
-              v-if="flow.type === 'item'">
-              <v-btn flat color="primary">View</v-btn>
-            </router-link>
-            <router-link
-              :to="'/flows/' + flow.id"
-              tag="span"
-              style="cursor: pointer"
-              :key="flow.id"
-              v-else>
-              <v-btn flat color="primary">View</v-btn>
-            </router-link>
-          </v-card-actions>
-        </v-card>
+        <router-link
+            :to="'/items/' + flow.id"
+            tag="span"
+            style="cursor: pointer"
+            :key="flow.id"
+            v-if="flow.type === 'item'">
+          <v-card class="mr-2 d-flex" :color="itemflowColor(flow.type)">
+            <v-card-title>
+              <div>
+                <h3>{{ flow.title }}</h3>
+                <div>{{ flow.message || 'no message' }}</div>
+              </div>
+            </v-card-title>
+          </v-card>
+        </router-link>
+
+
+        <router-link
+          :to="'/flows/' + flow.id"
+          tag="span"
+          style="cursor: pointer"
+          :key="flow.id"
+          v-else>
+          <v-card class="mr-2 d-flex" :color="itemflowColor(flow.type)">
+            <v-card-title>
+              <div>
+                <h3>{{ flow.title }}</h3>
+                <div>{{ flow.message || 'no message' }}</div>
+              </div>
+            </v-card-title>
+          </v-card>
+        </router-link>
       </v-flex>
     </draggable>
 </template>
