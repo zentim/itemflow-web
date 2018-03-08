@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <v-layout row>
+    <!-- <v-layout row>
       <v-flex xs12 class="text-xs-center text-sm-right">
         <v-btn
           class="primary"
           @click="onCreateItemFlow">Create</v-btn>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
 
     <v-layout row wrap>
       <v-flex xs12 md4>
@@ -61,10 +61,21 @@
     computed: {
       routeName () {
         return this.$route.name
+      },
+      isEmpty () {
+        if (this.routeName === 'CreateItem') {
+          return !this.title && !this.message && !this.itemContent && this.labels.length === 0
+        }
+        if (this.routeName === 'CreateFlow') {
+          return !this.title && !this.message && this.flowContent.length === 0 && this.labels.length === 0
+        }
       }
     },
     methods: {
       onCreateItemFlow () {
+        if (this.isEmpty) {
+          return
+        }
         let labels = this.labels
         let newLabels = []
         for (let i = 0; i < labels.length; i++) {
@@ -83,8 +94,9 @@
             labels: newLabels
           }
           this.$store.dispatch('createItem', newObj)
+          console.log(newObj)
           this.isCreated = true
-          this.$router.push('/items')
+          // this.$router.push('/items')
         } else if (this.routeName === 'CreateFlow') {
           let content = this.flowContent
           let newContent = []
@@ -104,22 +116,16 @@
           }
           this.$store.dispatch('createFlow', newObj)
           this.isCreated = true
-          this.$router.push('/flows')
+          // this.$router.push('/flows')
         }
       }
     },
     beforeRouteLeave (to, from, next) {
-      if (this.isCreated) {
-        this.isCreated = false
+      if (!this.isCreated) {
+        this.onCreateItemFlow()
         next()
       } else {
-        const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
-        if (answer) {
-          this.isCreated = false
-          next()
-        } else {
-          next(false)
-        }
+        next()
       }
     }
   }
