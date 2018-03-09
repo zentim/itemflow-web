@@ -83,7 +83,6 @@
       stateless
       permanent
       :mini-variant="mini"
-      mini-variant-width="70"
       light
       class="secondary"
       v-model="drawer"
@@ -93,7 +92,7 @@
         <v-list-tile to="/">
           <v-list-tile-action>
             <v-tooltip right>
-              <v-icon slot="activator">home</v-icon>
+              <v-icon large slot="activator">home</v-icon>
               <span>Home</span>
             </v-tooltip>
           </v-list-tile-action>
@@ -107,7 +106,7 @@
           :to="item.link">
           <v-list-tile-action>
             <v-tooltip right>
-              <v-icon slot="activator">{{ item.icon }}</v-icon>
+              <v-icon large slot="activator">{{ item.icon }}</v-icon>
               <span>{{ item.title }}</span>
             </v-tooltip>
           </v-list-tile-action>
@@ -121,7 +120,7 @@
           :to="item.link">
           <v-list-tile-action>
             <v-tooltip right>
-              <v-icon slot="activator">{{ item.icon }}</v-icon>
+              <v-icon large slot="activator">{{ item.icon }}</v-icon>
               <span>{{ item.title }}</span>
             </v-tooltip>
           </v-list-tile-action>
@@ -135,7 +134,7 @@
           :to="item.link">
           <v-list-tile-action>
             <v-tooltip right>
-              <v-icon slot="activator">{{ item.icon }}</v-icon>
+              <v-icon large slot="activator">{{ item.icon }}</v-icon>
               <span>{{ item.title }}</span>
             </v-tooltip>
           </v-list-tile-action>
