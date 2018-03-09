@@ -1,7 +1,6 @@
 <template>
   <v-app id="inspire">
 
-
     <!-- nav -->
     <v-toolbar
       light
@@ -63,7 +62,7 @@
       </v-container>
     </v-content>
 
-
+    <speed-dial></speed-dial>
 
 
     <!-- right -->

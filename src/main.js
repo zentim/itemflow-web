@@ -15,6 +15,7 @@ import Alert from './components/Shared/Alert'
 import tinymce from 'vue-tinymce-editor'
 import RemoveItemFlow from './components/Shared/RemoveItemFlow'
 import Loading from './components/Shared/Loading'
+import SpeedDial from './components/Shared/SpeedDial'
 
 Vue.use(Vuetify,
   {
@@ -46,6 +47,7 @@ Vue.component('app-alert', Alert)
 Vue.component('tinymce', tinymce)
 Vue.component('remove-item-flow', RemoveItemFlow)
 Vue.component('loading', Loading)
+Vue.component('speed-dial', SpeedDial)
 
 /* eslint-disable no-new */
 new Vue({
