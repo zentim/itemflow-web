@@ -7,7 +7,14 @@
 
     <!-- main -->
     <v-layout row wrap>
-      <v-flex xs12 sm4 v-for="(item, index) in items" :key="index" class="mb-2">
+      <v-flex
+        xs12
+        sm6
+        md4
+        lg3
+        v-for="(item, index) in items"
+        :key="index"
+        class="mb-2">
         <router-link
           :to="'/items/' + item.id"
           tag="span"
