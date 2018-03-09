@@ -43,6 +43,7 @@
       :direction="direction"
       :open-on-hover="hover"
       :transition="transition"
+      fixed
     >
       <v-btn
         slot="activator"
@@ -125,7 +126,7 @@
     }
   }
 </script>
-
+<!--
 <style scoped>
   /* This is for documentation purposes and will not be needed in your application */
   #create .speed-dial {
@@ -136,3 +137,4 @@
     position: relative;
   }
 </style>
+ -->
