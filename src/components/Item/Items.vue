@@ -21,12 +21,10 @@
           style="cursor: pointer"
           :key="item.id">
           <v-card class="mr-3" color="LogoItemColor">
-            <v-card-title>
-              <div>
-                <div class="title">{{ newTitle(item.title) }}</div>
-                <div>{{ newMessage(item.message) || replaceEmptyMessage(item.content) }}</div>
-              </div>
-            </v-card-title>
+            <div class="px-3 py-3">
+              <div class="title word-overflow-hidden">{{ item.title }}</div>
+              <div class="word-overflow-hidden">{{ item.message || item.content || 'no message' }}</div>
+            </div>
           </v-card>
         </router-link>
       </v-flex>
@@ -44,47 +42,14 @@
       items () {
         return this.$store.getters.loadedItems
       }
-    },
-    methods: {
-      newTitle (title) {
-        if (!title) {
-          return
-        }
-        let newTitle
-        let maxLength = 16
-        if (title.length <= maxLength) {
-          newTitle = title
-        } else {
-          newTitle = title.slice(0, maxLength - 3) + '...'
-        }
-        return newTitle
-      },
-      newMessage (message) {
-        if (!message) {
-          return ''
-        }
-        let newMessage
-        let maxLength = 47
-        if (message.length <= maxLength) {
-          newMessage = message
-        } else {
-          newMessage = message.slice(0, maxLength - 3) + '...'
-        }
-        return newMessage
-      },
-      replaceEmptyMessage (content) {
-        if (!content) {
-          return 'no message'
-        }
-        let newMessage = ''
-        let maxLength = 47
-        if (content.length <= maxLength) {
-          newMessage = content
-        } else {
-          newMessage = content.slice(0, maxLength - 3) + '...'
-        }
-        return newMessage
-      }
     }
   }
 </script>
+
+<style scoped>
+.word-overflow-hidden {
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+</style>

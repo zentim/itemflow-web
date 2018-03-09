@@ -21,12 +21,10 @@
           style="cursor: pointer"
           :key="flow.id">
           <v-card class="mr-3" color="LogoFlowColor">
-            <v-card-title>
-              <div>
-                <div class="title">{{ newTitle(flow.title) }}</div>
-                <div>{{ newMessage(flow.message) || 'no message' }}</div>
-              </div>
-            </v-card-title>
+            <div class="px-3 py-3">
+              <div class="title word-overflow-hidden">{{ flow.title }}</div>
+              <div class="word-overflow-hidden">{{ flow.message || 'no message' }}</div>
+            </div>
           </v-card>
         </router-link>
       </v-flex>
@@ -44,34 +42,15 @@
       loading () {
         return this.$store.getters.loading
       }
-    },
-    methods: {
-      newTitle (title) {
-        if (!title) {
-          return
-        }
-        let newTitle
-        let maxLength = 16
-        if (title.length <= maxLength) {
-          newTitle = title
-        } else {
-          newTitle = title.slice(0, maxLength - 3) + '...'
-        }
-        return newTitle
-      },
-      newMessage (message) {
-        if (!message) {
-          return ''
-        }
-        let newMessage
-        let maxLength = 47
-        if (message.length <= maxLength) {
-          newMessage = message
-        } else {
-          newMessage = message.slice(0, maxLength - 3) + '...'
-        }
-        return newMessage
-      }
     }
   }
 </script>
+
+<style scoped>
+.word-overflow-hidden {
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+</style>
+
