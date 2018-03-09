@@ -79,8 +79,6 @@
     <!-- left -->
     <v-navigation-drawer
       fixed
-      stateless
-      permanent
       :mini-variant="mini"
       light
       class="secondary"
