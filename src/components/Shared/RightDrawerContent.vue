@@ -17,7 +17,7 @@
           tag="span"
           style="cursor: pointer"
           :key="element.id">
-          <v-card color="LogoItemColor">
+          <v-card color="LogoItemColor" xs12 sm6 md4 lg3>
             <v-card-title>
               <div>
                 <div class="title">{{ newTitle(element.title) }}</div>
@@ -42,7 +42,7 @@
           tag="span"
           style="cursor: pointer"
           :key="element.id">
-          <v-card color="LogoFlowColor">
+          <v-card color="LogoFlowColor" xs12 sm6 md4 lg3>
             <v-card-title>
               <div>
                 <div class="title">{{ newTitle(element.title) }}</div>
