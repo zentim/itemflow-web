@@ -9,8 +9,8 @@
     <v-layout row wrap v-else>
       <v-flex xs12 sm4>
         <v-card>
-          {{obj}}
-          <remove-item-flow :id="item.id" :type="item.type"></remove-item-flow>
+          {{item}}
+          <remove-item-flow :id="item.id" :type="item.type" :isDeleted.sync="isDeleted"></remove-item-flow>
           <item-flow-outline
             :id="item.id"
             :title.sync="obj.title"
@@ -37,7 +37,8 @@
           message: '',
           labels: [],
           content: ''
-        }
+        },
+        isDeleted: false
       }
     },
     computed: {
@@ -49,6 +50,8 @@
       }
     },
     mounted () {
+      this.obj.type = this.item.type
+      this.obj.date = this.item.date
       this.obj.title = this.item.title
       this.obj.message = this.item.message
       this.obj.labels = this.item.labels
@@ -63,12 +66,16 @@
       }
     },
     beforeRouteLeave (to, from, next) {
-      let newObj = {
-        id: this.id,
-        ...this.obj
+      if (this.isDeleted) {
+        next()
+      } else {
+        let newObj = {
+          id: this.id,
+          ...this.obj
+        }
+        this.$store.dispatch('updateItem', newObj)
+        next()
       }
-      this.$store.dispatch('updateItem', newObj)
-      next()
     }
 
   }

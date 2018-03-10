@@ -28,6 +28,9 @@ export default {
       const userId = getters.user.id
       const itemflowId = payload.id
       const itemflowType = payload.type
+      console.log(payload)
+      console.log('start remove')
+      console.log(itemflowType + 's/' + userId + '/' + itemflowId)
       firebase.database().ref(itemflowType + 's/' + userId).child(itemflowId).remove()
     }
   },

@@ -6,9 +6,11 @@
 
 <script>
 export default {
-  props: ['id', 'type'],
+  props: ['id', 'type', 'isDeleted'],
   methods: {
     remove () {
+      this.$emit('update:isDeleted', true)
+      console.log(this.type)
       this.$store.dispatch('removeItemFlow', {
         id: this.id,
         type: this.type
