@@ -61,6 +61,14 @@
         this.obj.labels = newVal.labels
         this.obj.content = newVal.content
       }
+    },
+    beforeRouteLeave (to, from, next) {
+      let newObj = {
+        id: this.id,
+        ...this.obj
+      }
+      this.$store.dispatch('updateItem', newObj)
+      next()
     }
 
   }

@@ -129,19 +129,17 @@ export default {
         type: 'item'
       }
       firebase.database().ref('items').child(user.id).push(item)
-        // .then(
-        //   data => {
-        //     commit('createItem', {
-        //       ...item,
-        //       id: data.key
-        //     })
-        //   }
-        // )
-        // .catch(
-        //   error => {
-        //     console.log(error)
-        //   }
-        // )
+    },
+    updateItem ({ commit, getters }, payload) {
+      const user = getters.user
+      const itemId = payload.id
+      const item = {
+        title: payload.title,
+        message: payload.message,
+        content: payload.content,
+        labels: payload.labels || []
+      }
+      firebase.database().ref('items/' + user.id).child(itemId).update(item)
     }
   }
 }

@@ -88,8 +88,9 @@
             title: this.title,
             message: this.message,
             content: this.itemContent,
-            labels: newLabels
+            labels: newLabels || [{}]
           }
+          console.log(newObj)
           this.$store.dispatch('createItem', newObj)
           this.isCreated = true
           // this.$router.push('/items')
