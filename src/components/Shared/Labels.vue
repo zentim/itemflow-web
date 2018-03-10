@@ -54,9 +54,18 @@
         this.chips = [...this.chips]
       }
     },
+    mounted () {
+      this.chips = this.labels || []
+    },
     watch: {
+      labels (newVal) {
+        this.chips = newVal || []
+      },
       chips (newVal) {
-        this.$emit('update:labels', newVal)
+        if (this.labels !== newVal) {
+          console.log(newVal)
+          this.$emit('update:labels', newVal)
+        }
       }
     }
   }
