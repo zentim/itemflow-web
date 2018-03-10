@@ -9,20 +9,8 @@
     <v-layout row wrap v-else>
       <v-flex xs12 sm4>
         <v-card>
-          <remove-item-flow :id="id" :type="item.type"></remove-item-flow>
-          <v-card-title>
-            <div>
-              <div class="title">{{ item.title || 'untitled' }}</div>
-              <v-divider></v-divider>
-              <div>{{ item.message }}</div>
-              <v-divider></v-divider>
-            </div>
-          </v-card-title>
-          <v-card-text>
-            <v-divider class="my-3"></v-divider>
-            <h4>Labels:</h4>
-            <app-labels :labels.sync="item.labels" :key="item.id"></app-labels>
-          </v-card-text>
+          <remove-item-flow :id="item.id" :type="item.type"></remove-item-flow>
+          <item-flow-outline :obj="data"></item-flow-outline>
         </v-card>
       </v-flex>
       <v-flex xs12 sm8>

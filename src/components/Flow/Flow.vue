@@ -9,20 +9,8 @@
     <v-layout row wrap v-else>
       <v-flex xs12 sm4>
         <v-card>
-          <remove-item-flow :id="id" :type="flow.type"></remove-item-flow>
-          <v-card-title>
-            <div>
-              <div class="title">{{ flow.title || 'untitled' }}</div>
-              <v-divider></v-divider>
-              <div>{{ flow.message }}</div>
-              <v-divider></v-divider>
-            </div>
-          </v-card-title>
-          <v-card-text>
-            <v-divider class="my-3"></v-divider>
-            <h4>Labels:</h4>
-            <app-labels :labels="flow.labels" :key="flow.id"></app-labels>
-          </v-card-text>
+          <remove-item-flow :id="flow.id" :type="flow.type"></remove-item-flow>
+          <item-flow-outline :obj="data"></item-flow-outline>
         </v-card>
       </v-flex>
       <v-flex xs12 sm8>
@@ -36,12 +24,25 @@
 <script>
   export default {
     props: ['id'],
+    data () {
+      return {
+        data: {}
+      }
+    },
     computed: {
       flow () {
         return this.$store.getters.loadedFlow(this.id)
       },
       loading () {
         return this.$store.getters.loading
+      }
+    },
+    mounted () {
+      this.data = this.flow
+    },
+    watch: {
+      flow (newVal) {
+        this.data = JSON.parse(JSON.stringify(newVal))
       }
     }
   }

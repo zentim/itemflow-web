@@ -15,7 +15,6 @@
             <v-text-field
               name="title"
               label="Title"
-              autofocus
               id="title"
               v-model="title"></v-text-field>
           </v-card-title>
@@ -30,11 +29,9 @@
               rows="3"></v-text-field>
           </v-card-text>
 
-          <v-card-text>
-            <v-divider class="my-3"></v-divider>
-            <h4>Labels:</h4>
-            <app-labels :labels.sync="labels"></app-labels>
-          </v-card-text>
+          <v-divider class="my-3"></v-divider>
+          <h4>Labels:</h4>
+          <app-labels :labels.sync="labels"></app-labels>
         </v-card>
       </v-flex>
 
@@ -94,7 +91,6 @@
             labels: newLabels
           }
           this.$store.dispatch('createItem', newObj)
-          console.log(newObj)
           this.isCreated = true
           // this.$router.push('/items')
         } else if (this.routeName === 'CreateFlow') {
