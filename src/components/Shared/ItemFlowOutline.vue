@@ -1,10 +1,9 @@
 <template>
   <v-card>
-
       <v-divider></v-divider>
       <v-text-field
         placeholder="Add title here..."
-        v-model="itemflow.title"
+        v-model="outlineTitle"
         counter
         max="120"
         rows="3"
@@ -15,8 +14,8 @@
       ></v-text-field>
       <v-divider></v-divider>
       <v-text-field
-        placeholder="Add content here..."
-        v-model="itemflow.message"
+        placeholder="Add message here..."
+        v-model="outlineMessage"
         counter
         max="120"
         rows="7"
@@ -24,29 +23,51 @@
         multi-line
         hide-details
       ></v-text-field>
-
-
       <v-divider class="my-3"></v-divider>
       <h4>Labels:</h4>
-      <app-labels :labels.sync="itemflow.labels" :key="itemflow.id"></app-labels>
-
+      <app-labels :labels.sync="outlineLabels" :key="id"></app-labels>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: ['obj'],
+  props: ['id', 'title', 'message', 'labels'],
   data () {
     return {
-      itemflow: this.obj
+      outlineTitle: '',
+      outlineMessage: '',
+      outlineLabels: []
     }
   },
   mounted () {
-    this.itemflow = this.obj
+    this.outlineTitle = this.title
+    this.outlineMessage = this.message
+    this.outlineLabels = this.labels
   },
   watch: {
-    obj (newVal) {
-      this.itemflow = JSON.parse(JSON.stringify(newVal))
+    title (newVal) {
+      this.outlineTitle = newVal
+    },
+    message (newVal) {
+      this.outlineMessage = newVal
+    },
+    labels (newVal) {
+      this.outlineLabels = newVal
+    },
+    outlineTitle (newVal) {
+      if (this.title !== newVal) {
+        this.$emit('update:title', newVal)
+      }
+    },
+    outlineMessage (newVal) {
+      if (this.message !== newVal) {
+        this.$emit('update:message', newVal)
+      }
+    },
+    outlineLabels (newVal) {
+      if (this.labels !== newVal) {
+        this.$emit('update:labels', newVal)
+      }
     }
   }
 }

@@ -9,12 +9,17 @@
     <v-layout row wrap v-else>
       <v-flex xs12 sm4>
         <v-card>
+          {{obj}}
           <remove-item-flow :id="item.id" :type="item.type"></remove-item-flow>
-          <item-flow-outline :obj="data"></item-flow-outline>
+          <item-flow-outline
+            :id="item.id"
+            :title.sync="obj.title"
+            :message.sync="obj.message"
+            :labels.sync="obj.labels"></item-flow-outline>
         </v-card>
       </v-flex>
       <v-flex xs12 sm8>
-        <item-content :content="itemContent"></item-content>
+        <item-content :content="obj.content"></item-content>
       </v-flex>
     </v-layout>
 
@@ -27,8 +32,12 @@
     props: ['id'],
     data () {
       return {
-        data: {},
-        itemContent: ''
+        obj: {
+          title: '',
+          message: '',
+          labels: [],
+          content: ''
+        }
       }
     },
     computed: {
@@ -40,13 +49,17 @@
       }
     },
     mounted () {
-      this.data = this.item
-      this.itemContent = this.data.content
+      this.obj.title = this.item.title
+      this.obj.message = this.item.message
+      this.obj.labels = this.item.labels
+      this.obj.content = this.item.content
     },
     watch: {
       item (newVal) {
-        this.data = JSON.parse(JSON.stringify(newVal))
-        this.itemContent = this.data.content
+        this.obj.title = newVal.title
+        this.obj.message = newVal.message
+        this.obj.labels = newVal.labels
+        this.obj.content = newVal.content
       }
     }
 
