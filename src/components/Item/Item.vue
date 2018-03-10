@@ -19,7 +19,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 sm8>
-        <item-content :content="obj.content"></item-content>
+        <item-content :content.sync="obj.content"></item-content>
       </v-flex>
     </v-layout>
 
