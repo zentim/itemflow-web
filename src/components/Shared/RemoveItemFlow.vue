@@ -15,7 +15,7 @@ export default {
         id: this.id,
         type: this.type
       })
-      this.$router.push('/' + this.type + 's')
+      this.$router.push('/')
     }
   }
 }
