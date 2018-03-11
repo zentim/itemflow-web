@@ -7,31 +7,14 @@
     <div v-for="(element, index) in chips" :key="index" style="display: inline">
       <v-chip
         close
-        color="LogoItemColor"
+        :color="itemflowColor(element.type)"
         @input="remove(index)"
-        :key="index"
-        v-if="element.type === 'item'">
+        :key="index">
         <router-link
-          :to="'/items/' + element.id"
+          :to="'/' + element.type + '/' + element.id"
           tag="span"
           style="cursor: pointer"
           :key="element.id">
-          {{ element.title || 'untitled' }}
-        </router-link>
-      </v-chip>
-
-      <v-chip
-        close
-        color="LogoFlowColor"
-        @input="remove(index)"
-        :key="index"
-        v-if="element.type === 'flow'">
-        <router-link
-          :to="'/flows/' + element.id"
-          tag="span"
-          style="cursor: pointer"
-          :key="element.id"
-          v-if="element.type === 'flow'">
           {{ element.title || 'untitled' }}
         </router-link>
       </v-chip>
@@ -52,6 +35,13 @@
       remove (item) {
         this.chips.splice(this.chips.indexOf(item), 1)
         this.chips = [...this.chips]
+      },
+      itemflowColor (type) {
+        if (type === 'item') {
+          return 'LogoItemColor'
+        } else if (type === 'flow') {
+          return 'LogoFlowColor'
+        }
       }
     },
     mounted () {
