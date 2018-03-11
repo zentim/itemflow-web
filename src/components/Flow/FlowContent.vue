@@ -64,9 +64,14 @@
         }
       }
     },
+    mounted () {
+      this.flows = this.content
+    },
     watch: {
       flows (newVal) {
-        this.$emit('update:content', newVal)
+        if (this.flows !== newVal) {
+          this.$emit('update:content', newVal)
+        }
       }
     }
   }

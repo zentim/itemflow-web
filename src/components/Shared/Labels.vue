@@ -53,7 +53,6 @@
       },
       chips (newVal) {
         if (this.labels !== newVal) {
-          console.log(newVal)
           this.$emit('update:labels', newVal)
         }
       }
