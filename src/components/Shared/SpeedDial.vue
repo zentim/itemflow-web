@@ -47,28 +47,30 @@
     >
       <v-btn
         slot="activator"
-        color="blue darken-2"
+        color="grey darken-2"
         dark
         fab
         hover
         v-model="fab"
       >
-        <v-icon>account_circle</v-icon>
+        <v-icon>note_add</v-icon>
         <v-icon>close</v-icon>
       </v-btn>
       <v-btn
         fab
         dark
         small
-        color="green"
+        color="LogoFlowColor"
+        to="/flow/new"
       >
-        <v-icon>edit</v-icon>
+        <v-icon>playlist_add</v-icon>
       </v-btn>
       <v-btn
         fab
         dark
         small
-        color="indigo"
+        color="LogoItemColor"
+        to="/item/new"
       >
         <v-icon>add</v-icon>
       </v-btn>
@@ -108,6 +110,9 @@
           default: return {}
         }
       }
+    },
+    methods: {
+
     },
 
     watch: {
