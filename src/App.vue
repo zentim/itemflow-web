@@ -38,15 +38,17 @@
           Flow
         </router-link>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
 
+      <v-toolbar-side-icon class="hidden-lg-and-up" @click.stop="rightDrawer = !rightDrawer"></v-toolbar-side-icon>
+
       <!-- search -->
-      <v-card class="pl-4 mr-0 hidden-md-and-down" color="secondary" flat>
+      <v-card class="mr-0 hidden-md-and-down" color="secondary" flat>
         <v-text-field
           prepend-icon="search"
           label="Search"
           solo-inverted
-          class="pr-5"
         ></v-text-field>
       </v-card>
     </v-toolbar>
@@ -69,8 +71,18 @@
       right
       clipped
       app
+      :value="rightDrawer"
+      :hide-overlay="rightDrawer"
+      width="250"
       v-if="userIsAuthenticated"
     >
+      <v-card class="hidden-lg-and-up" color="secondary" flat>
+        <v-text-field
+          prepend-icon="search"
+          label="Search"
+          solo-inverted
+        ></v-text-field>
+      </v-card>
       <right-drawer-content></right-drawer-content>
     </v-navigation-drawer>
 
@@ -144,6 +156,7 @@
     data () {
       return {
         drawer: true,
+        rightDrawer: null,
         mini: true
       }
     },

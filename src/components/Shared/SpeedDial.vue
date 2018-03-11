@@ -47,13 +47,13 @@
     >
       <v-btn
         slot="activator"
-        color="grey darken-2"
+        color="primary"
         dark
         fab
         hover
         v-model="fab"
       >
-        <v-icon>note_add</v-icon>
+        <v-icon>add_circle</v-icon>
         <v-icon>close</v-icon>
       </v-btn>
       <v-btn
@@ -74,14 +74,14 @@
       >
         <v-icon>add</v-icon>
       </v-btn>
-      <v-btn
+      <!-- <v-btn
         fab
         dark
         small
         color="red"
       >
         <v-icon>delete</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-speed-dial>
   </v-card>
 </template>
