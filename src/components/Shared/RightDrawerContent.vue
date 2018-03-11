@@ -11,39 +11,25 @@
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
       v-if="!loading">
 
-      <v-flex v-for="(element, index) in itemflow" :key="index" class="mt-2">
+      <v-flex v-for="(obj, index) in itemflow" :key="index" class="mt-2">
         <router-link
-          :to="'/items/' + element.id"
+          :to="'/' + obj.type + '/' + obj.id"
           tag="span"
           style="cursor: pointer"
-          :key="element.id">
-          <v-card color="LogoItemColor" style="width: 250px">
+          :key="obj.id">
+          <!-- item card -->
+          <v-card color="LogoItemColor" style="width: 250px" v-if="obj.type === 'item'">
             <div class="px-3 py-3">
-              <div class="title word-overflow-hidden">{{ element.title }}</div>
-              <div class="word-overflow-hidden">{{ element.message || element.content || 'no message' }}</div>
+              <div class="title word-overflow-hidden">{{ obj.title }}</div>
+              <div class="word-overflow-hidden">{{ obj.message || obj.content || 'no message' }}</div>
             </div>
           </v-card>
-        </router-link>
-      </v-flex>
 
-    </draggable>
-
-    <draggable
-      v-model="flows"
-      class="dragArea"
-      :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
-      v-if="!loading">
-
-      <v-flex v-for="(element, index) in flows" :key="index" class="mt-2">
-        <router-link
-          :to="'/flows/' + element.id"
-          tag="span"
-          style="cursor: pointer"
-          :key="element.id">
-          <v-card color="LogoFlowColor" style="width: 250px">
+          <!-- flow card -->
+          <v-card color="LogoFlowColor" style="width: 250px" v-if="obj.type === 'flow'">
             <div class="px-3 py-3">
-              <div class="title word-overflow-hidden">{{ element.title }}</div>
-              <div class="word-overflow-hidden">{{ element.message || 'no message' }}</div>
+              <div class="title word-overflow-hidden">{{ obj.title }}</div>
+              <div class="word-overflow-hidden">{{ obj.message || 'no message' }}</div>
             </div>
           </v-card>
         </router-link>
@@ -67,15 +53,12 @@
       loading () {
         return this.$store.getters.loading
       },
-      items () {
-        return this.$store.getters.loadedItems
-      },
-      flows () {
-        return this.$store.getters.loadedFlows
+      loadedItemFlow () {
+        return this.$store.getters.loadedItemFlow
       }
     },
     watch: {
-      items (newVal) {
+      loadedItemFlow (newVal) {
         this.itemflow = JSON.parse(JSON.stringify(newVal))
       }
     }
