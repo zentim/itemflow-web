@@ -43,7 +43,7 @@
     },
     computed: {
       item () {
-        return this.$store.getters.loadedItem(this.id)
+        return this.$store.getters.loadedItemFlowObj(this.id)
       },
       loading () {
         return this.$store.getters.loadingItem
@@ -73,7 +73,7 @@
           id: this.id,
           ...this.obj
         }
-        this.$store.dispatch('updateItem', newObj)
+        this.$store.dispatch('updateItemFlow', newObj)
         next()
       }
     }

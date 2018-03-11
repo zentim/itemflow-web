@@ -31,7 +31,7 @@
     },
     computed: {
       flow () {
-        return this.$store.getters.loadedFlow(this.id)
+        return this.$store.getters.loadedItemFlowObj(this.id)
       },
       loading () {
         return this.$store.getters.loading

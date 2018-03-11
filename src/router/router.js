@@ -34,7 +34,7 @@ export const appRouter = [
     component: () => import('@/components/Item/Items')
   },
   {
-    path: '/items/:id',
+    path: '/item/:id',
     name: 'Item',
     props: true,
     component: () => import('@/components/Item/Item')
@@ -50,7 +50,7 @@ export const appRouter = [
     component: () => import('@/components/Flow/Flows')
   },
   {
-    path: '/flows/:id',
+    path: '/flow/:id',
     name: 'Flow',
     props: true,
     component: () => import('@/components/Flow/Flow')

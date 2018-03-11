@@ -25,47 +25,6 @@ export default {
       //     }
       //   ],
       //   date: new Date()
-      // },
-      // {
-      //   id: 'flowIdxx2',
-      //   type: 'flow',
-      //   title: 'test title flowIdxx2',
-      //   message: 'message flowIdxx2',
-      //   content: [
-      //     {
-      //       id: 'itemId001',
-      //       type: 'item',
-      //       title: 'this is itemId001 title',
-      //       message: 'itemId001 message'
-      //     },
-      //     {
-      //       id: 'itemId002',
-      //       type: 'item',
-      //       title: 'this is itemId002 title',
-      //       message: 'itemId002 message'
-      //     },
-      //     {
-      //       id: 'flowIdxx1',
-      //       type: 'flow',
-      //       title: 'test title flowIdxx1',
-      //       message: 'message flowIdxx1'
-      //     }
-      //   ],
-      //   labels: [
-      //     {
-      //       id: 'itemId002',
-      //       type: 'item',
-      //       title: 'this is itemId002 title',
-      //       message: 'itemId002 message'
-      //     },
-      //     {
-      //       id: 'itemId003',
-      //       type: 'item',
-      //       title: 'this is itemId003 title',
-      //       message: 'itemId003 message'
-      //     }
-      //   ],
-      //   date: new Date()
       // }
     ]
   },
@@ -92,9 +51,6 @@ export default {
     setLoadedFlows (state, payload) {
       state.loadedFlows = payload
     }
-    // createFlow (state, payload) {
-    //   state.loadedFlows.push(payload)
-    // }
   },
   actions: {
     loadFlows ({ commit, getters }) {
@@ -122,37 +78,6 @@ export default {
           commit('setLoadedFlows', flows)
           commit('setLoading', false)
         })
-        // .catch(
-        //   error => {
-        //     console.log(error)
-        //     commit('setLoading', false)
-        //   }
-        // )
-    },
-    createFlow ({ commit, getters }, payload) {
-      const user = getters.user
-      const flow = {
-        title: payload.title,
-        message: payload.message,
-        content: payload.content,
-        labels: payload.labels,
-        date: new Date().toISOString(),
-        type: 'flow'
-      }
-      firebase.database().ref('flows').child(user.id).push(flow)
-        // .then(
-        //   data => {
-        //     commit('createFlow', {
-        //       ...flow,
-        //       id: data.key
-        //     })
-        //   }
-        // )
-        // .catch(
-        //   error => {
-        //     console.log(error)
-        //   }
-        // )
     }
   }
 }

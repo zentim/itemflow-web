@@ -30,39 +30,8 @@ export default {
       //     }
       //   ],
       //   date: new Date()
-      // },
-      // {
-      //   id: 'itemId002',
-      //   type: 'item',
-      //   title: 'this is itemId002 title',
-      //   message: 'itemId002 message',
-      //   content: 'itemId002 content',
-      //   labels: [
-      //     {
-      //       id: 'itemId003',
-      //       type: 'item',
-      //       title: 'this is itemId003 title',
-      //       message: 'itemId003 message'
-      //     }
-      //   ],
-      //   date: new Date()
-      // },
-      // {
-      //   id: 'itemId003',
-      //   type: 'item',
-      //   title: 'this is itemId003 title',
-      //   message: 'itemId003 message',
-      //   content: 'itemId003 content',
-      //   labels: [
-      //     {
-      //       id: 'itemId004',
-      //       type: 'item',
-      //       title: 'this is itemId004 title',
-      //       message: 'itemId004 message'
-      //     }
-      //   ],
-      //   date: new Date()
       // }
+
     ]
   },
   getters: {
@@ -81,9 +50,6 @@ export default {
     setLoadedItems (state, payload) {
       state.loadedItems = payload
     }
-    // createItem (state, payload) {
-    //   state.loadedItems.push(payload)
-    // }
   },
   actions: {
     loadItems ({ commit, getters }) {
@@ -111,24 +77,6 @@ export default {
           commit('setLoadedItems', items)
           commit('setLoadingItem', false)
         })
-        // .catch(
-        //   error => {
-        //     console.log(error)
-        //     commit('setLoadingItem', false)
-        //   }
-        // )
-    },
-    createItem ({ commit, getters }, payload) {
-      const user = getters.user
-      const item = {
-        title: payload.title,
-        message: payload.message,
-        content: payload.content,
-        labels: payload.labels,
-        date: new Date().toISOString(),
-        type: 'item'
-      }
-      firebase.database().ref('items').child(user.id).push(item)
     },
     updateItem ({ commit, getters }, payload) {
       const user = getters.user

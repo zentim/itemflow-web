@@ -69,8 +69,9 @@ new Vue({
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.$store.dispatch('autoSignIn', user)
-        this.$store.dispatch('loadItems')
-        this.$store.dispatch('loadFlows')
+        this.$store.dispatch('loadItemFlow')
+        // this.$store.dispatch('loadItems')
+        // this.$store.dispatch('loadFlows')
       }
     })
   }
