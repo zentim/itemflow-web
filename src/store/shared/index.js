@@ -24,6 +24,18 @@ export default {
     clearError ({ commit }) {
       commit('clearError')
     },
+    createItemFlow ({ commit, getters }, payload) {
+      const user = getters.user
+      const obj = {
+        title: payload.title,
+        message: payload.message,
+        content: payload.content,
+        labels: payload.labels,
+        date: new Date().toISOString(),
+        type: payload.type
+      }
+      firebase.database().ref('itemflow').child(user.id).push(obj)
+    },
     removeItemFlow ({ commit, getters }, payload) {
       const userId = getters.user.id
       const itemflowId = payload.id

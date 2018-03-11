@@ -1,13 +1,5 @@
 <template>
   <v-container>
-    <!-- <v-layout row>
-      <v-flex xs12 class="text-xs-center text-sm-right">
-        <v-btn
-          class="primary"
-          @click="onCreateItemFlow">Create</v-btn>
-      </v-flex>
-    </v-layout> -->
-
     <v-layout row wrap>
       <v-flex xs12 md4>
         <v-card>
@@ -73,6 +65,7 @@
         if (this.isEmpty) {
           return
         }
+        // handle labels
         let labels = this.labels
         let newLabels = []
         for (let i = 0; i < labels.length; i++) {
@@ -83,38 +76,36 @@
             message: labels[i].message
           })
         }
+        // handle itemflow
+        let newType
+        let newContent
         if (this.routeName === 'CreateItem') {
-          const newObj = {
-            title: this.title,
-            message: this.message,
-            content: this.itemContent,
-            labels: newLabels || [{}]
-          }
-          console.log(newObj)
-          this.$store.dispatch('createItem', newObj)
-          this.isCreated = true
-          // this.$router.push('/items')
+          newType = 'item'
+          newContent = this.itemContent
         } else if (this.routeName === 'CreateFlow') {
-          let content = this.flowContent
-          let newContent = []
-          for (let i = 0; i < content.length; i++) {
+          newType = 'flow'
+          let oldFlowContent = this.flowContent
+          newContent = []
+          for (let i = 0; i < oldFlowContent.length; i++) {
             newContent.push({
-              id: content[i].id,
-              type: content[i].type,
-              title: content[i].title,
-              message: content[i].message
+              id: oldFlowContent[i].id,
+              type: oldFlowContent[i].type,
+              title: oldFlowContent[i].title,
+              message: oldFlowContent[i].message
             })
           }
-          const newObj = {
-            title: this.title,
-            message: this.message,
-            content: newContent,
-            labels: newLabels
-          }
-          this.$store.dispatch('createFlow', newObj)
-          this.isCreated = true
-          // this.$router.push('/flows')
         }
+        // handle create
+        const newObj = {
+          title: this.title,
+          message: this.message,
+          content: newContent,
+          labels: newLabels || [{}],
+          type: newType
+        }
+        console.log(newObj)
+        this.$store.dispatch('createItemFlow', newObj)
+        this.isCreated = true
       }
     },
     beforeRouteLeave (to, from, next) {
