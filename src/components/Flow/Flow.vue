@@ -18,7 +18,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 sm8>
-        <flow-content :content="obj.content" :key="flow.id"></flow-content>
+        <flow-content :content.sync="obj.content" :key="flow.id"></flow-content>
       </v-flex>
     </v-layout>
 
@@ -53,14 +53,14 @@
       this.obj.title = this.flow.title
       this.obj.message = this.flow.message
       this.obj.labels = this.flow.labels
-      this.obj.content = this.flow.content || []
+      this.obj.content = this.flow.content
     },
     watch: {
       flow (newVal) {
         this.obj.title = newVal.title
         this.obj.message = newVal.message
         this.obj.labels = newVal.labels
-        this.obj.content = newVal.content || []
+        this.obj.content = newVal.content
       }
     },
     beforeRouteLeave (to, from, next) {

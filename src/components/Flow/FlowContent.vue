@@ -6,37 +6,19 @@
 
       <v-flex
         xs12
-        v-for="(flow, index) in flows"
+        v-for="(obj, index) in flows"
         :key="index"
         class="mb-2">
         <router-link
-            :to="'/items/' + flow.id"
+            :to="'/' + obj.type + '/' + obj.id"
             tag="span"
             style="cursor: pointer"
-            :key="flow.id"
-            v-if="flow.type === 'item'">
-          <v-card class="d-flex" :color="itemflowColor(flow.type)">
+            :key="obj.id">
+          <v-card class="d-flex" :color="itemflowColor(obj.type)">
             <v-card-title>
               <div>
-                <h3>{{ flow.title }}</h3>
-                <div>{{ flow.message || 'no message' }}</div>
-              </div>
-            </v-card-title>
-          </v-card>
-        </router-link>
-
-
-        <router-link
-          :to="'/flows/' + flow.id"
-          tag="span"
-          style="cursor: pointer"
-          :key="flow.id"
-          v-else>
-          <v-card class="d-flex" :color="itemflowColor(flow.type)">
-            <v-card-title>
-              <div>
-                <h3>{{ flow.title }}</h3>
-                <div>{{ flow.message || 'no message' }}</div>
+                <h3>{{ obj.title }}</h3>
+                <div>{{ obj.message || 'no message' }}</div>
               </div>
             </v-card-title>
           </v-card>
@@ -51,7 +33,7 @@
     props: ['content'],
     data () {
       return {
-        flows: this.content
+        flows: this.content || []
       }
     },
     methods: {
@@ -65,11 +47,14 @@
       }
     },
     mounted () {
-      this.flows = this.content
+      this.flows = this.content || []
     },
     watch: {
+      content (newVal) {
+        this.flows = newVal || []
+      },
       flows (newVal) {
-        if (this.flows !== newVal) {
+        if (this.content !== newVal) {
           this.$emit('update:content', newVal)
         }
       }
