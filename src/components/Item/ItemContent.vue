@@ -15,29 +15,23 @@
     props: ['content'],
     data () {
       return {
-        data: this.content,
-        editerOptions: {
-          height: 350
+        data: this.content
+      }
+    },
+    computed: {
+      editerOptions () {
+        if (this.$route.name === 'CreateItem') {
+          return {
+            height: 350,
+            auto_focus: 'd1'
+          }
+        } else {
+          return {
+            height: 350
+          }
         }
       }
     },
-    // created: function () {
-    //   console.log('item content created')
-    // },
-    // destoryed: function () {
-    //   console.log('item content destoryed')
-    // },
-    // updated: function () {
-    //   console.log('item content updated')
-    // },
-    // mounted: function () {
-    //   console.log('item content mounted')
-    // },
-    // watch: {
-    //   '$route': function () {
-    //     console.log('item content watch')
-    //   }
-    // },
     methods: {
       initCallBack (e) {
         // console.log(this.$refs.tm.editor)
