@@ -47,14 +47,14 @@
     >
       <v-btn
         slot="activator"
-        color="primary"
+        color="accent"
         dark
         fab
         hover
         v-model="fab"
       >
-        <v-icon>add_circle</v-icon>
-        <v-icon>close</v-icon>
+        <v-icon large>add</v-icon>
+        <v-icon large>close</v-icon>
       </v-btn>
       <v-btn
         fab
@@ -63,7 +63,7 @@
         color="LogoFlowColor"
         to="/flow/new"
       >
-        <v-icon>playlist_add</v-icon>
+        <v-icon large>playlist_add</v-icon>
       </v-btn>
       <v-btn
         fab
@@ -72,7 +72,7 @@
         color="LogoItemColor"
         to="/item/new"
       >
-        <v-icon>add</v-icon>
+        <v-icon large>add</v-icon>
       </v-btn>
       <!-- <v-btn
         fab
