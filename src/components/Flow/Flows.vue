@@ -16,7 +16,7 @@
         :key="flow.id"
         class="mb-2">
         <router-link
-          :to="'/flows/' + flow.id"
+          :to="'/flow/' + flow.id"
           tag="span"
           style="cursor: pointer"
           :key="flow.id">

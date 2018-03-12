@@ -16,7 +16,7 @@
         :key="index"
         class="mb-2">
         <router-link
-          :to="'/items/' + item.id"
+          :to="'/item/' + item.id"
           tag="span"
           style="cursor: pointer"
           :key="item.id">

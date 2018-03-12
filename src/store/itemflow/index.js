@@ -66,6 +66,12 @@ export default {
           return obj.id === ObjId
         })
       }
+    },
+    loadedItems (getters) {
+      return getters.loadedItemFlow.filter(obj => obj.type === 'item')
+    },
+    loadedFlows (getters) {
+      return getters.loadedItemFlow.filter(obj => obj.type === 'flow')
     }
   },
   mutations: {
