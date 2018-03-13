@@ -13,8 +13,8 @@
     >
       <!-- nav - logo -->
 
-        <router-link to="/" tag="span" style="cursor: pointer">
-          <v-icon large>view_comfy</v-icon>
+        <router-link to="/" tag="span" style="cursor: pointer" class="pr-2">
+          <v-icon large>{{ logoIcon }}</v-icon>
         </router-link>
         <router-link to="/items" tag="span" style="cursor: pointer" :class="selectColor('item')" class="title">
           Item
@@ -163,6 +163,14 @@
       },
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
+      logoIcon () {
+        let routeName = this.$route.name
+        if (routeName === 'Home') {
+          return 'view_comfy'
+        } else {
+          return 'arrow_back'
+        }
       }
     },
     methods: {
