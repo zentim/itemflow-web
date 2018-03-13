@@ -18,6 +18,7 @@ import tinymce from 'vue-tinymce-editor'
 import RemoveItemFlow from './components/Shared/RemoveItemFlow'
 import Loading from './components/Shared/Loading'
 import SpeedDial from './components/Shared/SpeedDial'
+import Snackbar from './components/Shared/Snackbar'
 
 Vue.use(Vuetify,
   {
@@ -52,6 +53,7 @@ Vue.component('tinymce', tinymce)
 Vue.component('remove-item-flow', RemoveItemFlow)
 Vue.component('loading', Loading)
 Vue.component('speed-dial', SpeedDial)
+Vue.component('app-snackbar', Snackbar)
 
 /* eslint-disable no-new */
 new Vue({

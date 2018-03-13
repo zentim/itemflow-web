@@ -1,25 +1,30 @@
 <template>
-  <draggable
-    v-model="chips"
-    class="dragArea"
-    :options="{group: 'itemflow'}"
-    >
-    <div v-for="(element, index) in chips" :key="index" style="display: inline">
-      <v-chip
-        close
-        :color="itemflowColor(element.type)"
-        @input="remove(index)"
-        :key="index">
-        <router-link
-          :to="'/' + element.type + '/' + element.id"
-          tag="span"
-          style="cursor: pointer"
-          :key="element.id">
-          {{ element.title || 'untitled' }}
-        </router-link>
-      </v-chip>
-    </div>
-  </draggable>
+    <!-- drag area -->
+    <draggable
+      v-model="chips"
+      class="dragArea"
+      :options="{group: 'itemflow'}"
+      >
+      <!-- snackbar -->
+      <app-snackbar :errorText="errorText"></app-snackbar>
+
+      <!-- labels -->
+      <div v-for="(element, index) in chips" :key="index" style="display: inline">
+        <v-chip
+          close
+          :color="itemflowColor(element.type)"
+          @input="remove(index)"
+          :key="index">
+          <router-link
+            :to="'/' + element.type + '/' + element.id"
+            tag="span"
+            style="cursor: pointer"
+            :key="element.id">
+            {{ element.title || 'untitled' }}
+          </router-link>
+        </v-chip>
+      </div>
+    </draggable>
 </template>
 
 
@@ -28,7 +33,8 @@
     props: ['labels'],
     data () {
       return {
-        chips: this.labels || []
+        chips: this.labels || [],
+        errorText: 'test'
       }
     },
     methods: {
@@ -54,8 +60,14 @@
       chips (newVal) {
         // remove same label
         for (let i = 0, len = newVal.length; i < len; i++) {
+          if (newVal[i].id === this.$route.params.id) {
+            this.errorText = 'Can not put itself into Labels!'
+            this.remove(i)
+            return
+          }
           for (let j = i + 1; j < len; j++) {
-            if (newVal[i].id === newVal[j].id || newVal[j].id === this.$route.params.id) {
+            if (newVal[i].id === newVal[j].id) {
+              this.errorText = 'Aready had!'
               this.remove(j)
               return
             }
