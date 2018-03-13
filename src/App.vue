@@ -155,7 +155,7 @@
       menuItemsMiddle () {
         return [
           { icon: 'home', title: 'Home', link: '/' },
-          { icon: 'star', title: 'Star', link: '/star' },
+          { icon: 'star', title: 'Star', link: '/star' }
         ]
       },
       menuItemsBottom () {
