@@ -5,6 +5,7 @@ import { store } from './store'
 import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import ItemFlowCard from './components/Shared/ItemFlowCard'
 import InstantSearch from 'vue-instantsearch'
 import RightDrawerContent from './components/Shared/RightDrawerContent'
 import Draggable from 'vuedraggable'
@@ -40,6 +41,7 @@ Vue.use(InstantSearch)
 Vue.config.productionTip = false
 
 Vue.component('draggable', Draggable)
+Vue.component('itemflow-card', ItemFlowCard)
 Vue.component('item-flow-outline', ItemFlowOutline)
 Vue.component('item-content', ItemContent)
 Vue.component('flow-content', FlowContent)

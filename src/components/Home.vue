@@ -30,28 +30,12 @@
         lg3
         v-for="(obj, index) in itemflow"
         :key="index"
-        class="mb-2">
-        <router-link
-          :to="'/' + obj.type + '/' + obj.id"
-          tag="span"
-          style="cursor: pointer"
-          :key="obj.id">
-          <!-- item card -->
-          <v-card class="mr-3" color="LogoItemColor" v-if="obj.type === 'item'">
-            <div class="px-3 py-3">
-              <div class="title word-overflow-hidden">{{ obj.title ? obj.title : obj.message ? '' : 'no title' }}</div>
-              <div class="word-overflow-hidden">{{ obj.message }}</div>
-            </div>
-          </v-card>
-
-          <!-- flow card -->
-          <v-card class="mr-3" color="LogoFlowColor" v-if="obj.type === 'flow'">
-            <div class="px-3 py-3">
-              <div class="title word-overflow-hidden">{{ obj.title ? obj.title : obj.message ? '' : 'no title' }}</div>
-              <div class="word-overflow-hidden">{{ obj.message }}</div>
-            </div>
-          </v-card>
-        </router-link>
+        class="pb-1 pr-1">
+        <itemflow-card
+          :id="obj.id"
+          :type="obj.type"
+          :title="obj.title"
+          :message="obj.message"></itemflow-card>
       </v-flex>
     </v-layout>
   </v-container>
