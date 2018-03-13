@@ -32,8 +32,8 @@
       }
     },
     methods: {
-      remove (item) {
-        this.chips.splice(this.chips.indexOf(item), 1)
+      remove (index) {
+        this.chips.splice(index, 1)
         this.chips = [...this.chips]
       },
       itemflowColor (type) {
