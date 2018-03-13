@@ -12,32 +12,17 @@
       v-if="userIsAuthenticated"
     >
       <!-- nav - logo -->
-      <v-toolbar-title v-if="inItemPage">
-        <router-link to="/items" tag="span" style="cursor: pointer" class="LogoItemColor">
-          Item
-        </router-link>
-        <router-link to="/flows" tag="span" style="cursor: pointer">
-          Flow
-        </router-link>
-      </v-toolbar-title>
 
-      <v-toolbar-title v-else-if="inFlowPage">
-        <router-link to="/items" tag="span" style="cursor: pointer">
+        <router-link to="/" tag="span" style="cursor: pointer">
+          <v-icon large>view_comfy</v-icon>
+        </router-link>
+        <router-link to="/items" tag="span" style="cursor: pointer" :class="selectColor('item')" class="title">
           Item
         </router-link>
-        <router-link to="/flows" tag="span" style="cursor: pointer" class="LogoFlowColor">
+        <router-link to="/flows" tag="span" style="cursor: pointer" :class="selectColor('flow')" class="title">
           Flow
         </router-link>
-      </v-toolbar-title>
 
-      <v-toolbar-title v-else>
-        <router-link to="/items" tag="span" style="cursor: pointer">
-          Item
-        </router-link>
-        <router-link to="/flows" tag="span" style="cursor: pointer">
-          Flow
-        </router-link>
-      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -168,27 +153,30 @@
         ]
       },
       menuItemsMiddle () {
-        return [{ icon: 'home', title: 'Home', link: '/' }]
+        return [
+          { icon: 'home', title: 'Home', link: '/' },
+          { icon: 'star', title: 'Star', link: '/star' },
+        ]
       },
       menuItemsBottom () {
         return [{ icon: 'account_box', title: 'Profile', link: '/profile' }]
       },
-      inItemPage () {
-        let routeName = this.$route.name
-        if (routeName === 'Item' || routeName === 'Items' || routeName === 'CreateItem') {
-          return true
-        }
-        return false
-      },
-      inFlowPage () {
-        let routeName = this.$route.name
-        if (routeName === 'Flow' || routeName === 'Flows' || routeName === 'CreateFlow') {
-          return true
-        }
-        return false
-      },
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
+    },
+    methods: {
+      selectColor (type) {
+        let routeName = this.$route.name
+        if (type === 'item') {
+          if (routeName === 'Item' || routeName === 'Items' || routeName === 'CreateItem') {
+            return 'LogoItemColor'
+          }
+        } else if (type === 'flow') {
+          if (routeName === 'Flow' || routeName === 'Flows' || routeName === 'CreateFlow') {
+            return 'LogoFlowColor'
+          }
+        }
       }
     }
   }

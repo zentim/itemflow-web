@@ -22,7 +22,7 @@
     </v-layout>
 
     <!-- after log in -->
-    <v-layout row wrap>
+    <v-layout row wrap v-else>
       <v-flex
         xs12
         sm6
