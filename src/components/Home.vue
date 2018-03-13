@@ -39,16 +39,16 @@
           <!-- item card -->
           <v-card class="mr-3" color="LogoItemColor" v-if="obj.type === 'item'">
             <div class="px-3 py-3">
-              <div class="title word-overflow-hidden">{{ obj.title }}</div>
-              <div class="word-overflow-hidden">{{ obj.message || obj.content || 'no message' }}</div>
+              <div class="title word-overflow-hidden">{{ obj.title ? obj.title : obj.message ? '' : 'no title' }}</div>
+              <div class="word-overflow-hidden">{{ obj.message }}</div>
             </div>
           </v-card>
 
           <!-- flow card -->
           <v-card class="mr-3" color="LogoFlowColor" v-if="obj.type === 'flow'">
             <div class="px-3 py-3">
-              <div class="title word-overflow-hidden">{{ obj.title }}</div>
-              <div class="word-overflow-hidden">{{ obj.message || 'no message' }}</div>
+              <div class="title word-overflow-hidden">{{ obj.title ? obj.title : obj.message ? '' : 'no title' }}</div>
+              <div class="word-overflow-hidden">{{ obj.message }}</div>
             </div>
           </v-card>
         </router-link>
