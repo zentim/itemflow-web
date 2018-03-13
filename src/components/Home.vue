@@ -67,7 +67,16 @@
         return this.$store.getters.loading
       },
       itemflow () {
-        return this.$store.getters.loadedItemFlow
+        let routeName = this.$route.name
+        if (routeName === 'Home') {
+          return this.$store.getters.loadedItemFlow
+        }
+        if (routeName === 'Items') {
+          return this.$store.getters.loadedItems
+        }
+        if (routeName === 'Flows') {
+          return this.$store.getters.loadedFlows
+        }
       }
     }
   }
