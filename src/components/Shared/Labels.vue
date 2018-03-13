@@ -52,9 +52,18 @@
         this.chips = newVal || []
       },
       chips (newVal) {
-        if (this.labels !== newVal) {
-          this.$emit('update:labels', newVal)
+        // remove same label
+        for (let i = 0, len = newVal.length; i < len; i++) {
+          for (let j = i + 1; j < len; j++) {
+            if (newVal[i].id === newVal[j].id) {
+              this.remove(j)
+              return
+            }
+          }
         }
+
+        // update parent data
+        this.$emit('update:labels', newVal)
       }
     }
   }
