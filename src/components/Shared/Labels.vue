@@ -55,7 +55,7 @@
         // remove same label
         for (let i = 0, len = newVal.length; i < len; i++) {
           for (let j = i + 1; j < len; j++) {
-            if (newVal[i].id === newVal[j].id) {
+            if (newVal[i].id === newVal[j].id || newVal[j].id === this.$route.params.id) {
               this.remove(j)
               return
             }
