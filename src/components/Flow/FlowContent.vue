@@ -45,7 +45,22 @@
           return 'LogoFlowColor'
         }
       },
+      remove (index) {
+        this.flows.splice(index, 1)
+        this.flows = [...this.flows]
+      },
       syncData (newVal) {
+        // remove same label
+        console.log(newVal)
+        for (let i = 0, len = newVal.length; i < len; i++) {
+          if (newVal[i].id === this.$route.params.id) {
+            let error = 'Can not put itself into Labels!'
+            this.$store.dispatch('setErrorText', error)
+            this.remove(i)
+            return
+          }
+        }
+
         // get lastest data
         for (let i = 0, len = newVal.length; i < len; i++) {
           let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)

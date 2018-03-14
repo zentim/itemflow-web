@@ -1,5 +1,8 @@
 <template>
   <v-app id="inspire">
+    <!-- snackbar -->
+    <app-snackbar></app-snackbar>
+
 
     <!-- nav -->
     <v-toolbar
