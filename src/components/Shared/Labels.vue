@@ -18,7 +18,7 @@
             tag="span"
             style="cursor: pointer"
             :key="obj.id">
-            {{ obj.title || 'no title' }}
+            {{ handleText(obj.title) || 'no title' }}
           </router-link>
         </v-chip>
       </div>
@@ -35,6 +35,13 @@
       }
     },
     methods: {
+      handleText (text) {
+        let maxLength = 30
+        if (text.length > maxLength) {
+          return text.slice(0, maxLength - 3) + '...'
+        }
+        return text
+      },
       remove (index) {
         this.chips.splice(index, 1)
         this.chips = [...this.chips]
