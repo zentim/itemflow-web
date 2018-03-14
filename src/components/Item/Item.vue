@@ -10,7 +10,7 @@
     <v-layout row wrap v-else>
       <v-flex xs12 sm4>
         <v-card>
-          <remove-item-flow :id="item.id" :type="item.type" :isDeleted.sync="isDeleted"></remove-item-flow>
+          <app-toolbar :id="item.id" :type="item.type" :isDeleted.sync="isDeleted"></app-toolbar>
           <item-flow-outline
             :id="item.id"
             :title.sync="obj.title"

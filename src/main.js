@@ -15,7 +15,7 @@ import FlowContent from './components/Flow/FlowContent'
 import Labels from './components/Shared/Labels'
 import Alert from './components/Shared/Alert'
 import tinymce from 'vue-tinymce-editor'
-import RemoveItemFlow from './components/Shared/RemoveItemFlow'
+import ItemFlowToolbar from './components/Shared/ItemFlowToolbar'
 import Loading from './components/Shared/Loading'
 import SpeedDial from './components/Shared/SpeedDial'
 import Snackbar from './components/Shared/Snackbar'
@@ -50,7 +50,7 @@ Vue.component('right-drawer-content', RightDrawerContent)
 Vue.component('app-labels', Labels)
 Vue.component('app-alert', Alert)
 Vue.component('tinymce', tinymce)
-Vue.component('remove-item-flow', RemoveItemFlow)
+Vue.component('app-toolbar', ItemFlowToolbar)
 Vue.component('loading', Loading)
 Vue.component('speed-dial', SpeedDial)
 Vue.component('app-snackbar', Snackbar)

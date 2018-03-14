@@ -55,7 +55,6 @@
       },
       syncData (newVal) {
         // remove same label
-        // console.log(newVal)
         for (let i = 0, len = newVal.length; i < len; i++) {
           if (newVal[i].id === this.$route.params.id) {
             let error = 'Can not put itself into Labels!'

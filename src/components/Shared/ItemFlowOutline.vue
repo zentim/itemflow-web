@@ -1,6 +1,5 @@
 <template>
-  <v-card>
-      <v-divider></v-divider>
+  <v-card color="white">
       <v-text-field
         placeholder="Add title here..."
         v-model="outlineTitle"
@@ -12,7 +11,6 @@
         hide-details
         class="title"
       ></v-text-field>
-      <v-divider></v-divider>
       <v-text-field
         placeholder="Add message here..."
         v-model="outlineMessage"
