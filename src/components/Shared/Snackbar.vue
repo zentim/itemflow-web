@@ -18,7 +18,6 @@
 
 <script>
   export default {
-    props: ['errorText'],
     data () {
       return {
         snackbar: false,
@@ -26,6 +25,11 @@
         x: null,
         mode: 'multi-line',
         timeout: 6000
+      }
+    },
+    computed: {
+      errorText () {
+        return this.$store.getters.errorText
       }
     },
     watch: {

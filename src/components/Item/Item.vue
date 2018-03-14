@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <!-- snackbar -->
+    <app-snackbar></app-snackbar>
+
     <!-- loading -->
     <v-layout row wrap v-if="loading">
       <loading></loading>

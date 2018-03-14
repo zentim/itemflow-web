@@ -42,7 +42,18 @@
     },
     watch: {
       loadedItemFlow (newVal) {
-        this.itemflow = JSON.parse(JSON.stringify(newVal))
+        // this.itemflow = JSON.parse(JSON.stringify(newVal))
+        let objs = []
+        for (let i = 0, len = newVal.length; i < len; i++) {
+          let obj = {
+            id: newVal[i].id,
+            type: newVal[i].type,
+            title: newVal[i].title,
+            message: newVal[i].message
+          }
+          objs.push(obj)
+        }
+        this.itemflow = JSON.parse(JSON.stringify(objs))
       }
     }
   }

@@ -33,7 +33,7 @@
     props: ['content'],
     data () {
       return {
-        flows: this.content || []
+        flows: []
       }
     },
     methods: {
@@ -44,6 +44,16 @@
         if (type === 'flow') {
           return 'LogoFlowColor'
         }
+      },
+      syncData (newVal) {
+        // get lastest data
+        for (let i = 0, len = newVal.length; i < len; i++) {
+          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+          newVal[i].title = obj.title || ''
+          newVal[i].message = obj.message || ''
+        }
+
+        this.$emit('update:content', newVal)
       }
     },
     mounted () {
@@ -54,9 +64,7 @@
         this.flows = newVal || []
       },
       flows (newVal) {
-        if (this.content !== newVal) {
-          this.$emit('update:content', newVal)
-        }
+        this.syncData(newVal)
       }
     }
   }

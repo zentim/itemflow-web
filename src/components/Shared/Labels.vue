@@ -5,22 +5,20 @@
       class="dragArea"
       :options="{group: 'itemflow'}"
       >
-      <!-- snackbar -->
-      <app-snackbar :errorText="errorText"></app-snackbar>
 
       <!-- labels -->
-      <div v-for="(element, index) in chips" :key="index" style="display: inline">
+      <div v-for="(obj, index) in chips" :key="index" style="display: inline">
         <v-chip
           close
-          :color="itemflowColor(element.type)"
+          :color="itemflowColor(obj.type)"
           @input="remove(index)"
           :key="index">
           <router-link
-            :to="'/' + element.type + '/' + element.id"
+            :to="'/' + obj.type + '/' + obj.id"
             tag="span"
             style="cursor: pointer"
-            :key="element.id">
-            {{ element.title || 'untitled' }}
+            :key="obj.id">
+            {{ obj.title || 'no title' }}
           </router-link>
         </v-chip>
       </div>
@@ -33,8 +31,7 @@
     props: ['labels'],
     data () {
       return {
-        chips: this.labels || [],
-        errorText: 'test'
+        chips: []
       }
     },
     methods: {
@@ -48,6 +45,36 @@
         } else if (type === 'flow') {
           return 'LogoFlowColor'
         }
+      },
+      syncData (newVal) {
+        // remove same label
+        // console.log(newVal)
+        for (let i = 0, len = newVal.length; i < len; i++) {
+          if (newVal[i].id === this.$route.params.id) {
+            let error = 'Can not put itself into Labels!'
+            this.$store.dispatch('setErrorText', error)
+            this.remove(i)
+            return
+          }
+          for (let j = i + 1; j < len; j++) {
+            if (newVal[i].id === newVal[j].id) {
+              let error = 'Aready had!'
+              this.$store.dispatch('setErrorText', error)
+              this.remove(j)
+              return
+            }
+          }
+        }
+
+        // get lastest data
+        for (let i = 0, len = newVal.length; i < len; i++) {
+          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+          newVal[i].title = obj.title || ''
+          newVal[i].message = obj.message || ''
+        }
+
+        // update parent data
+        this.$emit('update:labels', newVal)
       }
     },
     mounted () {
@@ -58,24 +85,7 @@
         this.chips = newVal || []
       },
       chips (newVal) {
-        // remove same label
-        for (let i = 0, len = newVal.length; i < len; i++) {
-          if (newVal[i].id === this.$route.params.id) {
-            this.errorText = 'Can not put itself into Labels!'
-            this.remove(i)
-            return
-          }
-          for (let j = i + 1; j < len; j++) {
-            if (newVal[i].id === newVal[j].id) {
-              this.errorText = 'Aready had!'
-              this.remove(j)
-              return
-            }
-          }
-        }
-
-        // update parent data
-        this.$emit('update:labels', newVal)
+        this.syncData(newVal)
       }
     }
   }

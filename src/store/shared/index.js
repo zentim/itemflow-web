@@ -2,7 +2,22 @@ export default {
   state: {
     loadingItem: false,
     loading: false,
-    error: null
+    error: null,
+    errorText: null
+  },
+  getters: {
+    loadingItem (state) {
+      return state.loadingItem
+    },
+    loading (state) {
+      return state.loading
+    },
+    error (state) {
+      return state.error
+    },
+    errorText (state) {
+      return state.errorText
+    }
   },
   mutations: {
     setLoading (state, payload) {
@@ -14,24 +29,19 @@ export default {
     setError (state, payload) {
       state.error = payload
     },
+    setErrorText (state, payload) {
+      state.errorText = payload
+    },
     clearError (state) {
       state.error = null
     }
   },
   actions: {
+    setErrorText ({commit}, payload) {
+      commit('setErrorText', payload)
+    },
     clearError ({ commit }) {
       commit('clearError')
-    }
-  },
-  getters: {
-    loadingItem (state) {
-      return state.loadingItem
-    },
-    loading (state) {
-      return state.loading
-    },
-    error (state) {
-      return state.error
     }
   }
 }
