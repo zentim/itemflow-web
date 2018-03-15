@@ -1,4 +1,5 @@
 import * as firebase from 'firebase'
+import fuzzysort from 'fuzzysort'
 
 export default {
   state: {
@@ -54,6 +55,13 @@ export default {
       //   ],
       //   date: new Date()
       // }
+    ],
+    searchResults: [
+      // {
+      //   target: 'apple',
+      //   obj: {...},
+      //   score: -4,
+      // }
     ]
   },
   getters: {
@@ -72,11 +80,17 @@ export default {
     },
     loadedFlows (getters) {
       return getters.loadedItemFlow.filter(obj => obj.type === 'flow')
+    },
+    searchResults(getters) {
+      return getters.searchResults
     }
   },
   mutations: {
     setLoadedItemFlow (state, payload) {
       state.loadedItemFlow = payload
+    },
+    setSearchResults (state, payload) {
+      state.searchResults = payload
     }
   },
   actions: {
@@ -139,6 +153,15 @@ export default {
           commit('setLoadedItemFlow', newItemFlow)
           commit('setLoadingItem', false)
         })
+    },
+    searchItemFlow ({commit, getters}, payload) {
+      console.log('start search')
+      let result = fuzzysort.go(payload, getters.loadedItemFlow, {key: 'title'})
+      console.log(result)
+      for(let i = 0; i < result.length; i++) {
+        console.log(result[i].obj.id + ': ' + result[i].obj.title)
+      }
+      commit('setSearchResults', result)
     }
   }
 }

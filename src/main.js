@@ -6,7 +6,6 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import ItemFlowCard from './components/Shared/ItemFlowCard'
-import InstantSearch from 'vue-instantsearch'
 import RightDrawerContent from './components/Shared/RightDrawerContent'
 import Draggable from 'vuedraggable'
 import ItemFlowOutline from './components/Shared/ItemFlowOutline'
@@ -19,6 +18,7 @@ import ItemFlowToolbar from './components/Shared/ItemFlowToolbar'
 import Loading from './components/Shared/Loading'
 import SpeedDial from './components/Shared/SpeedDial'
 import Snackbar from './components/Shared/Snackbar'
+import ItemFlowSearch from './components/Shared/ItemFlowSearch'
 
 Vue.use(Vuetify,
   {
@@ -37,7 +37,6 @@ Vue.use(Vuetify,
     }
   }
 )
-Vue.use(InstantSearch)
 
 Vue.config.productionTip = false
 
@@ -54,6 +53,7 @@ Vue.component('app-toolbar', ItemFlowToolbar)
 Vue.component('loading', Loading)
 Vue.component('speed-dial', SpeedDial)
 Vue.component('app-snackbar', Snackbar)
+Vue.component('app-search', ItemFlowSearch)
 
 /* eslint-disable no-new */
 new Vue({

@@ -15,18 +15,20 @@
       v-if="userIsAuthenticated"
     >
       <!-- nav - logo -->
+      <router-link to="/" tag="span" style="cursor: pointer" class="pr-2 ml-2">
+        <v-icon large>{{ logoIcon }}</v-icon>
+      </router-link>
+      <router-link to="/items" tag="span" style="cursor: pointer" :class="selectColor('item')" class="title">
+        Item
+      </router-link>
+      <router-link to="/flows" tag="span" style="cursor: pointer" :class="selectColor('flow')" class="title">
+        Flow
+      </router-link>
 
-        <router-link to="/" tag="span" style="cursor: pointer" class="pr-2 ml-2">
-          <v-icon large>{{ logoIcon }}</v-icon>
-        </router-link>
-        <router-link to="/items" tag="span" style="cursor: pointer" :class="selectColor('item')" class="title">
-          Item
-        </router-link>
-        <router-link to="/flows" tag="span" style="cursor: pointer" :class="selectColor('flow')" class="title">
-          Flow
-        </router-link>
+      <!-- search -->
+      <app-search></app-search>
 
-
+      <!-- nav right part -->
       <v-spacer></v-spacer>
       <router-link to="/profile" tag="span" style="cursor: pointer" class="pr-2 hidden-lg-and-up">
         <v-icon>account_box</v-icon>

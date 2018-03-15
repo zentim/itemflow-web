@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "firebase": "^4.10.1",
+    "fuzzysort": "^1.1.1",
     "vue": "^2.5.2",
-    "vue-instantsearch": "^1.4.0",
     "vue-router": "^3.0.1",
     "vue-tinymce-editor": "^1.6.2",
     "vuedraggable": "^2.16.0",
