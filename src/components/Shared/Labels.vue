@@ -52,8 +52,33 @@
         } else if (type === 'flow') {
           return 'LogoFlowColor'
         }
+      }
+    },
+    watch: {
+      labels (newVal) {
+        let newLabels = []
+        for (let i = 0, len = newVal.length; i < len; i++) {
+          // get lastest data
+          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+          if (obj) {
+            newLabels.push({
+              id: obj.id,
+              type: obj.type,
+              title: obj.title || '',
+              message: obj.message || ''
+            })
+          } else {
+            // pass this obj because it not existed in firebase
+          }
+        }
+
+        // Avoid infinite loop
+        if (this.chips.length !== newLabels.length) {
+          this.chips = newLabels
+        }
       },
-      syncData (newVal) {
+      chips (newVal) {
+        console.log(newVal)
         // remove same label
         for (let i = 0, len = newVal.length; i < len; i++) {
           if (newVal[i].id === this.$route.params.id) {
@@ -72,26 +97,8 @@
           }
         }
 
-        // get lastest data
-        for (let i = 0, len = newVal.length; i < len; i++) {
-          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
-          newVal[i].title = obj.title || ''
-          newVal[i].message = obj.message || ''
-        }
-
         // update parent data
         this.$emit('update:labels', newVal)
-      }
-    },
-    mounted () {
-      this.chips = this.labels || []
-    },
-    watch: {
-      labels (newVal) {
-        this.chips = newVal || []
-      },
-      chips (newVal) {
-        this.syncData(newVal)
       }
     }
   }

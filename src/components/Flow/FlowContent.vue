@@ -48,10 +48,34 @@
       remove (index) {
         this.flows.splice(index, 1)
         this.flows = [...this.flows]
+      }
+    },
+    watch: {
+      content (newVal) {
+        let newContent = []
+        for (let i = 0, len = newVal.length; i < len; i++) {
+          // get lastest data
+          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+          if (obj) {
+            newContent.push({
+              id: obj.id,
+              type: obj.type,
+              title: obj.title || '',
+              message: obj.message || ''
+            })
+          } else {
+            // pass this obj because it not existed in firebase
+          }
+        }
+
+        // Avoid infinite loop
+        if (this.flows.length !== newContent.length) {
+          this.flows = newContent
+        }
+
       },
-      syncData (newVal) {
+      flows (newVal) {
         // remove same label
-        console.log(newVal)
         for (let i = 0, len = newVal.length; i < len; i++) {
           if (newVal[i].id === this.$route.params.id) {
             let error = 'Can not put itself into Labels!'
@@ -61,25 +85,7 @@
           }
         }
 
-        // get lastest data
-        for (let i = 0, len = newVal.length; i < len; i++) {
-          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
-          newVal[i].title = obj.title || ''
-          newVal[i].message = obj.message || ''
-        }
-
         this.$emit('update:content', newVal)
-      }
-    },
-    mounted () {
-      this.flows = this.content || []
-    },
-    watch: {
-      content (newVal) {
-        this.flows = newVal || []
-      },
-      flows (newVal) {
-        this.syncData(newVal)
       }
     }
   }
