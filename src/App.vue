@@ -16,7 +16,7 @@
     >
       <!-- nav - logo -->
 
-        <router-link to="/" tag="span" style="cursor: pointer" class="pr-2">
+        <router-link to="/" tag="span" style="cursor: pointer" class="pr-2 ml-2">
           <v-icon large>{{ logoIcon }}</v-icon>
         </router-link>
         <router-link to="/items" tag="span" style="cursor: pointer" :class="selectColor('item')" class="title">
@@ -28,7 +28,12 @@
 
 
       <v-spacer></v-spacer>
-
+      <router-link to="/profile" tag="span" style="cursor: pointer" class="pr-2 hidden-lg-and-up">
+        <v-icon>account_box</v-icon>
+      </router-link>
+      <router-link to="/star" tag="span" style="cursor: pointer" class="hidden-lg-and-up">
+        <v-icon>star</v-icon>
+      </router-link>
       <v-toolbar-side-icon class="hidden-lg-and-up" @click.stop="rightDrawer = !rightDrawer"></v-toolbar-side-icon>
 
       <!-- search -->
