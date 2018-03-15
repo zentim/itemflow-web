@@ -52,6 +52,11 @@
     },
     watch: {
       content (newVal) {
+        // Avoid cannot read property 'lenght' of undefined
+        if (!newVal) {
+          newVal = []
+        }
+
         let newContent = []
         for (let i = 0, len = newVal.length; i < len; i++) {
           // get lastest data
@@ -70,11 +75,15 @@
 
         // Avoid infinite loop
         if (this.flows.length !== newContent.length) {
-          this.flows = newContent
+          this.flows = newContent || []
         }
-
       },
       flows (newVal) {
+        // Avoid cannot read property 'lenght' of undefined
+        if (!newVal) {
+          newVal = []
+        }
+
         // remove same label
         for (let i = 0, len = newVal.length; i < len; i++) {
           if (newVal[i].id === this.$route.params.id) {
@@ -84,7 +93,6 @@
             return
           }
         }
-
         this.$emit('update:content', newVal)
       }
     }

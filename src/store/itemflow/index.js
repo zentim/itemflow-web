@@ -95,14 +95,17 @@ export default {
     removeItemFlow ({ commit, getters }, payload) {
       const userId = getters.user.id
       const objId = payload.id
-      console.log(payload)
-      console.log('start remove')
-      console.log('itemflow/' + userId + '/' + objId)
       firebase.database().ref('itemflow/' + userId).child(objId).remove()
     },
     updateItemFlow ({ commit, getters }, payload) {
       const user = getters.user
       const objId = payload.id
+      if (payload.type === 'item') {
+        payload.content = payload.content ? payload.content : ''
+      }
+      if (payload.type === 'flow') {
+        payload.content = payload.content ? payload.content : []
+      }
       const obj = {
         title: payload.title,
         message: payload.message,

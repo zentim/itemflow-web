@@ -57,10 +57,10 @@
     },
     watch: {
       flow (newVal) {
-        this.obj.title = newVal.title
-        this.obj.message = newVal.message
-        this.obj.labels = newVal.labels
-        this.obj.content = newVal.content
+        this.obj.title = newVal.title || ''
+        this.obj.message = newVal.message || ''
+        this.obj.labels = newVal.labels || []
+        this.obj.content = newVal.content || []
       }
     },
     beforeRouteUpdate (to, from, next) {
