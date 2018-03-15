@@ -5,6 +5,9 @@
       v-model="data"
       v-on:editorInit="initCallBack"
       ref="tm"
+      :htmlClass="editerHtmlClass"
+      :plugins="editerPlugins"
+      :toolbar1="editerToolbar1"
       :other_options="editerOptions"></tinymce>
   </v-card>
 </template>
@@ -15,23 +18,35 @@
     props: ['content'],
     data () {
       return {
-        data: this.content
-      }
-    },
-    computed: {
-      editerOptions () {
-        if (this.$route.name === 'CreateItem') {
-          return {
-            height: 350,
-            auto_focus: 'd1'
-          }
-        } else {
-          return {
-            height: 350
-          }
+        data: this.content,
+        editerHtmlClass: '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+        editerPlugins: [
+          'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+          'searchreplace wordcount visualblocks visualchars code fullscreen',
+          'insertdatetime media nonbreaking save table contextmenu directionality',
+          'template paste textcolor colorpicker textpattern imagetools toc emoticons hr codesample'
+        ],
+        editerToolbar1: 'undo redo | fontsizeselect forecolor backcolor bold italic underline | table codesample | bullist numlist outdent indent | removeformat hr',
+        editerOptions: {
+          height: 450,
+          menubar: false
         }
       }
     },
+    // computed: {
+    //   editerOptions () {
+    //     if (this.$route.name === 'CreateItem') {
+    //       return {
+    //         height: 350,
+    //         auto_focus: 'd1'
+    //       }
+    //     } else {
+    //       return {
+    //         height: 350
+    //       }
+    //     }
+    //   }
+    // },
     methods: {
       initCallBack (e) {
         // console.log(this.$refs.tm.editor)

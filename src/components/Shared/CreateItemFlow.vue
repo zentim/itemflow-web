@@ -103,7 +103,6 @@
           labels: newLabels || [{}],
           type: newType
         }
-        console.log(newObj)
         this.$store.dispatch('createItemFlow', newObj)
         this.isCreated = true
       }

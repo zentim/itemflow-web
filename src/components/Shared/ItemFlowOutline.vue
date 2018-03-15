@@ -9,7 +9,7 @@
         full-width
         multi-line
         hide-details
-        class="title"
+        class="title py-0"
       ></v-text-field>
       <v-text-field
         placeholder="Add message here..."

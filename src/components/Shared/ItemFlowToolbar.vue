@@ -12,8 +12,11 @@
         <v-icon>more_vert</v-icon>
       </v-btn>
       <v-list>
-        <v-list-tile @click="remove">
-          <v-list-tile-title>Delete this one</v-list-tile-title>
+        <v-list-tile @click="remove" class="red--text">
+          <v-list-tile-title>
+            <v-icon>delete</v-icon>
+            Delete
+          </v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-menu>
