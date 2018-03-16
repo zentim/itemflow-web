@@ -171,7 +171,8 @@ export default {
       // Fast SublimeText-like fuzzy search for JavaScript.
       let result = fuzzysort.go(payload, getters.loadedItemFlow, {keys: ['title', 'message']})
       let searchResults = []
-      for (let i = 0; i < result.length; i++) {
+      let resultLength = result ? result.length : 0
+      for (let i = 0; i < resultLength; i++) {
         searchResults.push(result[i].obj)
       }
       commit('setSearchResults', searchResults)

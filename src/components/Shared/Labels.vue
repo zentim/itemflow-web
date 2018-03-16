@@ -31,13 +31,16 @@
     props: ['labels'],
     data () {
       return {
-        chips: []
+        chips: [],
+        // for develope debug
+        preventInfiniteLoop: 0
       }
     },
     methods: {
       handleText (text) {
         let maxLength = 30
-        if (text.length > maxLength) {
+        let textLength = text ? text.length : 0
+        if (textLength > maxLength) {
           return text.slice(0, maxLength - 3) + '...'
         }
         return text
@@ -54,15 +57,27 @@
         }
       }
     },
+    mounted () {
+      this.chips = this.labels
+    },
     watch: {
       labels (newVal) {
+        // for develope debug
+        if (this.preventInfiniteLoop > 50) {
+          console.log('Error: Infinite Loop!')
+          return
+        } else {
+          this.preventInfiniteLoop++
+        }
+
         // Avoid cannot read property 'lenght' of undefined
         if (!newVal) {
           newVal = []
         }
 
         let newLabels = []
-        for (let i = 0, len = newVal.length; i < len; i++) {
+        let len = newVal ? newVal.length : 0
+        for (let i = 0; i < len; i++) {
           // get lastest data
           let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
           if (obj) {
@@ -78,18 +93,29 @@
         }
 
         // Avoid infinite loop
-        if (this.chips.length !== newLabels.length) {
+        let chipsLength = this.chips ? this.chips.length : 0
+        let newLabelsLenght = newLabels ? newLabels.length : 0
+        if (chipsLength !== newLabelsLenght) {
           this.chips = newLabels || []
         }
       },
       chips (newVal) {
+        // for develope debug
+        if (this.preventInfiniteLoop > 50) {
+          console.log('Error: Infinite Loop!')
+          return
+        } else {
+          this.preventInfiniteLoop++
+        }
+
         // Avoid cannot read property 'lenght' of undefined
         if (!newVal) {
           newVal = []
         }
 
         // remove same label
-        for (let i = 0, len = newVal.length; i < len; i++) {
+        let len = newVal ? newVal.length : 0
+        for (let i = 0; i < len; i++) {
           if (newVal[i].id === this.$route.params.id) {
             let error = 'Can not put itself into Labels!'
             this.$store.dispatch('setErrorText', error)

@@ -33,7 +33,9 @@
     props: ['content'],
     data () {
       return {
-        flows: []
+        flows: [],
+        // for develope debug
+        preventInfiniteLoop: 0
       }
     },
     methods: {
@@ -50,15 +52,27 @@
         this.flows = [...this.flows]
       }
     },
+    mounted () {
+      this.flows = this.content
+    },
     watch: {
       content (newVal) {
+        // for develope debug
+        if (this.preventInfiniteLoop > 50) {
+          console.log('Error: Infinite Loop!')
+          return
+        } else {
+          this.preventInfiniteLoop++
+        }
+
         // Avoid cannot read property 'lenght' of undefined
         if (!newVal) {
           newVal = []
         }
 
         let newContent = []
-        for (let i = 0, len = newVal.length; i < len; i++) {
+        let len = newVal ? newVal.length : 0
+        for (let i = 0; i < len; i++) {
           // get lastest data
           let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
           if (obj) {
@@ -74,18 +88,29 @@
         }
 
         // Avoid infinite loop
-        if (this.flows.length !== newContent.length) {
+        let flowsLength = this.flows ? this.flows.length : 0
+        let newContentLength = newContent ? newContent.length : 0
+        if (flowsLength !== newContentLength) {
           this.flows = newContent || []
         }
       },
       flows (newVal) {
+        // for develope debug
+        if (this.preventInfiniteLoop > 50) {
+          console.log('Error: Infinite Loop!')
+          return
+        } else {
+          this.preventInfiniteLoop++
+        }
+
         // Avoid cannot read property 'lenght' of undefined
         if (!newVal) {
           newVal = []
         }
 
         // remove same label
-        for (let i = 0, len = newVal.length; i < len; i++) {
+        let len = newVal ? newVal.length : 0
+        for (let i = 0; i < len; i++) {
           if (newVal[i].id === this.$route.params.id) {
             let error = 'Can not put itself into Labels!'
             this.$store.dispatch('setErrorText', error)

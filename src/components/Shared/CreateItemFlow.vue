@@ -67,8 +67,9 @@
         }
         // handle labels
         let labels = this.labels
+        let labelsLength = labels ? labels.length : 0
         let newLabels = []
-        for (let i = 0; i < labels.length; i++) {
+        for (let i = 0; i < labelsLength; i++) {
           newLabels.push({
             id: labels[i].id,
             type: labels[i].type,
@@ -86,7 +87,8 @@
           newType = 'flow'
           let oldFlowContent = this.flowContent
           newContent = []
-          for (let i = 0; i < oldFlowContent.length; i++) {
+          let oldFlowContentLength = oldFlowContent ? oldFlowContent.length : 0
+          for (let i = 0; i < oldFlowContentLength; i++) {
             newContent.push({
               id: oldFlowContent[i].id,
               type: oldFlowContent[i].type,

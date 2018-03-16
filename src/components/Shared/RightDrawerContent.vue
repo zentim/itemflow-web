@@ -51,7 +51,8 @@
       loadedItemFlow (newVal) {
         // this.itemflow = JSON.parse(JSON.stringify(newVal))
         let objs = []
-        for (let i = 0, len = newVal.length; i < len; i++) {
+        let len = newVal ? newVal.length : 0
+        for (let i = 0; i < len; i++) {
           let obj = {
             id: newVal[i].id,
             type: newVal[i].type,
