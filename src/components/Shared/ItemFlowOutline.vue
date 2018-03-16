@@ -22,7 +22,7 @@
         hide-details
       ></v-text-field>
       <v-divider class="my-3"></v-divider>
-      <h4>Labels:</h4>
+      <h4><v-icon color="primary">local_offer</v-icon> Labels:</h4>
       <app-labels :labels.sync="outlineLabels" :key="id"></app-labels>
   </v-card>
 </template>

@@ -5,9 +5,9 @@
     tag="span"
     style="cursor: pointer">
     <v-card :color="type === 'item' ? 'LogoItemColor' : 'LogoFlowColor'">
-      <div class="px-3 py-3">
-        <div class="title word-overflow-hidden" style="color: rgba(0, 0, 0, 0.87)">{{ title || 'no title' }}</div>
-        <div class="word-overflow-hidden" style="color: rgba(0, 0, 0, 0.6)">{{ message || 'no message' }}</div>
+      <div class="px-2 py-2">
+        <div class="itemflow-title word-overflow-hidden">{{ title || 'no title' }}</div>
+        <div class="itemflow-message word-overflow-hidden">{{ message || 'no message' }}</div>
       </div>
     </v-card>
   </router-link>
@@ -20,6 +20,15 @@
 </script>
 
 <style scoped>
+.itemflow-title {
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.87);
+}
+.itemflow-message {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6)
+}
 .word-overflow-hidden {
   overflow:hidden;
   white-space:nowrap;
