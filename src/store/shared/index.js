@@ -3,7 +3,8 @@ export default {
     loadingItem: false,
     loading: false,
     error: null,
-    errorText: null
+    errorText: null,
+    searching: false
   },
   getters: {
     loadingItem (state) {
@@ -17,6 +18,9 @@ export default {
     },
     errorText (state) {
       return state.errorText
+    },
+    searching (state) {
+      return state.searching
     }
   },
   mutations: {
@@ -34,6 +38,9 @@ export default {
     },
     clearError (state) {
       state.error = null
+    },
+    setSearching (state, payload) {
+      state.searching = payload
     }
   },
   actions: {

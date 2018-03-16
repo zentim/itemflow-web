@@ -50,16 +50,31 @@
       loading () {
         return this.$store.getters.loading
       },
+      searching () {
+        return this.$store.getters.searching
+      },
       itemflow () {
         let routeName = this.$route.name
-        if (routeName === 'Home') {
-          return this.$store.getters.loadedItemFlow
-        }
-        if (routeName === 'Items') {
-          return this.$store.getters.loadedItems
-        }
-        if (routeName === 'Flows') {
-          return this.$store.getters.loadedFlows
+        if (this.searching) {
+          if (routeName === 'Home') {
+            return this.$store.getters.searchResults
+          }
+          if (routeName === 'Items') {
+            return this.$store.getters.searchResultsItems
+          }
+          if (routeName === 'Flows') {
+            return this.$store.getters.searchResultsFlows
+          }
+        } else {
+          if (routeName === 'Home') {
+            return this.$store.getters.loadedItemFlow
+          }
+          if (routeName === 'Items') {
+            return this.$store.getters.loadedItems
+          }
+          if (routeName === 'Flows') {
+            return this.$store.getters.loadedFlows
+          }
         }
       }
     }

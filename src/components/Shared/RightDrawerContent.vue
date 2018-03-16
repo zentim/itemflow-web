@@ -36,8 +36,15 @@
       loading () {
         return this.$store.getters.loading
       },
+      searching () {
+        return this.$store.getters.searching
+      },
       loadedItemFlow () {
-        return this.$store.getters.loadedItemFlow
+        if (this.searching) {
+          return this.$store.getters.searchResults
+        } else {
+          return this.$store.getters.loadedItemFlow
+        }
       }
     },
     watch: {

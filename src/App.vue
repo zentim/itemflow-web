@@ -8,44 +8,47 @@
     <v-toolbar
       light
       fixed
-      clipped-right
       color="secondary"
       app
       dense
       v-if="userIsAuthenticated"
     >
+      <div class="ml-1" v-if="$route.name === 'Home'">
+        <v-toolbar-side-icon class="hidden-lg-and-up mx-0 px-0" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      </div>
+      <div class="ml-1" v-else>
+        <router-link to="/" tag="span" style="cursor: pointer">
+          <v-icon large color="primary">arrow_back</v-icon>
+        </router-link>
+      </div>
       <!-- nav - logo -->
-      <router-link to="/" tag="span" style="cursor: pointer" class="pr-2 ml-2">
-        <v-icon large>{{ logoIcon }}</v-icon>
-      </router-link>
-      <router-link to="/items" tag="span" style="cursor: pointer" :class="selectColor('item')" class="title">
-        Item
-      </router-link>
-      <router-link to="/flows" tag="span" style="cursor: pointer" :class="selectColor('flow')" class="title">
-        Flow
-      </router-link>
+      <div class="mx-1">
+        <router-link to="/items" tag="span" style="cursor: pointer" :class="selectColor('item')" class="title">
+          Item
+        </router-link>
+        <router-link to="/flows" tag="span" style="cursor: pointer" :class="selectColor('flow')" class="title">
+          Flow
+        </router-link>
+      </div>
 
       <!-- search -->
-      <app-search></app-search>
+      <v-spacer class="hidden-md-and-down"></v-spacer>
+      <app-search class="mx-1"></app-search>
+      <v-spacer class="hidden-md-and-down"></v-spacer>
 
       <!-- nav right part -->
-      <v-spacer></v-spacer>
-      <router-link to="/profile" tag="span" style="cursor: pointer" class="pr-2 hidden-lg-and-up">
+      <!-- <router-link to="/profile" tag="span" style="cursor: pointer" class="pr-2 hidden-lg-and-up">
         <v-icon>account_box</v-icon>
       </router-link>
       <router-link to="/star" tag="span" style="cursor: pointer" class="hidden-lg-and-up">
         <v-icon>star</v-icon>
-      </router-link>
-      <v-toolbar-side-icon class="hidden-lg-and-up" @click.stop="rightDrawer = !rightDrawer"></v-toolbar-side-icon>
+      </router-link> -->
+      <v-icon class="hidden-lg-and-up mx-1" large style="cursor: pointer" @click.stop="rightDrawer = !rightDrawer">chrome_reader_mode</v-icon>
 
       <!-- search -->
-      <v-card class="mr-0 hidden-md-and-down" color="secondary" flat>
-        <v-text-field
-          prepend-icon="search"
-          label="Search"
-          solo-inverted
-        ></v-text-field>
-      </v-card>
+      <!-- <v-card class="mr-0 hidden-md-and-down" color="secondary" flat>
+        <app-search></app-search>
+      </v-card> -->
     </v-toolbar>
 
 
@@ -57,26 +60,23 @@
       <router-view></router-view>
     </v-content>
 
-    <speed-dial></speed-dial>
+    <!-- speed dial component -->
+    <!-- <speed-dial></speed-dial> -->
 
 
     <!-- right -->
     <v-navigation-drawer
       fixed
       right
-      clipped
       app
       :value="rightDrawer"
       :hide-overlay="rightDrawer"
       width="250"
       v-if="userIsAuthenticated"
     >
+      <v-icon class="hidden-lg-and-up px-2 py-2" style="cursor: pointer" large @click.stop="rightDrawer = !rightDrawer">keyboard_tab</v-icon>
       <v-card class="hidden-lg-and-up" color="secondary" flat>
-        <v-text-field
-          prepend-icon="search"
-          label="Search"
-          solo-inverted
-        ></v-text-field>
+        <app-search></app-search>
       </v-card>
       <right-drawer-content></right-drawer-content>
     </v-navigation-drawer>
@@ -173,14 +173,6 @@
       },
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-      },
-      logoIcon () {
-        let routeName = this.$route.name
-        if (routeName === 'Home') {
-          return 'view_comfy'
-        } else {
-          return 'arrow_back'
-        }
       }
     },
     methods: {
@@ -199,3 +191,4 @@
     }
   }
 </script>
+

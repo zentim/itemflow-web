@@ -1,14 +1,16 @@
 <template>
   <v-text-field
     prepend-icon="search"
-    label="Search"
+    label="Search..."
     solo-inverted
     v-model="searchInput"
+    append-icon="close"
+    :append-icon-cb="clearSearchInput"
   ></v-text-field>
 </template>
 
 <script>
-import fuzzysort from 'fuzzysort'
+// import fuzzysort from 'fuzzysort'
 export default {
   data () {
     return {
@@ -18,6 +20,11 @@ export default {
   computed: {
     itemflow () {
       return this.$store.getters.loadedItemFlow
+    }
+  },
+  methods: {
+    clearSearchInput () {
+      this.searchInput = ''
     }
   },
   watch: {

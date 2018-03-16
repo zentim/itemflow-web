@@ -75,14 +75,20 @@ export default {
         })
       }
     },
-    loadedItems (getters) {
+    loadedItems (state, getters) {
       return getters.loadedItemFlow.filter(obj => obj.type === 'item')
     },
-    loadedFlows (getters) {
+    loadedFlows (state, getters) {
       return getters.loadedItemFlow.filter(obj => obj.type === 'flow')
     },
-    searchResults(getters) {
+    searchResults (getters) {
       return getters.searchResults
+    },
+    searchResultsItems (state, getters) {
+      return getters.searchResults.filter(obj => obj.type === 'item')
+    },
+    searchResultsFlows (state, getters) {
+      return getters.searchResults.filter(obj => obj.type === 'flow')
     }
   },
   mutations: {
@@ -155,13 +161,20 @@ export default {
         })
     },
     searchItemFlow ({commit, getters}, payload) {
-      console.log('start search')
-      let result = fuzzysort.go(payload, getters.loadedItemFlow, {key: 'title'})
-      console.log(result)
-      for(let i = 0; i < result.length; i++) {
-        console.log(result[i].obj.id + ': ' + result[i].obj.title)
+      if (!payload) {
+        commit('setSearching', false)
+        return
       }
-      commit('setSearchResults', result)
+
+      commit('setSearching', true)
+      // [fuzzysort](https://github.com/farzher/fuzzysort)
+      // Fast SublimeText-like fuzzy search for JavaScript.
+      let result = fuzzysort.go(payload, getters.loadedItemFlow, {keys: ['title', 'message']})
+      let searchResults = []
+      for (let i = 0; i < result.length; i++) {
+        searchResults.push(result[i].obj)
+      }
+      commit('setSearchResults', searchResults)
     }
   }
 }
