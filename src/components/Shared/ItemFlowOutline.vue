@@ -20,10 +20,12 @@
         full-width
         multi-line
         hide-details
+        :class="hiddenClass"
       ></v-text-field>
-      <v-divider class="my-3"></v-divider>
-      <h4><v-icon color="primary">local_offer</v-icon> Labels:</h4>
-      <app-labels :labels.sync="outlineLabels" :key="id"></app-labels>
+      <v-divider class="my-3" :class="hiddenClass"></v-divider>
+      <h4 :class="hiddenClass"><v-icon color="primary">local_offer</v-icon> Labels:</h4>
+      <app-labels :labels.sync="outlineLabels" :key="id" :class="hiddenClass"></app-labels>
+      <v-btn class="hidden-md-and-up mb-3" color="info" block dark @click.stop="show = !show" large><v-icon>{{show ? 'expand_less' : 'expand_more'}}</v-icon></v-btn>
   </v-card>
 </template>
 
@@ -34,13 +36,19 @@ export default {
     return {
       outlineTitle: '',
       outlineMessage: '',
-      outlineLabels: []
+      outlineLabels: [],
+      show: false
     }
   },
   mounted () {
     this.outlineTitle = this.title
     this.outlineMessage = this.message
     this.outlineLabels = this.labels
+  },
+  computed: {
+    hiddenClass () {
+      return this.show ? '' : 'hidden-sm-and-down'
+    }
   },
   watch: {
     title (newVal) {

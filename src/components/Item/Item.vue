@@ -8,7 +8,7 @@
 
     <!-- main -->
     <v-layout row wrap v-else>
-      <v-flex xs12 sm4>
+      <v-flex xs12 md4>
         <v-card>
           <app-toolbar :id="item.id" :type="item.type" :isDeleted.sync="isDeleted"></app-toolbar>
           <item-flow-outline
@@ -18,7 +18,7 @@
             :labels.sync="obj.labels"></item-flow-outline>
         </v-card>
       </v-flex>
-      <v-flex xs12 sm8>
+      <v-flex xs12 md8>
         <item-content :content.sync="obj.content"></item-content>
       </v-flex>
     </v-layout>
