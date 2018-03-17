@@ -3,7 +3,6 @@
     v-model="flows"
     class="dragArea"
     :options="{group: 'itemflow'}">
-    <div style="position: absolute; color: rgba(0, 0, 0, 0.6);">drag itemflow to here...</div>
       <v-flex
         v-for="(obj, index) in flows"
         :key="index"
