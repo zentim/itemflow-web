@@ -81,6 +81,9 @@ export default {
     loadedFlows (state, getters) {
       return getters.loadedItemFlow.filter(obj => obj.type === 'flow')
     },
+    favoriteItemFlow (state, getters) {
+      return getters.loadedItemFlow.filter(obj => obj.favorite === true)
+    },
     searchResults (getters) {
       return getters.searchResults
     },
@@ -89,6 +92,9 @@ export default {
     },
     searchResultsFlows (state, getters) {
       return getters.searchResults.filter(obj => obj.type === 'flow')
+    },
+    searchResultsFavorite (state, getters) {
+      return getters.searchResults.filter(obj => obj.favorite === true)
     }
   },
   mutations: {
@@ -108,7 +114,8 @@ export default {
         content: payload.content,
         labels: payload.labels,
         date: new Date().toISOString(),
-        type: payload.type
+        type: payload.type,
+        favorite: false
       }
       firebase.database().ref('itemflow').child(user.id).push(obj)
     },
@@ -128,9 +135,11 @@ export default {
       }
       const obj = {
         title: payload.title,
+        type: payload.type,
         message: payload.message,
         content: payload.content,
-        labels: payload.labels || []
+        labels: payload.labels || [],
+        favorite: payload.favorite
       }
       firebase.database().ref('itemflow/' + user.id).child(objId).update(obj)
     },
@@ -153,7 +162,8 @@ export default {
               message: itemflow[key].message,
               content: itemflow[key].content,
               labels: itemflow[key].labels,
-              date: itemflow[key].date
+              date: itemflow[key].date,
+              favorite: itemflow[key].favorite
             })
           }
           commit('setLoadedItemFlow', newItemFlow)

@@ -54,6 +54,11 @@ export const appRouter = [
     name: 'Flow',
     props: true,
     component: () => import('@/components/Flow/Flow')
+  },
+  {
+    path: '/favorite',
+    name: 'Favorite',
+    component: () => import('@/components/Home')
   }
 ]
 

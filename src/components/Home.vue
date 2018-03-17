@@ -65,6 +65,9 @@
           if (routeName === 'Flows') {
             return this.$store.getters.searchResultsFlows
           }
+          if (routeName === 'Favorite') {
+            return this.$store.getters.searchResultsFavorite
+          }
         } else {
           if (routeName === 'Home') {
             return this.$store.getters.loadedItemFlow
@@ -74,6 +77,9 @@
           }
           if (routeName === 'Flows') {
             return this.$store.getters.loadedFlows
+          }
+          if (routeName === 'Favorite') {
+            return this.$store.getters.favoriteItemFlow
           }
         }
       }

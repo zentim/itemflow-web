@@ -9,7 +9,7 @@
     <v-layout row wrap v-else>
       <v-flex xs12 md4>
         <v-card flat>
-          <app-toolbar :id="flow.id" :type="flow.type" :isDeleted.sync="isDeleted"></app-toolbar>
+          <app-toolbar :id="flow.id" :type="flow.type" :isFavorite.sync="obj.favorite" :isDeleted.sync="isDeleted"></app-toolbar>
           <item-flow-outline
             :id="flow.id"
             :title.sync="obj.title"
@@ -34,7 +34,8 @@
           title: '',
           message: '',
           labels: [],
-          content: []
+          content: [],
+          favorite: null
         },
         isDeleted: false
       }
@@ -54,6 +55,7 @@
       this.obj.message = this.flow.message
       this.obj.labels = this.flow.labels
       this.obj.content = this.flow.content
+      this.obj.favorite = this.flow.favorite
     },
     watch: {
       flow (newVal) {
@@ -61,6 +63,7 @@
         this.obj.message = newVal.message || ''
         this.obj.labels = newVal.labels || []
         this.obj.content = newVal.content || []
+        this.obj.favorite = newVal.favorite
       }
     },
     beforeRouteUpdate (to, from, next) {
@@ -71,6 +74,7 @@
       } else {
         let newObj = {
           id: this.id,
+          type: 'flow',
           ...this.obj
         }
         this.$store.dispatch('updateItemFlow', newObj)
@@ -83,6 +87,7 @@
       } else {
         let newObj = {
           id: this.id,
+          type: 'flow',
           ...this.obj
         }
         this.$store.dispatch('updateItemFlow', newObj)

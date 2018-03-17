@@ -9,7 +9,7 @@
         <v-list-tile class="orange--text" @click="favorite">
           <v-list-tile-title>
             <v-icon class="orange--text">star</v-icon>
-            Favorite
+            {{ isFavorite ? 'undo favorite' : 'Favorite'}}
           </v-list-tile-title>
         </v-list-tile>
         <v-list-tile class="red--text" @click="remove">
@@ -25,14 +25,14 @@
 
 <script>
 export default {
-  props: ['id', 'type', 'isDeleted'],
+  props: ['id', 'type', 'isFavorite', 'isDeleted'],
   data () {
     return {
     }
   },
   methods: {
     favorite () {
-      console.log('add to favorite')
+      this.$emit('update:isFavorite', !this.isFavorite)
     },
     remove () {
       this.$emit('update:isDeleted', true)
