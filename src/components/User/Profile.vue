@@ -26,7 +26,9 @@
             <v-container fill-height>
               <v-layout align-center>
                 <v-flex text-xs-center>
-                  <h3 class="display-3">Welcome to ItemFlow!</h3>
+                  <h3 class="display-2">I have <span primary style="font-weight: 600" class="display-3">{{ itemflowLength }}</span> ItemFlow</h3>
+                  <h3 >Items: <span primary style="color: #004D40; font-weight: 400" class="display-2 px-3">{{ itemsLength }}</span></h3>
+                  <h3 >Flows: <span primary style="color: #01579B; font-weight: 400" class="display-2 px-3">{{ flowsLength }}</span></h3>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -42,6 +44,21 @@
     computed: {
       user () {
         return this.$store.getters.user
+      },
+      itemflowLength () {
+        let itemflow =  this.$store.getters.loadedItemFlow
+        let length = itemflow ? itemflow.length : 0
+        return length
+      },
+      itemsLength () {
+        let itemflow =  this.$store.getters.loadedItems
+        let length = itemflow ? itemflow.length : 0
+        return length
+      },
+      flowsLength () {
+        let itemflow =  this.$store.getters.loadedFlows
+        let length = itemflow ? itemflow.length : 0
+        return length
       }
     },
     methods: {
