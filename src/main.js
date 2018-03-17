@@ -9,7 +9,6 @@ import Loading from './components/Shared/Loading'
 import Alert from './components/Shared/Alert'
 import Snackbar from './components/Shared/Snackbar'
 import ItemFlowSearch from './components/Shared/ItemFlowSearch'
-// import SpeedDial from './components/Shared/SpeedDial'
 import ItemFlowCard from './components/Shared/ItemFlowCard'
 import Draggable from 'vuedraggable'
 import RightDrawerContent from './components/Shared/RightDrawerContent'
@@ -44,7 +43,6 @@ Vue.component('loading', Loading)
 Vue.component('app-alert', Alert)
 Vue.component('app-snackbar', Snackbar)
 Vue.component('app-search', ItemFlowSearch)
-// Vue.component('speed-dial', SpeedDial)
 Vue.component('itemflow-card', ItemFlowCard)
 Vue.component('draggable', Draggable)
 Vue.component('right-drawer-content', RightDrawerContent)

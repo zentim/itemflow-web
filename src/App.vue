@@ -1,10 +1,5 @@
 <template>
   <v-app id="inspire">
-    <!-- loading -->
-    <v-layout row wrap v-if="loading">
-      <loading></loading>
-    </v-layout>
-
     <!-- snackbar -->
     <app-snackbar></app-snackbar>
 
@@ -139,7 +134,7 @@
         </v-list-tile>
       </v-list>
 
-      <v-list  class="my-5 py-5" v-if="userIsAuthenticated">
+      <!-- <v-list  class="my-5 py-5" v-if="userIsAuthenticated">
         <v-list-tile
           v-for="item in menuItemsBottom"
           :key="item.title"
@@ -151,7 +146,7 @@
             </v-tooltip>
           </v-list-tile-action>
         </v-list-tile>
-      </v-list>
+      </v-list> -->
     </v-navigation-drawer>
   </v-app>
 </template>
@@ -166,9 +161,6 @@
       }
     },
     computed: {
-      loading () {
-        return this.$store.getters.loading
-      },
       menuItemsTop () {
         return [
           { icon: 'add', title: 'Add Item', link: '/item/new' },
@@ -178,7 +170,8 @@
       menuItemsMiddle () {
         return [
           { icon: 'home', title: 'Home', link: '/' },
-          { icon: 'star', title: 'Favorite', link: '/favorite' }
+          { icon: 'star', title: 'Favorite', link: '/favorite' },
+          { icon: 'account_box', title: 'Profile', link: '/profile' }
         ]
       },
       menuItemsBottom () {

@@ -51,7 +51,11 @@ export default {
   },
   getters: {
     loadedItemFlow (state) {
-      return state.loadedItemFlow
+      return state.loadedItemFlow.sort(function (a, b) {
+        if (a.editedDate < b.editedDate) { return 1 }
+        if (a.editedDate > b.editedDate) { return -1 }
+        return 0
+      })
     },
     loadedItemFlowObj (state) {
       return (ObjId) => {
