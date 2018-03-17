@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card flat>
     <tinymce
       id="d1"
       v-model="data"
@@ -26,7 +26,7 @@
           'insertdatetime media nonbreaking save table contextmenu directionality',
           'template paste textcolor colorpicker textpattern imagetools toc emoticons hr codesample'
         ],
-        editerToolbar1: 'undo redo | fontsizeselect forecolor backcolor bold italic underline | table codesample | bullist numlist outdent indent | removeformat hr',
+        editerToolbar1: 'undo redo | forecolor backcolor bold italic underline | table codesample | bullist numlist outdent indent | removeformat hr | fontsizeselect',
         editerOptions: {
           height: 450,
           menubar: false

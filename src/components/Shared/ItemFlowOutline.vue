@@ -1,5 +1,5 @@
 <template>
-  <v-card color="white">
+  <v-card color="white" flat>
       <v-text-field
         placeholder="Add title here..."
         v-model="outlineTitle"
@@ -16,7 +16,7 @@
         v-model="outlineMessage"
         counter
         max="120"
-        rows="7"
+        rows="8"
         full-width
         multi-line
         hide-details

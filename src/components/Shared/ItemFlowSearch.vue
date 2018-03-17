@@ -3,6 +3,7 @@
     prepend-icon="search"
     label="Search..."
     solo-inverted
+    flat
     v-model="searchInput"
     append-icon="close"
     :append-icon-cb="clearSearchInput"

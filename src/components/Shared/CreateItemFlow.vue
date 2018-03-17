@@ -1,8 +1,8 @@
 <template>
-  <v-container>
+  <v-layout>
     <v-layout row wrap>
       <v-flex xs12 md4>
-        <v-card class="pt-3">
+        <v-card class="pt-3" flat>
           <item-flow-outline
             :id="id"
             :title.sync="title"
@@ -16,7 +16,7 @@
         <flow-content :content.sync="flowContent" v-if="routeName === 'CreateFlow'"></flow-content>
       </v-flex>
     </v-layout>
-  </v-container>
+  </v-layout>
 </template>
 
 <script>

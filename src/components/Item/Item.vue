@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-layout>
 
     <!-- loading -->
     <v-layout row wrap v-if="loading">
@@ -9,7 +9,7 @@
     <!-- main -->
     <v-layout row wrap v-else>
       <v-flex xs12 md4>
-        <v-card>
+        <v-card flat>
           <app-toolbar :id="item.id" :type="item.type" :isDeleted.sync="isDeleted"></app-toolbar>
           <item-flow-outline
             :id="item.id"
@@ -23,7 +23,7 @@
       </v-flex>
     </v-layout>
 
-  </v-container>
+  </v-layout>
 </template>
 
 

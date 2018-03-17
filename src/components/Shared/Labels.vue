@@ -5,7 +5,7 @@
       class="dragArea"
       :options="{group: 'itemflow'}"
       >
-
+      <div style="position: absolute; color: rgba(0, 0, 0, 0.6);" v-if="!chips.length">drag itemflow to here...</div>
       <!-- labels -->
       <div v-for="(obj, index) in chips" :key="index" style="display: inline">
         <v-chip
@@ -141,7 +141,8 @@
 
 <style scoped>
 .dragArea {
-  min-height: 50px;
-  border: 1px solid gray;
+  min-height: 120px;
+  border: 1px solid #888;
+  background-color: #eee;
 }
 </style>

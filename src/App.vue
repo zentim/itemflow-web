@@ -8,6 +8,7 @@
     <v-toolbar
       light
       fixed
+      flat
       color="secondary"
       app
       dense

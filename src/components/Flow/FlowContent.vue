@@ -3,6 +3,7 @@
     v-model="flows"
     class="dragArea"
     :options="{group: 'itemflow'}">
+    <div style="position: absolute; color: rgba(0, 0, 0, 0.6);">drag itemflow to here...</div>
       <v-flex
         v-for="(obj, index) in flows"
         :key="index"
@@ -112,8 +113,9 @@
 
 <style scoped>
 .dragArea {
-  min-height: 50px;
-  border: 1px solid gray;
+  min-height: 300px;
+  border: 1px solid #888;
+  background-color: #eee;
 }
 .closeCard:hover {
   color: red;
