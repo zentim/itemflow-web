@@ -7,6 +7,11 @@
         v-for="(obj, index) in flows"
         :key="index"
         class="pb-1">
+        <div style="position: relative;">
+          <div style="position: absolute; top: 10px; right: 0; z-index: 100; cursor: pointer;" >
+            <v-icon class="closeCard" large @click.prevent.stop="remove(index)">close</v-icon>
+          </div>
+        </div>
         <itemflow-card
           :id="obj.id"
           :type="obj.type"
@@ -109,5 +114,8 @@
 .dragArea {
   min-height: 50px;
   border: 1px solid gray;
+}
+.closeCard:hover {
+  color: red;
 }
 </style>
