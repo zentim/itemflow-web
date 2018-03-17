@@ -17,9 +17,10 @@
         <v-toolbar-side-icon class="hidden-lg-and-up mx-0 px-0" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       </div>
       <div class="ml-1" v-else>
-        <router-link to="/" tag="span" style="cursor: pointer">
+        <!-- <router-link :to="/" tag="span" style="cursor: pointer">
           <v-icon large color="primary">arrow_back</v-icon>
-        </router-link>
+        </router-link> -->
+        <v-icon large color="primary" style="cursor: pointer" @click="goto">arrow_back</v-icon>
       </div>
       <!-- nav - logo -->
       <div class="mx-1">
@@ -186,6 +187,13 @@
           if (routeName === 'Flow' || routeName === 'Flows' || routeName === 'CreateFlow') {
             return 'LogoFlowColor'
           }
+        }
+      },
+      goto () {
+        if (this.$route.name === 'Item' || this.$route.name === 'Flow') {
+          this.$router.go(-1)
+        } else {
+          this.$router.push('/')
         }
       }
     }
