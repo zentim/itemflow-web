@@ -165,8 +165,8 @@ export default {
         commit('setSearching', false)
         return
       }
-
       commit('setSearching', true)
+
       // [fuzzysort](https://github.com/farzher/fuzzysort)
       // Fast SublimeText-like fuzzy search for JavaScript.
       let result = fuzzysort.go(payload, getters.loadedItemFlow, {keys: ['title', 'message']})
