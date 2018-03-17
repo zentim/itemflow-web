@@ -22,8 +22,8 @@
         editerHtmlClass: '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
         editerPlugins: [
           'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-          'searchreplace wordcount visualblocks visualchars code fullscreen',
-          'insertdatetime media nonbreaking save table contextmenu directionality',
+          'searchreplace wordcount visualchars code fullscreen',
+          'insertdatetime media nonbreaking save table',
           'template paste textcolor colorpicker textpattern imagetools toc emoticons hr codesample'
         ],
         editerToolbar1: 'undo redo | forecolor backcolor bold italic underline | table codesample | bullist numlist outdent indent | removeformat hr | fontsizeselect',
