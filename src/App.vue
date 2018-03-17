@@ -1,5 +1,10 @@
 <template>
   <v-app id="inspire">
+    <!-- loading -->
+    <v-layout row wrap v-if="loading">
+      <loading></loading>
+    </v-layout>
+
     <!-- snackbar -->
     <app-snackbar></app-snackbar>
 
@@ -161,6 +166,9 @@
       }
     },
     computed: {
+      loading () {
+        return this.$store.getters.loading
+      },
       menuItemsTop () {
         return [
           { icon: 'add', title: 'Add Item', link: '/item/new' },

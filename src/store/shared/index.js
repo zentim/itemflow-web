@@ -1,15 +1,11 @@
 export default {
   state: {
-    loadingItem: false,
     loading: false,
     error: null,
     errorText: null,
     searching: false
   },
   getters: {
-    loadingItem (state) {
-      return state.loadingItem
-    },
     loading (state) {
       return state.loading
     },
@@ -26,9 +22,6 @@ export default {
   mutations: {
     setLoading (state, payload) {
       state.loading = payload
-    },
-    setLoadingItem (state, payload) {
-      state.loadingItem = payload
     },
     setError (state, payload) {
       state.error = payload

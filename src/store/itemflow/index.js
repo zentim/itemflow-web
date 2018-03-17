@@ -127,7 +127,7 @@ export default {
       firebase.database().ref('itemflow/' + user.id).child(objId).update(obj)
     },
     loadItemFlow ({ commit, getters }) {
-      commit('setLoadingItem', true)
+      commit('setLoading', true)
       const user = getters.user
       if (!user) {
         console.log('error: no user before loadItemFlow')
@@ -151,7 +151,7 @@ export default {
             })
           }
           commit('setLoadedItemFlow', newItemFlow)
-          commit('setLoadingItem', false)
+          commit('setLoading', false)
         })
     },
     searchItemFlow ({commit, getters}, payload) {

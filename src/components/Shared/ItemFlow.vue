@@ -1,5 +1,6 @@
 <template>
   <v-layout>
+
     <!-- loading -->
     <v-layout row wrap v-if="loading">
       <loading></loading>
@@ -9,21 +10,23 @@
     <v-layout row wrap v-else>
       <v-flex xs12 md4>
         <v-card flat>
-          <app-toolbar :id="flow.id" :type="flow.type" :isFavorite.sync="obj.favorite" :isDeleted.sync="isDeleted"></app-toolbar>
+          <app-toolbar :id="id" :type="obj.type" :isFavorite.sync="obj.favorite" :isDeleted.sync="isDeleted"></app-toolbar>
           <item-flow-outline
-            :id="flow.id"
+            :id="id"
             :title.sync="obj.title"
             :message.sync="obj.message"
             :labels.sync="obj.labels"></item-flow-outline>
         </v-card>
       </v-flex>
       <v-flex xs12 md8>
-        <flow-content :content.sync="obj.flowContent" :key="flow.id"></flow-content>
+        <item-content :content.sync="obj.itemContent" v-if="obj.type === 'item'"></item-content>
+        <flow-content :content.sync="obj.flowContent" v-if="obj.type === 'flow'"></flow-content>
       </v-flex>
     </v-layout>
 
   </v-layout>
 </template>
+
 
 <script>
   export default {
@@ -31,6 +34,7 @@
     data () {
       return {
         obj: {
+          type: '',
           title: '',
           message: '',
           labels: [],
@@ -42,25 +46,26 @@
       }
     },
     computed: {
-      flow () {
+      itemflowObj () {
         return this.$store.getters.loadedItemFlowObj(this.id)
       },
       loading () {
-        return this.$store.getters.loadingItem
+        return this.$store.getters.loading
       }
     },
     mounted () {
-      this.obj.type = this.flow.type
-      this.obj.title = this.flow.title || ''
-      this.obj.message = this.flow.message || ''
-      this.obj.labels = this.flow.labels || []
-      this.obj.itemContent = this.flow.itemContent || ''
-      this.obj.flowContent = this.flow.flowContent || []
-      this.obj.editedDate = this.flow.editedDate
-      this.obj.favorite = this.flow.favorite || false
+      this.obj.type = this.itemflowObj.type
+      this.obj.title = this.itemflowObj.title || ''
+      this.obj.message = this.itemflowObj.message || ''
+      this.obj.labels = this.itemflowObj.labels || []
+      this.obj.itemContent = this.itemflowObj.itemContent || ''
+      this.obj.flowContent = this.itemflowObj.flowContent || []
+      this.obj.editedDate = this.itemflowObj.editedDate
+      this.obj.favorite = this.itemflowObj.favorite || false
     },
     watch: {
-      flow (newVal) {
+      itemflowObj (newVal) {
+        this.obj.type = newVal.type
         this.obj.title = newVal.title || ''
         this.obj.message = newVal.message || ''
         this.obj.labels = newVal.labels || []
@@ -77,7 +82,6 @@
       } else {
         let newObj = {
           id: this.id,
-          type: 'flow',
           ...this.obj
         }
         this.$store.dispatch('updateItemFlow', newObj)
@@ -90,12 +94,12 @@
       } else {
         let newObj = {
           id: this.id,
-          type: 'flow',
           ...this.obj
         }
         this.$store.dispatch('updateItemFlow', newObj)
         next()
       }
     }
+
   }
 </script>

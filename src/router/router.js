@@ -37,7 +37,7 @@ export const appRouter = [
     path: '/item/:id',
     name: 'Item',
     props: true,
-    component: () => import('@/components/Item/Item')
+    component: () => import('@/components/Shared/ItemFlow')
   },
   {
     path: '/flow/new',
@@ -53,7 +53,7 @@ export const appRouter = [
     path: '/flow/:id',
     name: 'Flow',
     props: true,
-    component: () => import('@/components/Flow/Flow')
+    component: () => import('@/components/Shared/ItemFlow')
   },
   {
     path: '/favorite',
