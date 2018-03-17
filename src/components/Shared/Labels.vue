@@ -31,8 +31,7 @@
     data () {
       return {
         chips: [],
-        // for develope debug
-        preventInfiniteLoop: 0
+        preventInfiniteLoop: 0  // for develope debug
       }
     },
     methods: {
@@ -54,10 +53,29 @@
         } else if (type === 'flow') {
           return 'LogoFlowColor'
         }
+      },
+      updateLastestData (newVal) {
+        let lastestData = []
+        let len = newVal ? newVal.length : 0
+        for (let i = 0; i < len; i++) {
+          // get lastest data
+          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+          if (obj) {
+            lastestData.push({
+              id: obj.id,
+              type: obj.type,
+              title: obj.title || '',
+              message: obj.message || ''
+            })
+          } else {
+            // pass this obj because it not existed in firebase
+          }
+        }
+        return lastestData
       }
     },
     mounted () {
-      this.chips = this.labels
+      this.chips = this.updateLastestData(this.labels)
     },
     watch: {
       labels (newVal) {
@@ -74,22 +92,7 @@
           newVal = []
         }
 
-        let newLabels = []
-        let len = newVal ? newVal.length : 0
-        for (let i = 0; i < len; i++) {
-          // get lastest data
-          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
-          if (obj) {
-            newLabels.push({
-              id: obj.id,
-              type: obj.type,
-              title: obj.title || '',
-              message: obj.message || ''
-            })
-          } else {
-            // pass this obj because it not existed in firebase
-          }
-        }
+        let newLabels = this.updateLastestData(newVal)
 
         // Avoid infinite loop
         let chipsLength = this.chips ? this.chips.length : 0
@@ -131,7 +134,7 @@
           }
         }
 
-        // update parent data
+        // update data to parent component
         this.$emit('update:labels', newVal)
       }
     }

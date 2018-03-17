@@ -28,18 +28,36 @@
     data () {
       return {
         flows: [],
-        // for develope debug
-        preventInfiniteLoop: 0
+        preventInfiniteLoop: 0  // for develope debug
       }
     },
     methods: {
       remove (index) {
         this.flows.splice(index, 1)
         this.flows = [...this.flows]
+      },
+      updateLastestData (newVal) {
+        let lastestData = []
+        let len = newVal ? newVal.length : 0
+        for (let i = 0; i < len; i++) {
+          // get lastest data
+          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+          if (obj) {
+            lastestData.push({
+              id: obj.id,
+              type: obj.type,
+              title: obj.title || '',
+              message: obj.message || ''
+            })
+          } else {
+            // pass this obj because it not existed in firebase
+          }
+        }
+        return lastestData
       }
     },
     mounted () {
-      this.flows = this.content
+      this.flows = this.updateLastestData(this.content)
     },
     watch: {
       content (newVal) {
@@ -56,22 +74,7 @@
           newVal = []
         }
 
-        let newContent = []
-        let len = newVal ? newVal.length : 0
-        for (let i = 0; i < len; i++) {
-          // get lastest data
-          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
-          if (obj) {
-            newContent.push({
-              id: obj.id,
-              type: obj.type,
-              title: obj.title || '',
-              message: obj.message || ''
-            })
-          } else {
-            // pass this obj because it not existed in firebase
-          }
-        }
+        let newContent = this.updateLastestData(newVal)
 
         // Avoid infinite loop
         let flowsLength = this.flows ? this.flows.length : 0
@@ -104,6 +107,8 @@
             return
           }
         }
+
+        // update data to parent component
         this.$emit('update:content', newVal)
       }
     }
