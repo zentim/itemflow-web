@@ -14,8 +14,11 @@
       dense
       v-if="userIsAuthenticated"
     >
-      <div class="ml-1" v-if="$route.name === 'Home'">
-        <v-toolbar-side-icon class="hidden-lg-and-up mx-0 px-0" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <div class="ml-1 hidden-md-and-down mx-0 px-0" v-if="$route.name === 'Home'">
+        <v-icon large class="mx-0 px-0">home</v-icon>
+      </div>
+      <div class="ml-1 hidden-lg-and-up" v-if="$route.name === 'Home'">
+        <v-toolbar-side-icon class="mx-0 px-0" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       </div>
       <div class="ml-1" v-else>
         <!-- <router-link :to="/" tag="span" style="cursor: pointer">
