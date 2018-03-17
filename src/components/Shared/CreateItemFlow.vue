@@ -2,28 +2,12 @@
   <v-container>
     <v-layout row wrap>
       <v-flex xs12 md4>
-        <v-card>
-          <v-card-title>
-            <v-text-field
-              name="title"
-              label="Title"
-              id="title"
-              v-model="title"></v-text-field>
-          </v-card-title>
-
-          <v-card-text>
-            <v-text-field
-              name="message"
-              label="Message"
-              id="message"
-              v-model="message"
-              multi-line
-              rows="3"></v-text-field>
-          </v-card-text>
-
-          <v-divider class="my-3"></v-divider>
-          <h4>Labels:</h4>
-          <app-labels :labels.sync="labels"></app-labels>
+        <v-card class="pt-3">
+          <item-flow-outline
+            :id="id"
+            :title.sync="title"
+            :message.sync="message"
+            :labels.sync="labels"></item-flow-outline>
         </v-card>
       </v-flex>
 
@@ -39,6 +23,7 @@
   export default {
     data () {
       return {
+        id: 'new',
         title: '',
         message: '',
         itemContent: '',
