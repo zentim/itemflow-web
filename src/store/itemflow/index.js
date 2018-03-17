@@ -9,7 +9,15 @@ export default {
       //   type: 'item',
       //   title: 'this is itemId001 title',
       //   message: 'itemId001 message',
-      //   content: 'itemId001 content',
+      //   itemContent: 'itemId001 content',
+      //   flowContent: [
+      //     {
+      //       id: 'itemId001',
+      //       type: 'item',
+      //       title: 'this is itemId001 title',
+      //       message: 'itemId001 message'
+      //     }
+      //   ],
       //   labels: [
       //     {
       //       id: 'itemId002',
@@ -28,29 +36,6 @@ export default {
       //       type: 'item',
       //       title: 'this is itemId004 title',
       //       message: 'itemId004 message'
-      //     }
-      //   ],
-      //   date: new Date()
-      // },
-      // {
-      //   id: 'flowIdxx1',
-      //   type: 'flow',
-      //   title: 'test title flowIdxx1',
-      //   message: 'there something else',
-      //   content: [
-      //     {
-      //       id: 'itemId001',
-      //       type: 'item',
-      //       title: 'this is itemId001 title',
-      //       message: 'itemId001 message'
-      //     }
-      //   ],
-      //   labels: [
-      //     {
-      //       id: 'itemId002',
-      //       type: 'item',
-      //       title: 'this is itemId002 title',
-      //       message: 'itemId002 message'
       //     }
       //   ],
       //   date: new Date()
@@ -109,12 +94,14 @@ export default {
     createItemFlow ({ commit, getters }, payload) {
       const user = getters.user
       const obj = {
-        title: payload.title,
-        message: payload.message,
-        content: payload.content,
-        labels: payload.labels,
-        date: new Date().toISOString(),
         type: payload.type,
+        title: payload.title || '',
+        message: payload.message || '',
+        labels: payload.labels || [],
+        itemContent: payload.itemContent || '',
+        flowContent: payload.flowContent || [],
+        createdDate: new Date().toISOString(),
+        editedDate: new Date().toISOString(),
         favorite: false
       }
       firebase.database().ref('itemflow').child(user.id).push(obj)
@@ -127,19 +114,15 @@ export default {
     updateItemFlow ({ commit, getters }, payload) {
       const user = getters.user
       const objId = payload.id
-      if (payload.type === 'item') {
-        payload.content = payload.content ? payload.content : ''
-      }
-      if (payload.type === 'flow') {
-        payload.content = payload.content ? payload.content : []
-      }
       const obj = {
-        title: payload.title,
         type: payload.type,
-        message: payload.message,
-        content: payload.content,
+        title: payload.title || '',
+        message: payload.message || '',
         labels: payload.labels || [],
-        favorite: payload.favorite
+        itemContent: payload.itemContent || '',
+        flowContent: payload.flowContent || [],
+        editedDate: new Date().toISOString(),
+        favorite: payload.favorite || false
       }
       firebase.database().ref('itemflow/' + user.id).child(objId).update(obj)
     },
@@ -158,12 +141,13 @@ export default {
             newItemFlow.push({
               id: key,
               type: itemflow[key].type,
-              title: itemflow[key].title,
-              message: itemflow[key].message,
-              content: itemflow[key].content,
-              labels: itemflow[key].labels,
-              date: itemflow[key].date,
-              favorite: itemflow[key].favorite
+              title: itemflow[key].title || '',
+              message: itemflow[key].message || '',
+              labels: itemflow[key].labels || [],
+              itemContent: itemflow[key].itemContent || '',
+              flowContent: itemflow[key].flowContent || [],
+              editedDate: itemflow[key].editedDate,
+              favorite: itemflow[key].favorite || false
             })
           }
           commit('setLoadedItemFlow', newItemFlow)
@@ -179,7 +163,7 @@ export default {
 
       // [fuzzysort](https://github.com/farzher/fuzzysort)
       // Fast SublimeText-like fuzzy search for JavaScript.
-      let result = fuzzysort.go(payload, getters.loadedItemFlow, {keys: ['title', 'message']})
+      let result = fuzzysort.go(payload, getters.loadedItemFlow, {keys: ['title', 'message', 'itemContent']})
       let searchResults = []
       let resultLength = result ? result.length : 0
       for (let i = 0; i < resultLength; i++) {

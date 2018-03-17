@@ -64,17 +64,16 @@
         }
         // handle itemflow
         let newType
-        let newContent
+        let newFlowContent
         if (this.routeName === 'CreateItem') {
           newType = 'item'
-          newContent = this.itemContent
         } else if (this.routeName === 'CreateFlow') {
           newType = 'flow'
           let oldFlowContent = this.flowContent
-          newContent = []
+          newFlowContent = []
           let oldFlowContentLength = oldFlowContent ? oldFlowContent.length : 0
           for (let i = 0; i < oldFlowContentLength; i++) {
-            newContent.push({
+            newFlowContent.push({
               id: oldFlowContent[i].id,
               type: oldFlowContent[i].type,
               title: oldFlowContent[i].title,
@@ -84,11 +83,12 @@
         }
         // handle create
         const newObj = {
+          type: newType,
           title: this.title,
           message: this.message,
-          content: newContent,
-          labels: newLabels || [{}],
-          type: newType
+          labels: newLabels || [],
+          itemContent: this.itemContent,
+          flowContent: newFlowContent
         }
         this.$store.dispatch('createItemFlow', newObj)
         this.isCreated = true

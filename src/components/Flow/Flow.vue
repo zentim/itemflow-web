@@ -18,7 +18,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 md8>
-        <flow-content :content.sync="obj.content" :key="flow.id"></flow-content>
+        <flow-content :content.sync="obj.flowContent" :key="flow.id"></flow-content>
       </v-flex>
     </v-layout>
 
@@ -34,7 +34,8 @@
           title: '',
           message: '',
           labels: [],
-          content: [],
+          itemContent: '',
+          flowContent: [],
           favorite: null
         },
         isDeleted: false
@@ -50,20 +51,22 @@
     },
     mounted () {
       this.obj.type = this.flow.type
-      this.obj.date = this.flow.date
-      this.obj.title = this.flow.title
-      this.obj.message = this.flow.message
-      this.obj.labels = this.flow.labels
-      this.obj.content = this.flow.content
-      this.obj.favorite = this.flow.favorite
+      this.obj.title = this.flow.title || ''
+      this.obj.message = this.flow.message || ''
+      this.obj.labels = this.flow.labels || []
+      this.obj.itemContent = this.flow.itemContent || ''
+      this.obj.flowContent = this.flow.flowContent || []
+      this.obj.editedDate = this.flow.editedDate
+      this.obj.favorite = this.flow.favorite || false
     },
     watch: {
       flow (newVal) {
         this.obj.title = newVal.title || ''
         this.obj.message = newVal.message || ''
         this.obj.labels = newVal.labels || []
-        this.obj.content = newVal.content || []
-        this.obj.favorite = newVal.favorite
+        this.obj.itemContent = newVal.itemContent || ''
+        this.obj.flowContent = newVal.flowContent || []
+        this.obj.favorite = newVal.favorite || false
       }
     },
     beforeRouteUpdate (to, from, next) {

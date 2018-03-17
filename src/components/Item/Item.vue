@@ -19,7 +19,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 md8>
-        <item-content :content.sync="obj.content"></item-content>
+        <item-content :content.sync="obj.itemContent"></item-content>
       </v-flex>
     </v-layout>
 
@@ -36,7 +36,8 @@
           title: '',
           message: '',
           labels: [],
-          content: '',
+          itemContent: '',
+          flowContent: [],
           favorite: null
         },
         isDeleted: false
@@ -52,20 +53,22 @@
     },
     mounted () {
       this.obj.type = this.item.type
-      this.obj.date = this.item.date
-      this.obj.title = this.item.title
-      this.obj.message = this.item.message
-      this.obj.labels = this.item.labels
-      this.obj.content = this.item.content
-      this.obj.favorite = this.item.favorite
+      this.obj.title = this.item.title || ''
+      this.obj.message = this.item.message || ''
+      this.obj.labels = this.item.labels || []
+      this.obj.itemContent = this.item.itemContent || ''
+      this.obj.flowContent = this.item.flowContent || []
+      this.obj.editedDate = this.item.editedDate
+      this.obj.favorite = this.item.favorite || false
     },
     watch: {
       item (newVal) {
-        this.obj.title = newVal.title
-        this.obj.message = newVal.message
-        this.obj.labels = newVal.labels
-        this.obj.content = newVal.content
-        this.obj.favorite = newVal.favorite
+        this.obj.title = newVal.title || ''
+        this.obj.message = newVal.message || ''
+        this.obj.labels = newVal.labels || []
+        this.obj.itemContent = newVal.itemContent || ''
+        this.obj.flowContent = newVal.flowContent || []
+        this.obj.favorite = newVal.favorite || false
       }
     },
     beforeRouteUpdate (to, from, next) {
