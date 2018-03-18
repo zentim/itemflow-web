@@ -10,7 +10,7 @@
     <v-layout row wrap v-else>
       <v-flex xs12 md4>
         <v-card flat>
-          <app-toolbar :id="id" :type="obj.type" :isFavorite.sync="obj.favorite" :isDeleted.sync="isDeleted"></app-toolbar>
+          <app-toolbar :id="id" :type.sync="obj.type" :isFavorite.sync="obj.favorite" :isDeleted.sync="isDeleted"></app-toolbar>
           <item-flow-outline
             :id="id"
             :title.sync="obj.title"

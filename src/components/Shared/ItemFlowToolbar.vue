@@ -6,6 +6,12 @@
         <v-icon>more_vert</v-icon>
       </v-btn>
       <v-list>
+        <v-list-tile :class="switchTypeBtnColor" @click="switchType">
+          <v-list-tile-title>
+            <v-icon :class="switchTypeBtnColor">star</v-icon>
+            {{ type === 'item' ? 'become Flow' : 'become Item'}}
+          </v-list-tile-title>
+        </v-list-tile>
         <v-list-tile class="orange--text" @click="favorite">
           <v-list-tile-title>
             <v-icon class="orange--text">star</v-icon>
@@ -26,11 +32,16 @@
 <script>
 export default {
   props: ['id', 'type', 'isFavorite', 'isDeleted'],
-  data () {
-    return {
+  computed: {
+    switchTypeBtnColor () {
+      return this.type === 'item' ? 'blue--text' : 'green--text'
     }
   },
   methods: {
+    switchType () {
+      let type = this.type === 'item' ? 'flow' : 'item'
+      this.$emit('update:type', type)
+    },
     favorite () {
       this.$emit('update:isFavorite', !this.isFavorite)
     },
