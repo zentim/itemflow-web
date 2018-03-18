@@ -5,24 +5,8 @@
       <loading></loading>
     </v-layout>
 
-    <!-- before log in -->
-    <v-layout row wrap v-if="!userIsAuthenticated">
-      <v-flex xs12 sm6 class="text-xs-center text-sm-right">
-        <v-btn large to="/signup" class="primary">
-          <v-icon left dark>face</v-icon>
-          Sign up
-        </v-btn>
-      </v-flex>
-      <v-flex xs12 sm6 class="text-xs-center text-sm-left">
-        <v-btn large to="/login" class="primary">
-          <v-icon left dark>lock_open</v-icon>
-          Log in
-        </v-btn>
-      </v-flex>
-    </v-layout>
-
     <!-- after log in -->
-    <v-layout row wrap v-else>
+    <v-layout row wrap v-if="userIsAuthenticated">
       <v-flex
         xs12
         sm6

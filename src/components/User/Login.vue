@@ -1,93 +1,67 @@
 <template>
   <v-container>
-    <v-layout row v-if="error">
-      <v-flex xs12 sm6 offset-sm3>
-        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
-      </v-flex>
-    </v-layout>
-    <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
-        <v-card>
-          <v-card-text>
-            <v-container>
-              <form @submit.prevent="onSignin">
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="email"
-                      label="Mail"
-                      id="email"
-                      v-model="email"
-                      type="email"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="password"
-                      label="Password"
-                      id="password"
-                      v-model="password"
-                      type="password"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-btn type="submit" :disabled="loading" :loading="loading">
-                      Sign in
-                       <span slot="loader" class="custom-loader">
-                        <v-icon light>cached</v-icon>
-                       </span>
-                    </v-btn>
-                  </v-flex>
-                </v-layout>
-              </form>
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <v-flex x12 class="text-xs-center" v-if="!userIsAuthenticated">
+      <h2>Welcome to ItemFlow</h2>
+      <div id="firebaseui-auth-container"></div>
+    </v-flex>
   </v-container>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        email: '',
-        password: ''
-      }
+import * as firebase from 'firebase'
+import * as firebaseui from 'firebaseui'
+// FirebaseUI config.
+var uiConfig = {
+  signInSuccessUrl: '/',
+  signInOptions: [
+    // Leave the lines as is for the providers you want to offer your users.
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      requireDisplayName: false
     },
-    computed: {
-      user () {
-        return this.$store.getters.user
-      },
-      error () {
-        return this.$store.getters.error
-      },
-      loading () {
-        return this.$store.getters.loading
+    {
+      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      scopes: [
+        'https://www.googleapis.com/auth/plus.login'
+      ],
+      customParameters: {
+        // Forces account selection even when one account
+        // is available.
+        prompt: 'select_account'
       }
-    },
-    watch: {
-      user (value) {
-        if (value !== null && value !== undefined) {
-          if (this.$route.name === 'Login') {
-            this.$router.push('/items')
-          }
+    }
+    // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    // firebase.auth.GithubAuthProvider.PROVIDER_ID,
+    // firebase.auth.PhoneAuthProvider.PROVIDER_ID
+  ],
+  signInFlow: 'popup',
+  // Terms of service url.
+  tosUrl: 'https://www.google.com'
+}
+
+// Initialize the FirebaseUI Widget using Firebase.
+var ui = new firebaseui.auth.AuthUI(firebase.auth())
+// The start method will wait until the DOM is loaded.
+ui.start('#firebaseui-auth-container', uiConfig)
+
+export default {
+  computed: {
+    userIsAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    }
+    // user () {
+    //   return this.$store.getters.user
+    // }
+  },
+  watch: {
+    user (value) {
+      if (value !== null && value !== undefined) {
+        if (this.$route.name === 'Login') {
+          this.$router.push('/')
         }
-      }
-    },
-    methods: {
-      onSignin () {
-        this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
-        this.$router.push('/items')
-      },
-      onDismissed () {
-        this.$store.dispatch('clearError')
       }
     }
   }
+}
 </script>

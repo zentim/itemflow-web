@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import * as firebase from 'firebase'
+// import * as firebaseui from 'firebaseui'
 import { store } from './store'
 import router from './router'
 import Vuetify from 'vuetify'
@@ -61,6 +62,7 @@ new Vue({
   components: { App },
   template: '<App/>',
   created () {
+    // firebase init
     firebase.initializeApp({
       apiKey: 'AIzaSyAR8NWeWjUSSDtefimcD9nI5qiZ79pxUfk',
       authDomain: 'itemflow-7cb9d.firebaseapp.com',
@@ -68,10 +70,35 @@ new Vue({
       projectId: 'itemflow-7cb9d',
       storageBucket: 'itemflow-7cb9d.appspot.com'
     })
+
+    // // FirebaseUI config.
+    // var uiConfig = {
+    //   signInSuccessUrl: '/',
+    //   signInOptions: [
+    //     // Leave the lines as is for the providers you want to offer your users.
+    //     firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    //     firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    //     // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    //     // firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    //     // firebase.auth.GithubAuthProvider.PROVIDER_ID,
+    //     // firebase.auth.PhoneAuthProvider.PROVIDER_ID
+    //   ],
+    //   // Terms of service url.
+    //   tosUrl: 'https://www.google.com'
+    // }
+
+    // // Initialize the FirebaseUI Widget using Firebase.
+    // var ui = new firebaseui.auth.AuthUI(firebase.auth())
+    // // The start method will wait until the DOM is loaded.
+    // ui.start('#firebaseui-auth-container', uiConfig)
+
+    // auto login
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.$store.dispatch('autoSignIn', user)
         this.$store.dispatch('loadItemFlow')
+      } else {
+        this.$router.push('/login')
       }
     })
   }

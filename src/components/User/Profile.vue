@@ -46,17 +46,17 @@
         return this.$store.getters.user
       },
       itemflowLength () {
-        let itemflow =  this.$store.getters.loadedItemFlow
+        let itemflow = this.$store.getters.loadedItemFlow
         let length = itemflow ? itemflow.length : 0
         return length
       },
       itemsLength () {
-        let itemflow =  this.$store.getters.loadedItems
+        let itemflow = this.$store.getters.loadedItems
         let length = itemflow ? itemflow.length : 0
         return length
       },
       flowsLength () {
-        let itemflow =  this.$store.getters.loadedFlows
+        let itemflow = this.$store.getters.loadedFlows
         let length = itemflow ? itemflow.length : 0
         return length
       }
