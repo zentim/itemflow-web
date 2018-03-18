@@ -78,6 +78,7 @@
       :hide-overlay="rightDrawer"
       width="250"
       v-if="userIsAuthenticated"
+      style="z-index: 200"
     >
       <v-icon class="hidden-lg-and-up px-2 py-2" style="cursor: pointer" large @click.stop="rightDrawer = !rightDrawer">keyboard_tab</v-icon>
       <v-card class="hidden-lg-and-up" color="secondary" flat>
