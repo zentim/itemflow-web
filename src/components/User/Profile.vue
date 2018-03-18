@@ -9,7 +9,7 @@
                 <v-flex text-xs-center>
                   <div class="my-3">
                     <v-avatar class="orange">
-                      <span class="white--text headline">J</span>
+                      <span class="white--text headline">{{ user.email.slice(0, 1) }}</span>
                     </v-avatar>
                     <h3 class="headline d-inline-block mx-1">{{ user.email }}</h3>
                   </div>
