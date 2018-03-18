@@ -20,7 +20,6 @@
         full-width
         multi-line
         hide-details
-        :class="hiddenClass"
       ></v-text-field>
       <v-divider class="my-3" :class="hiddenClass"></v-divider>
       <h4 :class="hiddenClass"><v-icon color="primary">local_offer</v-icon> Labels:</h4>
