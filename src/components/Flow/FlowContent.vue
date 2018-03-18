@@ -1,24 +1,28 @@
 <template>
-  <draggable
-    v-model="flows"
-    class="dragArea"
-    :options="{group: 'itemflow'}">
-      <v-flex
-        v-for="(obj, index) in flows"
-        :key="index"
-        class="pb-1">
-        <div style="position: relative;">
-          <div style="position: absolute; top: 10px; right: 0; z-index: 100; cursor: pointer;" >
-            <v-icon class="closeCard" large @click.prevent.stop="remove(index)">close</v-icon>
+  <v-layout class="d-flex" style="position: relative">
+    <draggable
+      v-model="flows"
+      class="dragArea"
+      :options="{group: 'itemflow'}">
+        <v-flex
+          v-for="(obj, index) in flows"
+          :key="index"
+          class="pb-1">
+          <div style="position: relative;">
+            <div style="position: absolute; top: 10px; right: 0; z-index: 100; cursor: pointer;" >
+              <v-icon class="closeCard" large @click.prevent.stop="remove(index)">close</v-icon>
+            </div>
           </div>
-        </div>
-        <itemflow-card
-          :id="obj.id"
-          :type="obj.type"
-          :title="obj.title"
-          :message="obj.message"></itemflow-card>
-      </v-flex>
-  </draggable>
+          <itemflow-card
+            :id="obj.id"
+            :type="obj.type"
+            :title="obj.title"
+            :message="obj.message"></itemflow-card>
+        </v-flex>
+    </draggable>
+    <!-- fix cannot scroll list in small size screen.  -->
+    <div class="coverArea hidden-md-and-up"></div>
+  </v-layout>
 </template>
 
 
@@ -123,5 +127,15 @@
 }
 .closeCard:hover {
   color: red;
+}
+.coverArea {
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 60%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10
 }
 </style>

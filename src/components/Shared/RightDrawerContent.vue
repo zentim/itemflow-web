@@ -5,6 +5,8 @@
       <loading></loading>
     </v-layout>
 
+    <!-- <div class="coverArea"></div> -->
+
     <draggable
       v-model="itemflow"
       class="dragArea "
@@ -72,5 +74,15 @@
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
+}
+.coverArea {
+  background-color: red;
+  width: 100px;
+  height: 1000px;
+  position: fixed;
+  top: 100px;
+  right: 0;
+  bottom: 0;
+  z-index: 100
 }
 </style>

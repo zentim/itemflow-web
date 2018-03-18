@@ -65,11 +65,9 @@
       <router-view></router-view>
     </v-content>
 
-    <!-- speed dial component -->
-    <!-- <speed-dial></speed-dial> -->
-
 
     <!-- right -->
+    <!-- z-index is fixing flow content delete show problem in small size screen.  -->
     <v-navigation-drawer
       fixed
       right
@@ -80,11 +78,15 @@
       v-if="userIsAuthenticated"
       style="z-index: 200"
     >
-      <v-icon class="hidden-lg-and-up px-2 py-2" style="cursor: pointer" large @click.stop="rightDrawer = !rightDrawer">keyboard_tab</v-icon>
-      <v-card class="hidden-lg-and-up" color="secondary" flat>
-        <app-search></app-search>
-      </v-card>
-      <right-drawer-content></right-drawer-content>
+      <div style="position: relative">
+        <v-icon class="hidden-lg-and-up px-2 py-2" style="cursor: pointer" large @click.stop="rightDrawer = !rightDrawer">keyboard_tab</v-icon>
+        <v-card class="hidden-lg-and-up" color="secondary" flat>
+          <app-search></app-search>
+        </v-card>
+        <right-drawer-content></right-drawer-content>
+        <!-- fix cannot scroll list in small size screen.  -->
+        <div class="coverArea hidden-md-and-up"></div>
+      </div>
     </v-navigation-drawer>
 
     <!-- left -->
@@ -205,4 +207,14 @@
     }
   }
 </script>
-
+<style scoped>
+.coverArea {
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 60%;
+  height: 100%;
+  position: absolute;
+  top: 100px;
+  right: 0;
+  z-index: 10
+}
+</style>
