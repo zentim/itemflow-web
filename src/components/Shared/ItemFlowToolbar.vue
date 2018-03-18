@@ -8,7 +8,7 @@
       <v-list>
         <v-list-tile :class="switchTypeBtnColor" @click="switchType">
           <v-list-tile-title>
-            <v-icon :class="switchTypeBtnColor">star</v-icon>
+            <v-icon :class="switchTypeBtnColor">swap_horiz</v-icon>
             {{ type === 'item' ? 'become Flow' : 'become Item'}}
           </v-list-tile-title>
         </v-list-tile>
