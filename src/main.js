@@ -98,7 +98,7 @@ new Vue({
         this.$store.dispatch('autoSignIn', user)
         this.$store.dispatch('loadItemFlow')
       } else {
-        this.$router.push('/login')
+        this.$router.push('/signin')
       }
     })
   }

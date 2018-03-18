@@ -1,14 +1,8 @@
 // 登陸頁面
-export const signupRouter = {
-  path: '/signup',
-  name: 'Signup',
-  component: () => import('@/components/User/Signup')
-}
-
-export const loginRouter = {
-  path: '/login',
-  name: 'Login',
-  component: () => import('@/components/User/Login')
+export const signinRouter = {
+  path: '/signin',
+  name: 'Signin',
+  component: () => import('@/components/User/Signin')
 }
 
 // Main
@@ -64,7 +58,6 @@ export const appRouter = [
 
 // 所有上面定義的路由都要寫在下面的 routers 裡
 export const routers = [
-  signupRouter,
-  loginRouter,
+  signinRouter,
   ...appRouter
 ]

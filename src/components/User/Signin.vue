@@ -57,7 +57,7 @@ export default {
   watch: {
     user (value) {
       if (value !== null && value !== undefined) {
-        if (this.$route.name === 'Login') {
+        if (this.$route.name === 'Signin') {
           this.$router.push('/')
         }
       }
