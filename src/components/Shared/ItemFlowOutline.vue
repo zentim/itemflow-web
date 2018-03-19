@@ -9,8 +9,9 @@
         full-width
         multi-line
         hide-details
-        class="title py-0"
+        class="itemflow-title py-0"
       ></v-text-field>
+
       <v-text-field
         placeholder="Add message here..."
         v-model="outlineMessage"
@@ -20,7 +21,9 @@
         full-width
         multi-line
         hide-details
+        class="itemflow-message"
       ></v-text-field>
+
       <v-divider class="my-3" :class="hiddenClass"></v-divider>
       <h4 :class="hiddenClass"><v-icon color="primary">local_offer</v-icon> Labels:</h4>
       <app-labels :labels.sync="outlineLabels" :key="id" :class="hiddenClass"></app-labels>
@@ -77,3 +80,22 @@ export default {
   }
 }
 </script>
+<style scoped>
+.itemflow-title {
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: normal;
+}
+.itemflow-message {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: normal;
+}
+.input-group--text-field textarea {
+  font-size: 12px !important;
+}
+.input-group--text-field textarea {
+  font-size: 10px !important;
+}
+</style>

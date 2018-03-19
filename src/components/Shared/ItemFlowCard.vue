@@ -24,10 +24,12 @@
   font-size: 18px;
   font-weight: 300;
   color: rgba(0, 0, 0, 0.87);
+  line-height: normal;
 }
 .itemflow-message {
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.6)
+  color: rgba(0, 0, 0, 0.6);
+  line-height: normal;
 }
 .word-overflow-hidden {
   overflow:hidden;

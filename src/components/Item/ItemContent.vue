@@ -26,11 +26,11 @@
           'insertdatetime media nonbreaking save table',
           'template paste textcolor colorpicker textpattern imagetools toc emoticons hr codesample'
         ],
-        editerToolbar1: 'undo redo | backcolor bold italic underline | table codesample | bullist numlist outdent indent | hr removeformat  | fontsizeselect',
+        editerToolbar1: 'undo redo | backcolor bold italic underline | bullist numlist table | codesample outdent indent | hr removeformat',
         editerOptions: {
-          height: 450,
+          height: 520,
           menubar: false,
-          content_style: ".mce-content-body {font-size:10pt;font-family:sans-serif;}"
+          content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px}'
         }
       }
     },
