@@ -61,7 +61,7 @@
 
 
     <!-- main -->
-    <v-content>
+    <v-content style="background-color: #ececec">
       <router-view></router-view>
     </v-content>
 

@@ -21,16 +21,25 @@
         data: this.content,
         editerHtmlClass: '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
         editerPlugins: [
-          'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+          'autolink lists link image charmap print preview hr anchor pagebreak',
           'searchreplace wordcount visualchars code fullscreen',
           'insertdatetime media nonbreaking save table',
           'template paste textcolor colorpicker textpattern imagetools toc emoticons hr codesample'
         ],
-        editerToolbar1: 'undo redo | backcolor bold italic underline | bullist numlist table | codesample outdent indent | hr removeformat',
+        editerToolbar1: 'undo redo | backcolor bold italic | bullist numlist table | hr codesample removeformat | mybutton',
         editerOptions: {
           height: 520,
           menubar: false,
-          content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px}'
+          content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px}',
+          setup: function (editor) {
+            editor.addButton('mybutton', {
+              text: 'H',
+              icon: false,
+              onclick: function () {
+                editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;');
+              }
+            });
+          }
         }
       }
     },

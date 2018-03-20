@@ -22,6 +22,7 @@
         multi-line
         hide-details
         class="itemflow-message"
+        :class="hiddenClass"
       ></v-text-field>
 
       <v-divider class="my-3" :class="hiddenClass"></v-divider>
