@@ -15,7 +15,8 @@
             :id="id"
             :title.sync="obj.title"
             :message.sync="obj.message"
-            :labels.sync="obj.labels"></item-flow-outline>
+            :labels.sync="obj.labels"
+            :labelsFrom="obj.labelsFrom"></item-flow-outline>
         </v-card>
       </v-flex>
       <v-flex xs12 md8>
@@ -38,6 +39,7 @@
           title: '',
           message: '',
           labels: [],
+          labelsFrom: [],
           itemContent: '',
           flowContent: [],
           favorite: null
@@ -58,6 +60,7 @@
       this.obj.title = this.itemflowObj.title || ''
       this.obj.message = this.itemflowObj.message || ''
       this.obj.labels = this.itemflowObj.labels || []
+      this.obj.labelsFrom = this.itemflowObj.labelsFrom || []
       this.obj.itemContent = this.itemflowObj.itemContent || ''
       this.obj.flowContent = this.itemflowObj.flowContent || []
       this.obj.editedDate = this.itemflowObj.editedDate
@@ -69,7 +72,8 @@
         this.obj.title = newVal.title || ''
         this.obj.message = newVal.message || ''
         this.obj.labels = newVal.labels || []
-        this.obj.itemContent = newVal.itemContent || ''
+        this.obj.labelsFrom = newVal.labelsFrom || []
+        this.obj.itemContent = newVal.itemContent || []
         this.obj.flowContent = newVal.flowContent || []
         this.obj.favorite = newVal.favorite || false
       }
@@ -85,6 +89,15 @@
           ...this.obj
         }
         this.$store.dispatch('updateItemFlow', newObj)
+        this.$store.dispatch('addLabelsFrom', {
+          targets: this.obj.labels,
+          updatedData: {
+            id: this.id,
+            type: this.obj.type,
+            title: this.obj.title,
+            message: this.obj.message
+          }
+        })
         next()
       }
     },
@@ -97,6 +110,17 @@
           ...this.obj
         }
         this.$store.dispatch('updateItemFlow', newObj)
+        console.log('1')
+        this.$store.dispatch('addLabelsFrom', {
+          targets: this.obj.labels,
+          updatedData: {
+            id: this.id,
+            type: this.obj.type,
+            title: this.obj.title,
+            message: this.obj.message
+          }
+        })
+        console.log('3')
         next()
       }
     }

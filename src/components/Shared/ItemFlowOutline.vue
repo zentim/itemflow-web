@@ -27,19 +27,20 @@
 
       <v-divider class="my-3" :class="hiddenClass"></v-divider>
       <h4 :class="hiddenClass"><v-icon color="primary">local_offer</v-icon> Labels:</h4>
-      <app-labels :labels.sync="outlineLabels" :key="id" :class="hiddenClass"></app-labels>
+      <app-labels :labels.sync="outlineLabels" :labelsFrom="outlineLabelsFrom" :key="id" :class="hiddenClass"></app-labels>
       <v-btn class="hidden-md-and-up mb-3" color="info" block dark @click.stop="show = !show" large><v-icon>{{show ? 'expand_less' : 'expand_more'}}</v-icon></v-btn>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: ['id', 'title', 'message', 'labels'],
+  props: ['id', 'title', 'message', 'labels', 'labelsFrom'],
   data () {
     return {
       outlineTitle: '',
       outlineMessage: '',
       outlineLabels: [],
+      outlineLabelsFrom: [],
       show: false
     }
   },
@@ -47,6 +48,7 @@ export default {
     this.outlineTitle = this.title
     this.outlineMessage = this.message
     this.outlineLabels = this.labels
+    this.outlineLabelsFrom = this.labelsFrom
   },
   computed: {
     hiddenClass () {
@@ -62,6 +64,9 @@ export default {
     },
     labels (newVal) {
       this.outlineLabels = newVal
+    },
+    labelsFrom (newVal) {
+      this.outlineLabelsFrom = newVal
     },
     outlineTitle (newVal) {
       if (this.title !== newVal) {

@@ -32,13 +32,14 @@
           menubar: false,
           content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px}',
           setup: function (editor) {
+            // TODO: make highlight button work
             editor.addButton('mybutton', {
               text: 'H',
               icon: false,
               onclick: function () {
-                editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;');
+                editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;')
               }
-            });
+            })
           }
         }
       }

@@ -1,37 +1,100 @@
 <template>
-    <!-- drag area -->
-    <draggable
-      v-model="chips"
-      class="dragArea"
-      :options="{group: 'itemflow'}"
+  <v-layout>
+    <v-flex>
+      <v-tabs
+        dark
+        color="cyan"
+        centered
+        v-model="model"
       >
-      <!-- labels -->
-      <div v-for="(obj, index) in chips" :key="index" style="display: inline">
-        <v-chip
-          close
-          :color="itemflowColor(obj.type)"
-          @input="remove(index)"
-          :key="index">
-          <router-link
-            :to="'/' + obj.type + '/' + obj.id"
-            tag="span"
-            style="cursor: pointer"
-            :key="obj.id">
-            {{ handleText(obj.title) || 'no title' }}
-          </router-link>
-        </v-chip>
-      </div>
-    </draggable>
+        <v-tabs-slider color="yellow"></v-tabs-slider>
+        <v-tab
+          key="tab-from"
+          href="#tab-from">
+          From
+        </v-tab>
+        <v-tab
+          key="tab-to"
+          href="#tab-to"
+        >
+          To
+        </v-tab>
+        <v-tabs-items v-model="model">
+          <v-tab-item
+            id="tab-from">
+            <v-card flat>
+              <!-- labels -->
+              <div v-for="(obj, index) in chipsFrom" :key="`index + 1000`" style="display: inline">
+                <v-chip
+                  :color="itemflowColor(obj.type)"
+                  :key="`index + 1000`">
+                  <router-link
+                    :to="'/' + obj.type + '/' + obj.id"
+                    tag="span"
+                    style="cursor: pointer"
+                    :key="`obj.id + from`">
+                    {{ handleText(obj.title) || 'no title' }}
+                  </router-link>
+                </v-chip>
+              </div>
+            </v-card>
+          </v-tab-item>
+
+          <v-tab-item
+            id="tab-to"
+          >
+            <v-card flat>
+              <v-card flat>
+                <!-- drag area -->
+                <draggable
+                  v-model="chips"
+                  class="dragArea"
+                  :options="{group: 'itemflow'}"
+                  >
+                  <!-- labels -->
+                  <div v-for="(obj, index) in chips" :key="index" style="display: inline">
+
+                    <v-chip
+                      close
+                      :color="itemflowColor(obj.type)"
+                      @input="remove(index)"
+                      :key="index">
+                      <router-link
+                        :to="'/' + obj.type + '/' + obj.id"
+                        tag="span"
+                        style="cursor: pointer"
+                        :key="obj.id">
+                        {{ handleText(obj.title) || 'no title' }}
+                      </router-link>
+                    </v-chip>
+                  </div>
+                </draggable>
+            </v-card>
+            </v-card>
+          </v-tab-item>
+        </v-tabs-items>
+      </v-tabs>
+    </v-flex>
+  </v-layout>
 </template>
 
 
 <script>
   export default {
-    props: ['labels'],
+    props: ['labels', 'labelsFrom'],
     data () {
       return {
-        chips: [],
-        preventInfiniteLoop: 0  // for develope debug
+        chips: [
+          // {
+          //   id: '',
+          //   type: '',
+          //   title: '',
+          //   message: ''
+          // }
+        ],
+        chipsFrom: [],
+        preventInfiniteLoop: 0,  // for develope debug
+        model: 'tab-to'
       }
     },
     methods: {
@@ -44,8 +107,15 @@
         return text
       },
       remove (index) {
+        let removedChipId = this.chips[index].id
         this.chips.splice(index, 1)
         this.chips = [...this.chips]
+
+        // remove this from removedChip's labelsFrom
+        this.$store.dispatch('removeLabelsFrom', {
+          targetId: removedChipId,
+          removedObjId: this.$route.params.id
+        })
       },
       itemflowColor (type) {
         if (type === 'item') {
@@ -76,6 +146,7 @@
     },
     mounted () {
       this.chips = this.updateLastestData(this.labels)
+      this.chipsFrom = this.labelsFrom
     },
     watch: {
       labels (newVal) {
@@ -136,6 +207,9 @@
 
         // update data to parent component
         this.$emit('update:labels', newVal)
+      },
+      labelsFrom (newVal) {
+        this.chipsFrom = newVal
       }
     }
   }

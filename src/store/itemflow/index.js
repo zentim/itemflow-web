@@ -130,6 +130,82 @@ export default {
       }
       firebase.database().ref('itemflow/' + user.id).child(objId).update(obj)
     },
+    addLabelsFrom ({ commit, getters }, payload) {
+      // payload = {
+      //   targets: [{}, {}],
+      //   updatedData: {
+      //     id: '',
+      //     type: '',
+      //     title: '',
+      //     message: ''
+      //   }
+      // }
+      const user = getters.user
+      let targets = payload.targets
+      let updatedData = payload.updatedData
+
+      let i = 0
+      let len = targets ? targets.length : 0
+      for (i = 0; i < len; i++) {
+        let target = getters.loadedItemFlowObj(targets[i].id)
+        if (!target) {
+          console.log('addLabelsFrom error: target (' + targets[i].id + ') is not exited')
+          continue
+        }
+
+        let targetLabelsFrom = target.labelsFrom
+        let j = 0
+        let isExisted = false
+        let targetLabelsFromLen = targetLabelsFrom ? targetLabelsFrom.length : 0
+        for (j = 0; j < targetLabelsFromLen; j++) {
+          if (targetLabelsFrom[j].id === updatedData.id) {
+            console.log('addLabelsFrom error: updatedData is already exited targetLabelsFrom')
+            isExisted = true
+            break
+          }
+        }
+
+        if (!isExisted) {
+          targetLabelsFrom = [
+            ...targetLabelsFrom,
+            updatedData
+          ]
+          console.log(target.title + ': addLabelsFrom successd')
+        }
+        firebase.database().ref('itemflow/' + user.id + '/' + target.id).child('labelsFrom')
+          .set(targetLabelsFrom)
+      }
+    },
+    removeLabelsFrom ({ commit, getters }, payload) {
+      // payload = {
+      //   targetId: removedChip.id,
+      //   removedObjId: this.$route.params.id
+      // }
+      const user = getters.user
+      let target = getters.loadedItemFlowObj(payload.targetId)
+      let removedObjId = payload.removedObjId
+      if (!target) {
+        console.log('removeLabelsFrom error: target(' + payload.id + ') not existed')
+        return
+      }
+      if (!target.labelsFrom) {
+        console.log('removeLabelsFrom error: target labelsFrom is empty')
+        return
+      }
+      let targetLabelsFrom = target.labelsFrom
+      let i = 0
+      let len = targetLabelsFrom.length
+      for (i = 0; i < len; i++) {
+        if (targetLabelsFrom[i].id === removedObjId) {
+          let removedObj = targetLabelsFrom.splice(i, 1)
+          targetLabelsFrom = [...targetLabelsFrom]
+          console.log('remove successd: ' + removedObj.title + ' is removed')
+          break
+        }
+      }
+      firebase.database().ref('itemflow/' + user.id + '/' + target.id).child('labelsFrom')
+        .set(targetLabelsFrom)
+    },
     loadItemFlow ({ commit, getters }) {
       commit('setLoading', true)
       const user = getters.user
@@ -148,6 +224,7 @@ export default {
               title: itemflow[key].title || '',
               message: itemflow[key].message || '',
               labels: itemflow[key].labels || [],
+              labelsFrom: itemflow[key].labelsFrom || [],
               itemContent: itemflow[key].itemContent || '',
               flowContent: itemflow[key].flowContent || [],
               editedDate: itemflow[key].editedDate,
