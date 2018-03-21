@@ -26,7 +26,7 @@
           'insertdatetime media nonbreaking save table',
           'template paste textcolor colorpicker textpattern imagetools toc emoticons hr codesample'
         ],
-        editerToolbar1: 'undo redo | bold italic mark | bullist numlist table | hr codesample removeformat ',
+        editerToolbar1: 'undo redo bold mark hr bullist numlist table codesample removeformat ',
         editerOptions: {
           height: 520,
           menubar: false,
