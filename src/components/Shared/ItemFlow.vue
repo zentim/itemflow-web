@@ -73,7 +73,7 @@
         this.obj.message = newVal.message || ''
         this.obj.labels = newVal.labels || []
         this.obj.labelsFrom = newVal.labelsFrom || []
-        this.obj.itemContent = newVal.itemContent || []
+        this.obj.itemContent = newVal.itemContent || ''
         this.obj.flowContent = newVal.flowContent || []
         this.obj.favorite = newVal.favorite || false
       }

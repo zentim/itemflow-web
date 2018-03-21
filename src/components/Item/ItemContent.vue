@@ -48,20 +48,6 @@
         }
       }
     },
-    // computed: {
-    //   editerOptions () {
-    //     if (this.$route.name === 'CreateItem') {
-    //       return {
-    //         height: 350,
-    //         auto_focus: 'd1'
-    //       }
-    //     } else {
-    //       return {
-    //         height: 350
-    //       }
-    //     }
-    //   }
-    // },
     methods: {
       initCallBack (e) {
         // console.log(this.$refs.tm.editor)
