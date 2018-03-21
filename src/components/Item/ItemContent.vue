@@ -26,18 +26,22 @@
           'insertdatetime media nonbreaking save table',
           'template paste textcolor colorpicker textpattern imagetools toc emoticons hr codesample'
         ],
-        editerToolbar1: 'undo redo | backcolor bold italic | bullist numlist table | hr codesample removeformat | mybutton',
+        editerToolbar1: 'undo redo | bold italic mark | bullist numlist table | hr codesample removeformat ',
         editerOptions: {
           height: 520,
           menubar: false,
           content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px}',
           setup: function (editor) {
-            // TODO: make highlight button work
-            editor.addButton('mybutton', {
+            editor.addButton('mark', {
               text: 'H',
               icon: false,
               onclick: function () {
-                editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;')
+                var toggleFormat = function (name, value) {
+                  editor.formatter.toggle(name, value ? { value: value } : undefined)
+                  editor.nodeChanged()
+                  console.log('hi')
+                }
+                toggleFormat('hilitecolor', 'yellow')
               }
             })
           }
