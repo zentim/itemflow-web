@@ -110,7 +110,6 @@
           ...this.obj
         }
         this.$store.dispatch('updateItemFlow', newObj)
-        console.log('1')
         this.$store.dispatch('addLabelsFrom', {
           targets: this.obj.labels,
           updatedData: {
@@ -120,7 +119,6 @@
             message: this.obj.message
           }
         })
-        console.log('3')
         next()
       }
     }

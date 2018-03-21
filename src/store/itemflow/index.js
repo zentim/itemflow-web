@@ -198,8 +198,10 @@ export default {
       for (i = 0; i < len; i++) {
         if (targetLabelsFrom[i].id === removedObjId) {
           let removedObj = targetLabelsFrom.splice(i, 1)
+          console.log(removedObj)
           targetLabelsFrom = [...targetLabelsFrom]
-          console.log('remove successd: ' + removedObj.title + ' is removed')
+          console.log('remove successd: ' + removedObj[0].title + ' is removed')
+          console.log(targetLabelsFrom)
           break
         }
       }

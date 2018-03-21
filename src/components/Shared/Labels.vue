@@ -204,7 +204,6 @@
             }
           }
         }
-
         // update data to parent component
         this.$emit('update:labels', newVal)
       },
