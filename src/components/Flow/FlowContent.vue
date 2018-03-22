@@ -1,6 +1,5 @@
 <template>
   <v-layout class="d-flex" style="position: relative">
-    {{content}}
     <draggable
       v-model="flows"
       class="dragArea"
