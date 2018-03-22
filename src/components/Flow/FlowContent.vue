@@ -1,5 +1,6 @@
 <template>
   <v-layout class="d-flex" style="position: relative">
+    {{content}}
     <draggable
       v-model="flows"
       class="dragArea"
@@ -85,6 +86,13 @@
         let newContentLength = newContent ? newContent.length : 0
         if (flowsLength !== newContentLength) {
           this.flows = newContent || []
+        } else {
+          for (let i = 0; i < flowsLength; i++) {
+            if (this.flows[i].id !== newContent[i].id) {
+              this.flows = newContent || []
+              return
+            }
+          }
         }
       },
       flows (newVal) {
