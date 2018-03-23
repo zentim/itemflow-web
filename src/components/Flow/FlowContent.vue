@@ -131,6 +131,8 @@
   min-height: 300px;
   border: 1px solid #888;
   background-color: #eee;
+  /* I don't know why add any value to width can fix card's word overflow problem. */
+  width: 0px;
 }
 .closeCard:hover {
   color: red;
