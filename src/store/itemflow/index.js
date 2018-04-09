@@ -246,7 +246,7 @@ export default {
 
       // [fuzzysort](https://github.com/farzher/fuzzysort)
       // Fast SublimeText-like fuzzy search for JavaScript.
-      let result = fuzzysort.go(payload, getters.loadedItemFlow, {keys: ['title', 'message', 'itemContent']})
+      let result = fuzzysort.go(payload, getters.loadedItemFlow, {keys: ['title', 'message']})
       let searchResults = []
       let resultLength = result ? result.length : 0
       for (let i = 0; i < resultLength; i++) {
