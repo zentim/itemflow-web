@@ -166,8 +166,7 @@
     computed: {
       menuItemsTop () {
         return [
-          { icon: 'add', title: 'Add Item', link: '/item/new' },
-          { icon: 'playlist_add', title: 'Add Flow', link: '/flow/new' }
+          { icon: 'add', title: 'Add Item', link: '/item/new' }
         ]
       },
       menuItemsMiddle () {
