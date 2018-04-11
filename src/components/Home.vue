@@ -12,10 +12,10 @@
         sm6
         md4
         lg3
-        v-for="(obj, index) in itemflow"
+        v-for="(obj, index) in Objects"
         :key="index"
         class="pb-1 pr-1">
-        <itemflow-card
+          <itemflow-card
           :id="obj.id"
           :type="obj.type"
           :title="obj.title"
@@ -27,6 +27,11 @@
 
 <script>
   export default {
+    data () {
+      return {
+        count: 60
+      }
+    },
     computed: {
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
@@ -66,7 +71,30 @@
             return this.$store.getters.favoriteItemFlow
           }
         }
+      },
+      Objects () {
+        var objs = []
+        let i = 0
+        let length = this.count > this.itemflow.length ? this.itemflow.length : this.count
+        for (i = 0; i < length; i++) {
+          objs[i] = this.itemflow[i]
+        }
+        return objs
       }
+    },
+    methods: {
+      handleScroll (event) {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+        if (scrollTop + window.innerHeight >= document.body.clientHeight) {
+          this.count += 60
+        }
+      }
+    },
+    created () {
+      window.addEventListener('scroll', this.handleScroll)
+    },
+    destroyed () {
+      window.removeEventListener('scroll', this.handleScroll)
     }
   }
 </script>
