@@ -81,9 +81,6 @@ export default {
     },
     searchResultsFlows (state, getters) {
       return getters.searchResults.filter(obj => obj.type === 'flow')
-    },
-    searchResultsFavorite (state, getters) {
-      return getters.searchResults.filter(obj => obj.favorite === true)
     }
   },
   mutations: {
