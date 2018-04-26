@@ -29,7 +29,7 @@
   export default {
     data () {
       return {
-        count: 60
+        count: 120
       }
     },
     computed: {
@@ -84,7 +84,7 @@
       handleScroll (event) {
         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
         if (scrollTop + window.innerHeight >= document.body.clientHeight) {
-          this.count += 60
+          this.count += 120
         }
       }
     },
