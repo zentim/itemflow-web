@@ -17,11 +17,6 @@ export default {
       searchInput: ''
     }
   },
-  computed: {
-    itemflow () {
-      return this.$store.getters.loadedItemFlow
-    }
-  },
   methods: {
     clearSearchInput () {
       this.searchInput = ''
