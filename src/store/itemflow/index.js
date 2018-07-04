@@ -107,18 +107,18 @@ export default {
       }
       const createdObj = firebase
         .database()
-        .ref("MetadataStore")
+        .ref('MetadataStore')
         .child(user.id)
         .push(obj)
 
       const createdObjKey = createdObj.key
       const objContent = {
-        itemContent: payload.itemContent || "",
+        itemContent: payload.itemContent || '',
         flowContent: payload.flowContent || []
       }
       firebase
         .database()
-        .ref("ContentStore")
+        .ref('ContentStore')
         .child(user.id + '/' + createdObjKey)
         .update(objContent)
     },
@@ -127,7 +127,7 @@ export default {
       const objId = payload.id
       firebase
         .database()
-        .ref("MetadataStore/" + userId)
+        .ref('MetadataStore/' + userId)
         .child(objId)
         .remove()
     },
@@ -146,17 +146,17 @@ export default {
       }
       firebase
         .database()
-        .ref("MetadataStore/" + user.id)
+        .ref('MetadataStore/' + user.id)
         .child(objId)
         .update(obj)
 
       const objContent = {
-        itemContent: payload.itemContent || "",
+        itemContent: payload.itemContent || '',
         flowContent: payload.flowContent || []
       }
       firebase
         .database()
-        .ref("ContentStore")
+        .ref('ContentStore')
         .child(user.id + '/' + objId)
         .update(objContent)
     },
@@ -204,8 +204,8 @@ export default {
         }
         firebase
           .database()
-          .ref("MetadataStore/" + user.id + "/" + target.id)
-          .child("labelsFrom")
+          .ref('MetadataStore/' + user.id + '/' + target.id)
+          .child('labelsFrom')
           .set(targetLabelsFrom)
       }
     },
@@ -240,8 +240,8 @@ export default {
       }
       firebase
         .database()
-        .ref("MetadataStore/" + user.id + "/" + target.id)
-        .child("labelsFrom")
+        .ref('MetadataStore/' + user.id + '/' + target.id)
+        .child('labelsFrom')
         .set(targetLabelsFrom)
     },
     loadItemFlow ({ commit, getters }) {
@@ -253,27 +253,27 @@ export default {
       }
       firebase
         .database()
-        .ref("MetadataStore")
+        .ref('MetadataStore')
         .child(user.id)
-        .on("value", data => {
+        .on('value', data => {
           let newItemFlow = []
           let itemflow = data.val()
           for (let key in itemflow) {
             newItemFlow.push({
               id: key,
               type: itemflow[key].type,
-              title: itemflow[key].title || "",
-              message: itemflow[key].message || "",
+              title: itemflow[key].title || '',
+              message: itemflow[key].message || '',
               labels: itemflow[key].labels || [],
               labelsFrom: itemflow[key].labelsFrom || [],
-              itemContent: itemflow[key].itemContent || "",
+              itemContent: itemflow[key].itemContent || '',
               flowContent: itemflow[key].flowContent || [],
               editedDate: itemflow[key].editedDate,
               favorite: itemflow[key].favorite || false
             })
           }
-          commit("setLoadedItemFlow", newItemFlow)
-          commit("setLoading", false)
+          commit('setLoadedItemFlow', newItemFlow)
+          commit('setLoading', false)
         })
     },
     searchItemFlow ({commit, getters}, payload) {
