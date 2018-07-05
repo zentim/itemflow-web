@@ -51,31 +51,43 @@
       itemflowObj () {
         return this.$store.getters.loadedItemFlowObj(this.id)
       },
+      loadedContent () {
+        return this.$store.getters.loadedContent
+      },
       loading () {
         return this.$store.getters.loading
       }
     },
+    methods: {
+      loadContent () {
+        this.$store.dispatch('loadContent', this.id)
+      }
+    },
     mounted () {
+      this.loadContent()
       this.obj.type = this.itemflowObj.type
       this.obj.title = this.itemflowObj.title || ''
       this.obj.message = this.itemflowObj.message || ''
       this.obj.labels = this.itemflowObj.labels || []
       this.obj.labelsFrom = this.itemflowObj.labelsFrom || []
-      this.obj.itemContent = this.itemflowObj.itemContent || ''
-      this.obj.flowContent = this.itemflowObj.flowContent || []
+      this.obj.itemContent = this.loadedContent.itemContent || ''
+      this.obj.flowContent = this.loadedContent.flowContent || []
       this.obj.editedDate = this.itemflowObj.editedDate
       this.obj.favorite = this.itemflowObj.favorite || false
     },
     watch: {
       itemflowObj (newVal) {
+        this.loadContent()
         this.obj.type = newVal.type
         this.obj.title = newVal.title || ''
         this.obj.message = newVal.message || ''
         this.obj.labels = newVal.labels || []
         this.obj.labelsFrom = newVal.labelsFrom || []
+        this.obj.favorite = newVal.favorite || false
+      },
+      loadedContent (newVal) {
         this.obj.itemContent = newVal.itemContent || ''
         this.obj.flowContent = newVal.flowContent || []
-        this.obj.favorite = newVal.favorite || false
       }
     },
     beforeRouteUpdate (to, from, next) {

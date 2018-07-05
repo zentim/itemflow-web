@@ -9,15 +9,6 @@ export default {
       //   type: 'item',
       //   title: 'this is itemId001 title',
       //   message: 'itemId001 message',
-      //   itemContent: 'itemId001 content',
-      //   flowContent: [
-      //     {
-      //       id: 'itemId001',
-      //       type: 'item',
-      //       title: 'this is itemId001 title',
-      //       message: 'itemId001 message'
-      //     }
-      //   ],
       //   labels: [
       //     {
       //       id: 'itemId002',
@@ -41,6 +32,17 @@ export default {
       //   date: new Date()
       // }
     ],
+    loadedContent: {
+      //   itemContent: 'itemId001 content',
+      //   flowContent: [
+      //     {
+      //       id: 'itemId001',
+      //       type: 'item',
+      //       title: 'this is itemId001 title',
+      //       message: 'itemId001 message'
+      //     }
+      //   ],
+    },
     searchResults: [
       // {
       //   target: 'apple',
@@ -52,14 +54,18 @@ export default {
   getters: {
     loadedItemFlow (state) {
       return state.loadedItemFlow.sort(function (a, b) {
-        if (a.editedDate < b.editedDate) { return 1 }
-        if (a.editedDate > b.editedDate) { return -1 }
+        if (a.editedDate < b.editedDate) {
+          return 1
+        }
+        if (a.editedDate > b.editedDate) {
+          return -1
+        }
         return 0
       })
     },
     loadedItemFlowObj (state) {
-      return (ObjId) => {
-        return state.loadedItemFlow.find((obj) => {
+      return ObjId => {
+        return state.loadedItemFlow.find(obj => {
           return obj.id === ObjId
         })
       }
@@ -81,11 +87,17 @@ export default {
     },
     searchResultsFlows (state, getters) {
       return getters.searchResults.filter(obj => obj.type === 'flow')
+    },
+    loadedContent (state) {
+      return state.loadedContent
     }
   },
   mutations: {
     setLoadedItemFlow (state, payload) {
       state.loadedItemFlow = payload
+    },
+    setLoadedContent (state, payload) {
+      state.loadedContent = payload
     },
     setSearchResults (state, payload) {
       state.searchResults = payload
@@ -179,27 +191,30 @@ export default {
       for (i = 0; i < len; i++) {
         let target = getters.loadedItemFlowObj(targets[i].id)
         if (!target) {
-          console.log('addLabelsFrom error: target (' + targets[i].id + ') is not exited')
+          console.log(
+            'addLabelsFrom error: target (' + targets[i].id + ') is not exited'
+          )
           continue
         }
 
         let targetLabelsFrom = target.labelsFrom
         let j = 0
         let isExisted = false
-        let targetLabelsFromLen = targetLabelsFrom ? targetLabelsFrom.length : 0
+        let targetLabelsFromLen = targetLabelsFrom
+          ? targetLabelsFrom.length
+          : 0
         for (j = 0; j < targetLabelsFromLen; j++) {
           if (targetLabelsFrom[j].id === updatedData.id) {
-            console.log('addLabelsFrom error: updatedData is already exited targetLabelsFrom')
+            console.log(
+              'addLabelsFrom error: updatedData is already exited targetLabelsFrom'
+            )
             isExisted = true
             break
           }
         }
 
         if (!isExisted) {
-          targetLabelsFrom = [
-            ...targetLabelsFrom,
-            updatedData
-          ]
+          targetLabelsFrom = [...targetLabelsFrom, updatedData]
           console.log(target.title + ': addLabelsFrom successd')
         }
         firebase
@@ -218,7 +233,9 @@ export default {
       let target = getters.loadedItemFlowObj(payload.targetId)
       let removedObjId = payload.removedObjId
       if (!target) {
-        console.log('removeLabelsFrom error: target(' + payload.id + ') not existed')
+        console.log(
+          'removeLabelsFrom error: target(' + payload.id + ') not existed'
+        )
         return
       }
       if (!target.labelsFrom) {
@@ -233,7 +250,9 @@ export default {
           let removedObj = targetLabelsFrom.splice(i, 1)
           console.log(removedObj)
           targetLabelsFrom = [...targetLabelsFrom]
-          console.log('remove successd: ' + removedObj[0].title + ' is removed')
+          console.log(
+            'remove successd: ' + removedObj[0].title + ' is removed'
+          )
           console.log(targetLabelsFrom)
           break
         }
@@ -266,8 +285,8 @@ export default {
               message: itemflow[key].message || '',
               labels: itemflow[key].labels || [],
               labelsFrom: itemflow[key].labelsFrom || [],
-              itemContent: itemflow[key].itemContent || '',
-              flowContent: itemflow[key].flowContent || [],
+              // itemContent: itemflow[key].itemContent || '',
+              // flowContent: itemflow[key].flowContent || [],
               editedDate: itemflow[key].editedDate,
               favorite: itemflow[key].favorite || false
             })
@@ -276,7 +295,26 @@ export default {
           commit('setLoading', false)
         })
     },
-    searchItemFlow ({commit, getters}, payload) {
+    loadContent ({ commit, getters }, payload) {
+      commit('setLoading', true)
+      const user = getters.user
+      if (!user) {
+        console.log('error: no user before loadItemFlow')
+        return
+      }
+      var objId = payload
+      var obj = {}
+      firebase
+        .database()
+        .ref('ContentStore')
+        .child(user.id + '/' + objId)
+        .once('value', function (snapshot) {
+          obj = snapshot.val()
+          commit('setLoadedContent', obj)
+          commit('setLoading', false)
+        })
+    },
+    searchItemFlow ({ commit, getters }, payload) {
       if (!payload) {
         commit('setSearching', false)
         return
@@ -285,7 +323,9 @@ export default {
 
       // [fuzzysort](https://github.com/farzher/fuzzysort)
       // Fast SublimeText-like fuzzy search for JavaScript.
-      let result = fuzzysort.go(payload, getters.loadedItemFlow, {keys: ['title', 'message']})
+      let result = fuzzysort.go(payload, getters.loadedItemFlow, {
+        keys: ['title', 'message']
+      })
       let searchResults = []
       let resultLength = result ? result.length : 0
       for (let i = 0; i < resultLength; i++) {
