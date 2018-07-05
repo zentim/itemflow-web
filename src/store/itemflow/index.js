@@ -288,6 +288,7 @@ export default {
               // itemContent: itemflow[key].itemContent || '',
               // flowContent: itemflow[key].flowContent || [],
               editedDate: itemflow[key].editedDate,
+              createdDate: itemflow[key].createdDate,
               favorite: itemflow[key].favorite || false
             })
           }
@@ -337,24 +338,32 @@ export default {
         console.log('error: no user before loadItemFlow')
         return
       }
-      var data = getters.loadedItemFlow
+      var loadeditemflow = getters.loadedItemFlow
+
       firebase
         .database()
         .ref('ContentStore')
         .child(user.id)
         .once('value', function (snapshot) {
+          var data = {}
           snapshot.forEach(function (childSnapshot) {
-            var elementIndex = data.findIndex(function (element) {
+            var elementIndex = loadeditemflow.findIndex(function (element) {
               return element.id === childSnapshot.key
             })
-            data[elementIndex] = Object.assign(data[elementIndex], childSnapshot.val())
+            loadeditemflow[elementIndex] = Object.assign(loadeditemflow[elementIndex], childSnapshot.val())
+            delete loadeditemflow[elementIndex].id
+            data[childSnapshot.key] = {
+              ...loadeditemflow[elementIndex]
+            }
           })
+          console.log(data)
+
           // output file
           var jsonData = JSON.stringify(data)
           var a = document.createElement('a')
           var file = new Blob([jsonData], {type: 'text/plain'})
           a.href = URL.createObjectURL(file)
-          a.download = 'itemflow.json'
+          a.download = 'itemflow_' + Date.now() + '.json'
           a.click()
         })
     },
@@ -367,26 +376,48 @@ export default {
       var data = payload
       var metatdatastore = {}
       var contentstore = {}
-
-      // for (var i in data) {
-      //   contentstore[data[i].id] = {
-      //     itemContent: data[i].itemContent,
-      //     flowContent: data[i].flowContent
-      //   }
-      // }
-
-      data.forEach(function (element) {
-        contentstore[element.id] = {
-          itemContent: element.itemContent || '',
-          flowContent: element.flowContent || []
+      for (var key in data) {
+        metatdatastore[key] = {
+          type: data[key].type,
+          title: data[key].title || '',
+          message: data[key].message || '',
+          labels: data[key].labels || [],
+          labelsFrom: data[key].labelsFrom || [],
+          editedDate: data[key].editedDate,
+          createdDate: data[key].createdDate,
+          favorite: data[key].favorite || false
         }
-      })
-      console.log(contentstore)
+        contentstore[key] = {
+          itemContent: data[key].itemContent || '',
+          flowContent: data[key].flowContent || []
+        }
+      }
+      firebase
+        .database()
+        .ref('MetadataStore')
+        .child(user.id)
+        .update(metatdatastore, function (error) {
+          if (error) {
+            // The write failed...
+            console.log('MetadataStore: The write failed...')
+          } else {
+            // Data saved successfully!
+            console.log('MetadataStore: Data saved successfully!')
+          }
+        })
       firebase
         .database()
         .ref('ContentStore')
         .child(user.id)
-        .update(contentstore)
+        .update(contentstore, function (error) {
+          if (error) {
+            // The write failed...
+            console.log('ContentStore: The write failed...')
+          } else {
+            // Data saved successfully!
+            console.log('ContentStore: Data saved successfully!')
+          }
+        })
     }
   }
 }
