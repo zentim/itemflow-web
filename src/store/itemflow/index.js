@@ -296,7 +296,6 @@ export default {
         })
     },
     loadContent ({ commit, getters }, payload) {
-      commit('setLoading', true)
       const user = getters.user
       if (!user) {
         console.log('error: no user before loadItemFlow')
@@ -311,7 +310,6 @@ export default {
         .once('value', function (snapshot) {
           obj = snapshot.val()
           commit('setLoadedContent', obj)
-          commit('setLoading', false)
         })
     },
     searchItemFlow ({ commit, getters }, payload) {
