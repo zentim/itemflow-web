@@ -330,6 +330,33 @@ export default {
         searchResults.push(result[i].obj)
       }
       commit('setSearchResults', searchResults)
+    },
+    exportData ({ commit, getters }) {
+      const user = getters.user
+      if (!user) {
+        console.log('error: no user before loadItemFlow')
+        return
+      }
+      var data = getters.loadedItemFlow
+      firebase
+        .database()
+        .ref('ContentStore')
+        .child(user.id)
+        .once('value', function (snapshot) {
+          snapshot.forEach(function (childSnapshot) {
+            var elementIndex = data.findIndex(function (element) {
+              return element.id === childSnapshot.key
+            })
+            data[elementIndex] = Object.assign(data[elementIndex], childSnapshot.val())
+          })
+          // output file
+          var jsonData = JSON.stringify(data)
+          var a = document.createElement('a')
+          var file = new Blob([jsonData], {type: 'text/plain'})
+          a.href = URL.createObjectURL(file)
+          a.download = 'itemflow.json'
+          a.click()
+        })
     }
   }
 }
