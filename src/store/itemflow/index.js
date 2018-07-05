@@ -357,6 +357,36 @@ export default {
           a.download = 'itemflow.json'
           a.click()
         })
+    },
+    importData ({ commit, getters }, payload) {
+      const user = getters.user
+      if (!user) {
+        console.log('error: no user before importData')
+        return
+      }
+      var data = payload
+      var metatdatastore = {}
+      var contentstore = {}
+
+      // for (var i in data) {
+      //   contentstore[data[i].id] = {
+      //     itemContent: data[i].itemContent,
+      //     flowContent: data[i].flowContent
+      //   }
+      // }
+
+      data.forEach(function (element) {
+        contentstore[element.id] = {
+          itemContent: element.itemContent || '',
+          flowContent: element.flowContent || []
+        }
+      })
+      console.log(contentstore)
+      firebase
+        .database()
+        .ref('ContentStore')
+        .child(user.id)
+        .update(contentstore)
     }
   }
 }

@@ -30,6 +30,8 @@
                   <h3 >Items: <span primary style="color: #004D40; font-weight: 400" class="display-2 px-3">{{ itemsLength }}</span></h3>
                   <h3 >Flows: <span primary style="color: #01579B; font-weight: 400" class="display-2 px-3">{{ flowsLength }}</span></h3>
                   <v-btn color="success" @click="exportData">export data</v-btn>
+                  <v-btn color="success" @click="importData">import data</v-btn>
+                  <input type="file" id="selectFiles" ref="fileInput" value="Import" style="display: none" @change="onFilePicked"/>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -69,6 +71,23 @@
       },
       exportData () {
         this.$store.dispatch('exportData')
+      },
+      importData () {
+        this.$refs.fileInput.click()
+      },
+      onFilePicked (event) {
+        const files = event.target.files
+        let filename = files[0].name
+        if (filename.lastIndexOf('.') <= 0) {
+          return alert('Please add a valid file!')
+        }
+
+        var fr = new FileReader()
+        fr.addEventListener('load', (e) => {
+          var result = JSON.parse(e.target.result)
+          this.$store.dispatch('importData', result)
+        })
+        fr.readAsText(files.item(0))
       }
     }
   }
