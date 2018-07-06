@@ -173,7 +173,8 @@
         return [
           { icon: 'home', title: 'Home', link: '/' },
           { icon: 'star', title: 'Favorite', link: '/favorite' },
-          { icon: 'account_box', title: 'Profile', link: '/profile' }
+          { icon: 'account_box', title: 'Profile', link: '/profile' },
+          { icon: 'delete', title: 'Trash', link: '/trash' }
         ]
       },
       menuItemsBottom () {

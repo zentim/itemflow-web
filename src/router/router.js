@@ -1,4 +1,4 @@
-// 登陸頁面
+// 登入頁面
 export const signinRouter = {
   path: '/signin',
   name: 'Signin',
@@ -52,6 +52,11 @@ export const appRouter = [
   {
     path: '/favorite',
     name: 'Favorite',
+    component: () => import('@/components/Home')
+  },
+  {
+    path: '/trash',
+    name: 'Trash',
     component: () => import('@/components/Home')
   }
 ]

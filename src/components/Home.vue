@@ -48,6 +48,10 @@
           return this.$store.getters.favoriteItemFlow
         }
 
+        if (routeName === 'Trash') {
+          return this.$store.getters.deletedItemflow
+        }
+
         if (this.searching) {
           if (routeName === 'Home') {
             return this.$store.getters.searchResults

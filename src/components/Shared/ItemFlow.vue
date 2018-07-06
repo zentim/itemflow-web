@@ -10,7 +10,12 @@
     <v-layout row wrap v-else>
       <v-flex xs12 md4>
         <v-card flat>
-          <app-toolbar :id="id" :type.sync="obj.type" :isFavorite.sync="obj.favorite" :isDeleted.sync="isDeleted"></app-toolbar>
+          <app-toolbar
+            :id="id"
+            :type.sync="obj.type"
+            :isFavorite.sync="obj.favorite"
+            :isDeleted.sync="isDeleted"
+            :deletedDate.sync="obj.deletedDate"></app-toolbar>
           <item-flow-outline
             :id="id"
             :title.sync="obj.title"
@@ -42,7 +47,8 @@
           labelsFrom: [],
           itemContent: '',
           flowContent: [],
-          favorite: null
+          favorite: null,
+          deletedDate: null
         },
         isDeleted: false
       }
@@ -74,6 +80,7 @@
       this.obj.flowContent = this.loadedContent.flowContent || []
       this.obj.editedDate = this.itemflowObj.editedDate
       this.obj.favorite = this.itemflowObj.favorite || false
+      this.obj.deletedDate = this.itemflowObj.deletedDate || false
     },
     watch: {
       itemflowObj (newVal) {

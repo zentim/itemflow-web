@@ -52,8 +52,11 @@ export default {
     ]
   },
   getters: {
-    loadedItemFlow (state) {
-      return state.loadedItemFlow.sort(function (a, b) {
+    allItemflow (state) {
+      return state.loadedItemFlow.filter(obj => !!obj.deletedDate === false)
+    },
+    loadedItemFlow (state, getters) {
+      return getters.allItemflow.sort(function (a, b) {
         if (a.editedDate < b.editedDate) {
           return 1
         }
@@ -78,6 +81,9 @@ export default {
     },
     favoriteItemFlow (state, getters) {
       return getters.loadedItemFlow.filter(obj => obj.favorite === true)
+    },
+    deletedItemflow (state, getters) {
+      return state.loadedItemFlow.filter(obj => !!obj.deletedDate === true)
     },
     searchResults (getters) {
       return getters.searchResults
@@ -154,6 +160,7 @@ export default {
         itemContent: payload.itemContent || '',
         flowContent: payload.flowContent || [],
         editedDate: new Date().toISOString(),
+        deletedDate: payload.deletedDate || false,
         favorite: payload.favorite || false
       }
       firebase
@@ -287,8 +294,9 @@ export default {
               labelsFrom: itemflow[key].labelsFrom || [],
               // itemContent: itemflow[key].itemContent || '',
               // flowContent: itemflow[key].flowContent || [],
-              editedDate: itemflow[key].editedDate,
               createdDate: itemflow[key].createdDate,
+              editedDate: itemflow[key].editedDate,
+              deletedDate: itemflow[key].deletedDate,
               favorite: itemflow[key].favorite || false
             })
           }
