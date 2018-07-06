@@ -4,7 +4,24 @@
     :key="id"
     tag="span"
     style="cursor: pointer">
-    <v-card :color="type === 'item' ? 'LogoItemColor' : 'LogoFlowColor'">
+    <v-card
+      :color="type === 'item' ? 'LogoItemColor' : 'LogoFlowColor'"
+      @mouseover="cardHover = true"
+      @mouseleave="cardHover = false">
+      <v-btn
+        absolute
+        fab
+        top
+        left
+        small
+        color="white"
+        @click.native.stop=""
+        v-show="cardHover"
+        class="select_btn"
+        style="width: 24px; height: 24px; left: -12px; top: -12px;"
+      >
+        <v-icon>done</v-icon>
+      </v-btn>
       <div class="px-2 py-2">
         <div class="itemflow-title word-overflow-hidden">{{ title || 'no title' }}</div>
         <div class="itemflow-message word-overflow-hidden">{{ message || 'no message' }}</div>
@@ -15,7 +32,12 @@
 
 <script>
   export default {
-    props: ['id', 'type', 'title', 'message']
+    props: ['id', 'type', 'title', 'message'],
+    data () {
+      return {
+        cardHover: false
+      }
+    }
   }
 </script>
 
