@@ -6,6 +6,7 @@
     style="cursor: pointer">
     <v-card
       :color="type === 'item' ? 'LogoItemColor' : 'LogoFlowColor'"
+      :class="{ selectedCard: isSelected }"
       @mouseover="cardHover = true"
       @mouseleave="cardHover = false">
       <v-btn
@@ -14,10 +15,9 @@
         top
         left
         small
-        color="white"
-        @click.native.stop=""
-        v-show="cardHover"
-        class="select_btn"
+        :dark="isSelected"
+        @click.native.stop="toggleSelectCard"
+        v-show="cardHover || isSelected"
         style="width: 24px; height: 24px; left: -12px; top: -12px;"
       >
         <v-icon>done</v-icon>
@@ -32,10 +32,42 @@
 
 <script>
   export default {
-    props: ['id', 'type', 'title', 'message'],
+    props: ['id', 'type', 'title', 'message', 'selectedList'],
     data () {
       return {
-        cardHover: false
+        cardHover: false,
+        isSelected: false
+      }
+    },
+    methods: {
+      toggleSelectCard () {
+        let newArray = []
+
+        if (this.selectedList.includes(this.id)) {
+          for (let i = 0; i < this.selectedList.length; i++) {
+            if (this.selectedList[i] !== this.id) {
+              newArray.push(this.selectedList[i])
+            }
+          }
+          this.isSelected = false
+        } else {
+          newArray = this.selectedList
+          newArray.push(this.id)
+          this.isSelected = true
+        }
+        this.$emit('update:selectedList', newArray)
+      }
+    },
+    watch: {
+      selectedList (newVal) {
+        if (!newVal.length) {
+          this.isSelected = false
+        }
+        if (this.selectedList.includes(this.id)) {
+          this.isSelected = true
+        } else {
+          this.isSelected = false
+        }
       }
     }
   }
@@ -57,5 +89,8 @@
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
+}
+.selectedCard {
+  box-shadow: 0 0 0 1px black;
 }
 </style>

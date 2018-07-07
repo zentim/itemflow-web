@@ -6,6 +6,59 @@
     </v-layout>
 
     <!-- after log in -->
+    <template>
+      <div class="text-xs-center" v-if="userIsAuthenticated">
+        <v-bottom-sheet
+          inset
+          :value="selectedList.length > 0"
+          :hide-overlay="true"
+          :persistent="true">
+
+          <v-card tile>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-action>
+                  <v-btn icon @click="clearAllSelected">
+                    <v-icon>arrow_back</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-content>
+                  <v-list-tile-title>已選取 {{ selectedList.length }} 個</v-list-tile-title>
+                </v-list-tile-content>
+
+
+                <v-spacer></v-spacer>
+
+                <v-list-tile-action>
+                  <v-btn @click="selectAll">
+                    Select All
+                  </v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-action>
+                  <v-btn icon @click="favoriteSeleted">
+                    <v-icon>star</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-action :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
+                  <v-btn icon @click="moveToTrashSeleted">
+                    <v-icon>delete</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }">
+                  <v-btn icon @click="removeForeverSeleted">
+                    <v-icon>delete_forever</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-bottom-sheet>
+      </div>
+    </template>
     <v-layout row wrap v-if="userIsAuthenticated">
       <v-flex
         xs12
@@ -19,7 +72,8 @@
           :id="obj.id"
           :type="obj.type"
           :title="obj.title"
-          :message="obj.message"></itemflow-card>
+          :message="obj.message"
+          :selectedList.sync="selectedList"></itemflow-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -29,7 +83,8 @@
   export default {
     data () {
       return {
-        count: 120
+        count: 120,
+        selectedList: []
       }
     },
     computed: {
@@ -43,6 +98,7 @@
         return this.$store.getters.searching
       },
       itemflow () {
+        this.selectedList = []
         let routeName = this.$route.name
         if (routeName === 'Favorite') {
           return this.$store.getters.favoriteItemFlow
@@ -89,6 +145,35 @@
         var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
         if (scrollTop + window.innerHeight >= document.body.clientHeight) {
           this.count += 120
+        }
+      },
+      clearAllSelected () {
+        this.selectedList = []
+      },
+      selectAll () {
+        let newArr = []
+        for (let i = 0; i < this.itemflow.length; i++) {
+          newArr.push(this.itemflow[i].id)
+        }
+        this.selectedList = newArr
+      },
+      favoriteSeleted () {
+        for (let i = 0; i < this.selectedList.length; i++) {
+          let obj = this.$store.getters.loadedItemFlowObj(this.selectedList[i])
+          obj.favorite = true
+          this.$store.dispatch('updateItemFlow', obj)
+        }
+      },
+      moveToTrashSeleted () {
+        for (let i = 0; i < this.selectedList.length; i++) {
+          let obj = this.$store.getters.loadedItemFlowObj(this.selectedList[i])
+          obj.deletedDate = new Date().toISOString()
+          this.$store.dispatch('updateItemFlow', obj)
+        }
+      },
+      removeForeverSeleted () {
+        for (let i = 0; i < this.selectedList.length; i++) {
+          this.$store.dispatch('removeItemFlow', { 'id': this.selectedList[i] })
         }
       }
     },

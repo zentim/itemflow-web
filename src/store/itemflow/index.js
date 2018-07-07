@@ -148,6 +148,11 @@ export default {
         .ref('MetadataStore/' + userId)
         .child(objId)
         .remove()
+      firebase
+        .database()
+        .ref('ContentStore/' + userId)
+        .child(objId)
+        .remove()
     },
     updateItemFlow ({ commit, getters }, payload) {
       const user = getters.user
