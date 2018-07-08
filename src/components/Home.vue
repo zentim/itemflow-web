@@ -27,18 +27,11 @@
                   <v-list-tile-title>已選取 {{ selectedList.length }} 個</v-list-tile-title>
                 </v-list-tile-content>
 
-
                 <v-spacer></v-spacer>
 
                 <v-list-tile-action>
                   <v-btn @click="selectAll">
                     Select All
-                  </v-btn>
-                </v-list-tile-action>
-
-                <v-list-tile-action>
-                  <v-btn icon @click="favoriteSeleted">
-                    <v-icon>star</v-icon>
                   </v-btn>
                 </v-list-tile-action>
 
@@ -156,13 +149,6 @@
           newArr.push(this.itemflow[i].id)
         }
         this.selectedList = newArr
-      },
-      favoriteSeleted () {
-        for (let i = 0; i < this.selectedList.length; i++) {
-          let obj = this.$store.getters.loadedItemFlowObj(this.selectedList[i])
-          obj.favorite = true
-          this.$store.dispatch('updateItemFlow', obj)
-        }
       },
       moveToTrashSeleted () {
         for (let i = 0; i < this.selectedList.length; i++) {
