@@ -6,52 +6,6 @@
     </v-layout>
 
     <!-- after log in -->
-    <template>
-      <div class="text-xs-center" v-if="userIsAuthenticated">
-        <v-bottom-sheet
-          inset
-          :value="selectedList.length > 0"
-          :hide-overlay="true"
-          :persistent="true">
-
-          <v-card tile>
-            <v-list>
-              <v-list-tile>
-                <v-list-tile-action>
-                  <v-btn icon @click="clearAllSelected">
-                    <v-icon>arrow_back</v-icon>
-                  </v-btn>
-                </v-list-tile-action>
-
-                <v-list-tile-content>
-                  <v-list-tile-title>已選取 {{ selectedList.length }} 個</v-list-tile-title>
-                </v-list-tile-content>
-
-                <v-spacer></v-spacer>
-
-                <v-list-tile-action>
-                  <v-btn @click="selectAll">
-                    Select All
-                  </v-btn>
-                </v-list-tile-action>
-
-                <v-list-tile-action :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
-                  <v-btn icon @click="moveToTrashSeleted">
-                    <v-icon>delete</v-icon>
-                  </v-btn>
-                </v-list-tile-action>
-
-                <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }">
-                  <v-btn icon @click="removeForeverSeleted">
-                    <v-icon>delete_forever</v-icon>
-                  </v-btn>
-                </v-list-tile-action>
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-bottom-sheet>
-      </div>
-    </template>
     <v-layout row wrap v-if="userIsAuthenticated">
       <v-flex
         xs12
@@ -69,6 +23,98 @@
           :selectedList.sync="selectedList"></itemflow-card>
       </v-flex>
     </v-layout>
+
+
+    <template>
+      <!-- toolbar -->
+      <div class="text-xs-center" v-if="userIsAuthenticated">
+        <v-bottom-sheet
+          inset
+          :value="selectedList.length > 0"
+          :hide-overlay="true"
+          :persistent="true">
+
+          <v-card tile>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-action>
+                  <v-btn icon @click="clearAllSelected">
+                    <v-icon>arrow_back</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ selectedList.length }} selected</v-list-tile-title>
+                </v-list-tile-content>
+
+                <v-spacer></v-spacer>
+
+                <v-list-tile-action>
+                  <v-btn @click="selectAll">
+                    Select All
+                  </v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-action :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }" v-if="this.$route.name !== 'Trash'">
+                  <v-btn icon @click="moveToTrashSeleted">
+                    <v-icon>delete</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }" v-if="this.$route.name === 'Trash'">
+                  <v-btn icon @click="restoreFromTrashSeleted">
+                    <v-icon>restore_from_trash</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+
+                <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }" v-if="this.$route.name === 'Trash'">
+                  <v-btn icon dark color="red" @click.stop="dialog = true">
+                    <v-icon>delete_forever</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+        </v-bottom-sheet>
+      </div>
+
+      <template>
+        <!-- delete forever dialog -->
+        <v-layout row justify-center>
+          <v-dialog
+            v-model="dialog"
+            max-width="290"
+          >
+            <v-card>
+              <v-card-title class="headline">Delete Forever?</v-card-title>
+
+              <v-card-text>
+                {{ selectedList.length }} selected
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn
+                  color="red darken-1"
+                  flat="flat"
+                  @click="removeForeverSeleted"
+                >
+                  Delete Forever
+                </v-btn>
+
+                <v-btn
+                  flat="flat"
+                  @click="dialog = false"
+                >
+                  NO
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-layout>
+      </template>
+    </template>
   </v-container>
 </template>
 
@@ -77,7 +123,8 @@
     data () {
       return {
         count: 120,
-        selectedList: []
+        selectedList: [],
+        dialog: false
       }
     },
     computed: {
@@ -157,10 +204,18 @@
           this.$store.dispatch('updateItemFlow', obj)
         }
       },
+      restoreFromTrashSeleted () {
+        for (let i = 0; i < this.selectedList.length; i++) {
+          let obj = this.$store.getters.loadedItemFlowObj(this.selectedList[i])
+          obj.deletedDate = false
+          this.$store.dispatch('updateItemFlow', obj)
+        }
+      },
       removeForeverSeleted () {
         for (let i = 0; i < this.selectedList.length; i++) {
           this.$store.dispatch('removeItemFlow', { 'id': this.selectedList[i] })
         }
+        this.dialog = false
       }
     },
     created () {

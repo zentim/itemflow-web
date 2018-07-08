@@ -18,18 +18,19 @@
             {{ isFavorite ? 'undo favorite' : 'Favorite'}}
           </v-list-tile-title>
         </v-list-tile>
-        <v-list-tile class="red--text" @click="moveToTrash">
+        <v-list-tile @click="moveToTrash">
           <v-list-tile-title>
-            <v-icon class="red--text">delete</v-icon>
-            {{ deletedDate ? 'undo trash' : 'move to trash' }}
+            <v-icon v-if="!deletedDate">delete</v-icon>
+            <v-icon v-if="!!deletedDate">restore_from_trash</v-icon>
+            {{ deletedDate ? 'restore from trash' : 'move to trash' }}
           </v-list-tile-title>
         </v-list-tile>
-        <v-list-tile class="red--text" @click="removeForever">
+        <!-- <v-list-tile class="red--text" @click="removeForever">
           <v-list-tile-title>
             <v-icon class="red--text">delete_forever</v-icon>
             delete forever
           </v-list-tile-title>
-        </v-list-tile>
+        </v-list-tile> -->
       </v-list>
     </v-menu>
   </v-toolbar>
@@ -58,15 +59,15 @@ export default {
         this.$emit('update:deletedDate', new Date().toISOString())
       }
       this.$router.push('/')
-    },
-    removeForever () {
-      this.$emit('update:isDeleted', true)
-      this.$store.dispatch('removeItemFlow', {
-        id: this.id,
-        type: this.type
-      })
-      this.$router.push('/')
     }
+    // removeForever () {
+    //   this.$emit('update:isDeleted', true)
+    //   this.$store.dispatch('removeItemFlow', {
+    //     id: this.id,
+    //     type: this.type
+    //   })
+    //   this.$router.push('/')
+    // }
   }
 }
 </script>
