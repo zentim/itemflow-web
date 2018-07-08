@@ -12,7 +12,7 @@
             {{ type === 'item' ? 'become Flow' : 'become Item'}}
           </v-list-tile-title>
         </v-list-tile>
-        <v-list-tile class="orange--text" @click="favorite">
+        <v-list-tile class="orange--text" @click="favorite" v-if="!deletedDate">
           <v-list-tile-title>
             <v-icon class="orange--text">star</v-icon>
             {{ isFavorite ? 'undo favorite' : 'Favorite'}}

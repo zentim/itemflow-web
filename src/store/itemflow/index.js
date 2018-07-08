@@ -212,9 +212,7 @@ export default {
         let targetLabelsFrom = target.labelsFrom
         let j = 0
         let isExisted = false
-        let targetLabelsFromLen = targetLabelsFrom
-          ? targetLabelsFrom.length
-          : 0
+        let targetLabelsFromLen = targetLabelsFrom ? targetLabelsFrom.length : 0
         for (j = 0; j < targetLabelsFromLen; j++) {
           if (targetLabelsFrom[j].id === updatedData.id) {
             console.log(
@@ -297,8 +295,6 @@ export default {
               message: itemflow[key].message || '',
               labels: itemflow[key].labels || [],
               labelsFrom: itemflow[key].labelsFrom || [],
-              // itemContent: itemflow[key].itemContent || '',
-              // flowContent: itemflow[key].flowContent || [],
               createdDate: itemflow[key].createdDate,
               editedDate: itemflow[key].editedDate,
               deletedDate: itemflow[key].deletedDate,
@@ -369,7 +365,6 @@ export default {
               ...loadeditemflow[elementIndex]
             }
           })
-          console.log(data)
 
           // output file
           var jsonData = JSON.stringify(data)
@@ -398,6 +393,7 @@ export default {
           labelsFrom: data[key].labelsFrom || [],
           editedDate: data[key].editedDate,
           createdDate: data[key].createdDate,
+          deletedDate: data[key].deletedDate || false,
           favorite: data[key].favorite || false
         }
         contentstore[key] = {

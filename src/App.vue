@@ -21,22 +21,16 @@
         <v-toolbar-side-icon class="mx-0 px-0" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       </div>
       <div class="ml-1" v-else>
-        <!-- <router-link :to="/" tag="span" style="cursor: pointer">
-          <v-icon large color="primary">arrow_back</v-icon>
-        </router-link> -->
         <v-icon large color="primary" style="cursor: pointer" @click="goto">arrow_back</v-icon>
       </div>
       <!-- nav - logo -->
       <div class="mx-1">
-        <router-link to="/items" tag="span" style="cursor: pointer" :class="selectColor('item')" class="title">
-          Item
-        </router-link>
-        <router-link to="/flows" tag="span" style="cursor: pointer" :class="selectColor('flow')" class="title">
-          Flow
+        <router-link to="/" tag="span" style="cursor: pointer" class="title">
+          Itemflow
         </router-link>
       </div>
 
-      <!-- search -->
+      <!-- Search -->
       <v-spacer class="hidden-md-and-down"></v-spacer>
       <app-search class="mx-1"></app-search>
       <v-spacer class="hidden-md-and-down"></v-spacer>
@@ -49,11 +43,6 @@
         <v-icon>star</v-icon>
       </router-link> -->
       <v-icon class="hidden-lg-and-up mx-1" large style="cursor: pointer" @click.stop="rightDrawer = !rightDrawer">chrome_reader_mode</v-icon>
-
-      <!-- search -->
-      <!-- <v-card class="mr-0 hidden-md-and-down" color="secondary" flat>
-        <app-search></app-search>
-      </v-card> -->
     </v-toolbar>
 
 
@@ -185,18 +174,6 @@
       }
     },
     methods: {
-      selectColor (type) {
-        let routeName = this.$route.name
-        if (type === 'item') {
-          if (routeName === 'Item' || routeName === 'Items' || routeName === 'CreateItem') {
-            return 'LogoItemColor'
-          }
-        } else if (type === 'flow') {
-          if (routeName === 'Flow' || routeName === 'Flows' || routeName === 'CreateFlow') {
-            return 'LogoFlowColor'
-          }
-        }
-      },
       goto () {
         if (this.$route.name === 'Item' || this.$route.name === 'Flow') {
           this.$router.go(-1)
