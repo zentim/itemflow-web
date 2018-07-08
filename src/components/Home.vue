@@ -2,7 +2,30 @@
   <v-container>
     <!-- loading -->
     <v-layout row wrap v-if="loading">
-      <loading></loading>
+      <template>
+        <div class="text-xs-center">
+          <v-dialog
+            v-model="loading"
+            hide-overlay
+            persistent
+            width="300"
+          >
+            <v-card
+              color="primary"
+              dark
+            >
+              <v-card-text>
+                Please stand by
+                <v-progress-linear
+                  indeterminate
+                  color="white"
+                  class="mb-0"
+                ></v-progress-linear>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+        </div>
+      </template>
     </v-layout>
 
     <!-- after log in -->
@@ -148,27 +171,11 @@
           return this.$store.getters.deletedItemflow
         }
 
-        if (this.searching) {
-          if (routeName === 'Home') {
-            return this.$store.getters.searchResults
-          }
-          if (routeName === 'Items') {
-            return this.$store.getters.searchResultsItems
-          }
-          if (routeName === 'Flows') {
-            return this.$store.getters.searchResultsFlows
-          }
-        } else {
-          if (routeName === 'Home') {
-            return this.$store.getters.loadedItemFlow
-          }
-          if (routeName === 'Items') {
-            return this.$store.getters.loadedItems
-          }
-          if (routeName === 'Flows') {
-            return this.$store.getters.loadedFlows
-          }
+        if (this.searching && routeName === 'Home') {
+          return this.$store.getters.searchResults
         }
+
+        return this.$store.getters.loadedItemFlow
       },
       Objects () {
         var objs = []

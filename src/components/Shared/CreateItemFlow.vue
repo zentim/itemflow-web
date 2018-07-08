@@ -12,8 +12,7 @@
       </v-flex>
 
       <v-flex xs12 md8>
-        <item-content :content.sync="itemContent" v-if="routeName === 'CreateItem'"></item-content>
-        <flow-content :content.sync="flowContent" v-if="routeName === 'CreateFlow'"></flow-content>
+        <item-content :content.sync="itemContent"></item-content>
       </v-flex>
     </v-layout>
   </v-layout>
@@ -33,16 +32,8 @@
       }
     },
     computed: {
-      routeName () {
-        return this.$route.name
-      },
       isEmpty () {
-        if (this.routeName === 'CreateItem') {
-          return !this.title && !this.message && !this.itemContent && this.labels.length === 0
-        }
-        if (this.routeName === 'CreateFlow') {
-          return !this.title && !this.message && this.flowContent.length === 0 && this.labels.length === 0
-        }
+        return !this.title && !this.message && !this.itemContent && this.labels.length === 0
       }
     },
     methods: {
@@ -62,33 +53,15 @@
             message: labels[i].message
           })
         }
-        // handle itemflow
-        let newType
-        let newFlowContent
-        if (this.routeName === 'CreateItem') {
-          newType = 'item'
-        } else if (this.routeName === 'CreateFlow') {
-          newType = 'flow'
-          let oldFlowContent = this.flowContent
-          newFlowContent = []
-          let oldFlowContentLength = oldFlowContent ? oldFlowContent.length : 0
-          for (let i = 0; i < oldFlowContentLength; i++) {
-            newFlowContent.push({
-              id: oldFlowContent[i].id,
-              type: oldFlowContent[i].type,
-              title: oldFlowContent[i].title,
-              message: oldFlowContent[i].message
-            })
-          }
-        }
+
         // handle create
         const newObj = {
-          type: newType,
+          type: 'item',
           title: this.title,
           message: this.message,
           labels: newLabels || [],
           itemContent: this.itemContent,
-          flowContent: newFlowContent
+          flowContent: []
         }
         this.$store.dispatch('createItemFlow', newObj)
         this.isCreated = true

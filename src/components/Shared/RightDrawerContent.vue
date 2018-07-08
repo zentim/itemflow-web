@@ -1,9 +1,9 @@
 <template>
   <v-layout row wrap justify-center>
     <!-- loading -->
-    <v-layout row wrap v-if="loading">
+    <!-- <v-layout row wrap v-if="loading">
       <loading></loading>
-    </v-layout>
+    </v-layout> -->
 
     <!-- <div class="coverArea"></div> -->
 

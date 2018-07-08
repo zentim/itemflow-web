@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="'/' + type + '/' + id"
+    :to="'/' + id"
     :key="id"
     tag="span"
     style="cursor: pointer">

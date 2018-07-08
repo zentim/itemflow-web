@@ -29,7 +29,7 @@
                   :color="itemflowColor(obj.type)"
                   :key="`index + 1000`">
                   <router-link
-                    :to="'/' + obj.type + '/' + obj.id"
+                    :to="'/'+ obj.id"
                     tag="span"
                     style="cursor: pointer"
                     :key="`obj.id + from`">
@@ -60,7 +60,7 @@
                       @input="remove(index)"
                       :key="index">
                       <router-link
-                        :to="'/' + obj.type + '/' + obj.id"
+                        :to="'/' + obj.id"
                         tag="span"
                         style="cursor: pointer"
                         :key="obj.id">

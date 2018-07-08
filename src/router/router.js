@@ -13,41 +13,9 @@ export const appRouter = [
     component: () => import('@/components/Home')
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: () => import('@/components/User/Profile')
-  },
-  {
-    path: '/item/new',
-    name: 'CreateItem',
+    path: '/new',
+    name: 'New',
     component: () => import('@/components/Shared/CreateItemFlow')
-  },
-  {
-    path: '/items',
-    name: 'Items',
-    component: () => import('@/components/Home')
-  },
-  {
-    path: '/item/:id',
-    name: 'Item',
-    props: true,
-    component: () => import('@/components/Shared/ItemFlow')
-  },
-  {
-    path: '/flow/new',
-    name: 'CreateFlow',
-    component: () => import('@/components/Shared/CreateItemFlow')
-  },
-  {
-    path: '/flows',
-    name: 'Flows',
-    component: () => import('@/components/Home')
-  },
-  {
-    path: '/flow/:id',
-    name: 'Flow',
-    props: true,
-    component: () => import('@/components/Shared/ItemFlow')
   },
   {
     path: '/favorite',
@@ -55,9 +23,20 @@ export const appRouter = [
     component: () => import('@/components/Home')
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/components/User/Profile')
+  },
+  {
     path: '/trash',
     name: 'Trash',
     component: () => import('@/components/Home')
+  },
+  {
+    path: '/:id',
+    name: 'Itemflow',
+    props: true,
+    component: () => import('@/components/Shared/ItemFlow')
   }
 ]
 

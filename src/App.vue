@@ -175,7 +175,7 @@
     },
     methods: {
       goto () {
-        if (this.$route.name === 'Item' || this.$route.name === 'Flow') {
+        if (this.$route.name === 'Itemflow') {
           this.$router.go(-1)
         } else {
           this.$router.push('/')
