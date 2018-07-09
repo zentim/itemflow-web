@@ -167,8 +167,10 @@ export default {
         title: payload.title || '',
         message: payload.message || '',
         labels: payload.labels || [],
+        labelsFrom: payload.labelsFrom || [],
         itemContent: payload.itemContent || '',
         flowContent: payload.flowContent || [],
+        whoHaveMe: payload.whoHaveMe || [],
         editedDate: new Date().toISOString(),
         deletedDate: payload.deletedDate || false,
         favorite: payload.favorite || false
@@ -188,6 +190,53 @@ export default {
         .ref('ContentStore')
         .child(user.id + '/' + objId)
         .update(objContent)
+    },
+    addWhoHaveMe ({ commit, getters }, payload) {
+      // payload = {
+      //   targets: [{}, {}],
+      //   updatedData: {
+      //     id: '',
+      //     type: '',
+      //     title: '',
+      //     message: ''
+      //   }
+      // }
+      const user = getters.user
+      let targets = payload.targets
+      let updatedData = payload.updatedData
+      let i = 0
+      let len = targets ? targets.length : 0
+      for (i = 0; i < len; i++) {
+        let target = getters.loadedItemFlowObj(targets[i].id)
+        if (!target) {
+          console.log(
+            'addWhoHaveMe alert: target (' + targets[i].id + ') is not exited'
+          )
+          continue
+        }
+        let targetWhoHaveMe = target.whoHaveMe || []
+        let j = 0
+        let isExisted = false
+        let targetWhoHaveMeLen = targetWhoHaveMe ? targetWhoHaveMe.length : 0
+        for (j = 0; j < targetWhoHaveMeLen; j++) {
+          if (targetWhoHaveMe[j].id === updatedData.id) {
+            console.log(
+              'addWhoHaveMe error: updatedData is already exited targetWhoHaveMe'
+            )
+            isExisted = true
+            break
+          }
+        }
+        if (!isExisted) {
+          targetWhoHaveMe = [...targetWhoHaveMe, updatedData]
+          console.log(target.title + ': addWhoHaveMe successd')
+        }
+        firebase
+          .database()
+          .ref('MetadataStore/' + user.id + '/' + target.id)
+          .child('whoHaveMe')
+          .set(targetWhoHaveMe)
+      }
     },
     addLabelsFrom ({ commit, getters }, payload) {
       // payload = {
@@ -238,6 +287,45 @@ export default {
           .child('labelsFrom')
           .set(targetLabelsFrom)
       }
+    },
+    removeWhoHaveMe ({ commit, getters }, payload) {
+      // payload = {
+      //   targetId: removedChip.id,
+      //   removedObjId: this.$route.params.id
+      // }
+      const user = getters.user
+      let target = getters.loadedItemFlowObj(payload.targetId)
+      let removedObjId = payload.removedObjId
+      if (!target) {
+        console.log(
+          'removeWhoHaveMe error: target(' + payload.id + ') not existed'
+        )
+        return
+      }
+      if (!target.whoHaveMe) {
+        console.log('removeWhoHaveMe error: target whoHaveMe is empty')
+        return
+      }
+      let targetWhoHaveMe = target.whoHaveMe
+      let i = 0
+      let len = targetWhoHaveMe.length
+      for (i = 0; i < len; i++) {
+        if (targetWhoHaveMe[i].id === removedObjId) {
+          let removedObj = targetWhoHaveMe.splice(i, 1)
+          console.log(removedObj)
+          targetWhoHaveMe = [...targetWhoHaveMe]
+          console.log(
+            'remove successd: ' + removedObj[0].title + ' is removed'
+          )
+          console.log(targetWhoHaveMe)
+          break
+        }
+      }
+      firebase
+        .database()
+        .ref('MetadataStore/' + user.id + '/' + target.id)
+        .child('whoHaveMe')
+        .set(targetWhoHaveMe)
     },
     removeLabelsFrom ({ commit, getters }, payload) {
       // payload = {
@@ -300,6 +388,7 @@ export default {
               message: itemflow[key].message || '',
               labels: itemflow[key].labels || [],
               labelsFrom: itemflow[key].labelsFrom || [],
+              whoHaveMe: itemflow[key].whoHaveMe || [],
               createdDate: itemflow[key].createdDate,
               editedDate: itemflow[key].editedDate,
               deletedDate: itemflow[key].deletedDate,

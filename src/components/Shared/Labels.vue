@@ -146,7 +146,7 @@
     },
     mounted () {
       this.chips = this.updateLastestData(this.labels)
-      this.chipsFrom = this.labelsFrom
+      this.chipsFrom = this.updateLastestData(this.labelsFrom)
     },
     watch: {
       labels (newVal) {
@@ -208,7 +208,7 @@
         this.$emit('update:labels', newVal)
       },
       labelsFrom (newVal) {
-        this.chipsFrom = newVal
+        this.chipsFrom = this.updateLastestData(newVal)
       }
     }
   }

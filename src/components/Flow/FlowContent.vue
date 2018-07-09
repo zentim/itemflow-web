@@ -1,44 +1,104 @@
 <template>
-  <v-layout class="d-flex" style="position: relative">
-    <draggable
-      v-model="flows"
-      class="dragArea"
-      :options="{group: 'itemflow'}">
-        <v-flex
-          v-for="(obj, index) in flows"
-          :key="index"
-          class="pb-1">
-          <div style="position: relative;">
-            <div style="position: absolute; top: 10px; right: 0; z-index: 100; cursor: pointer;" >
-              <v-icon class="closeCard" large @click.prevent.stop="remove(index)">close</v-icon>
-            </div>
-          </div>
-          <itemflow-card
-            :id="obj.id"
-            :type="obj.type"
-            :title="obj.title"
-            :message="obj.message"></itemflow-card>
-        </v-flex>
-    </draggable>
-    <!-- fix cannot scroll list in small size screen.  -->
-    <div class="coverArea hidden-md-and-up"></div>
+  <v-layout>
+    <v-flex>
+      <v-tabs
+        dark
+        color="cyan"
+        centered
+        v-model="model"
+      >
+        <v-tabs-slider color="yellow"></v-tabs-slider>
+        <v-tab
+          key="tab-from"
+          href="#tab-from">
+          Who have me
+        </v-tab>
+        <v-tab
+          key="tab-to"
+          href="#tab-to"
+        >
+          I have
+        </v-tab>
+        <v-tabs-items v-model="model">
+          <v-tab-item
+            id="tab-from">
+            <v-card>
+              <v-flex
+                v-for="(obj, index) in Owners"
+                :key="index"
+                class="pb-1">
+                <itemflow-card
+                  :id="obj.id"
+                  :type="obj.type"
+                  :title="obj.title"
+                  :message="obj.message"></itemflow-card>
+              </v-flex>
+              <!-- fix cannot scroll list in small size screen.  -->
+              <div class="coverArea hidden-md-and-up"></div>
+            </v-card>
+          </v-tab-item>
+
+          <v-tab-item
+            id="tab-to"
+          >
+            <v-card flat>
+              <v-layout class="d-flex" style="position: relative">
+                <draggable
+                  v-model="flows"
+                  class="dragArea"
+                  :options="{group: 'itemflow'}">
+                    <v-flex
+                      v-for="(obj, index) in flows"
+                      :key="index"
+                      class="pb-1">
+                      <div style="position: relative;">
+                        <div style="position: absolute; top: 10px; right: 0; z-index: 100; cursor: pointer;" >
+                          <v-icon class="closeCard" large @click.prevent.stop="remove(index)">close</v-icon>
+                        </div>
+                      </div>
+                      <itemflow-card
+                        :id="obj.id"
+                        :type="obj.type"
+                        :title="obj.title"
+                        :message="obj.message"></itemflow-card>
+                    </v-flex>
+                </draggable>
+                <!-- fix cannot scroll list in small size screen.  -->
+                <div class="coverArea hidden-md-and-up"></div>
+              </v-layout>
+            </v-card>
+          </v-tab-item>
+        </v-tabs-items>
+      </v-tabs>
+    </v-flex>
   </v-layout>
+
+
 </template>
 
 
 <script>
   export default {
-    props: ['content'],
+    props: ['content', 'whoHaveMe'],
     data () {
       return {
         flows: [],
+        Owners: [],
+        model: 'tab-to',
         preventInfiniteLoop: 0  // for develope debug
       }
     },
     methods: {
       remove (index) {
+        let removedItemflowId = this.flows[index].id
         this.flows.splice(index, 1)
         this.flows = [...this.flows]
+
+        // remove this from removedItemflow's whoHaveMe
+        this.$store.dispatch('removeWhoHaveMe', {
+          targetId: removedItemflowId,
+          removedObjId: this.$route.params.id
+        })
       },
       updateLastestData (newVal) {
         let lastestData = []
@@ -62,9 +122,11 @@
     },
     mounted () {
       this.flows = this.updateLastestData(this.content)
+      this.Owners = this.updateLastestData(this.whoHaveMe)
     },
     watch: {
       content (newVal) {
+        this.model = 'tab-to'
         // for develope debug
         if (this.preventInfiniteLoop > 50) {
           console.log('Error: Infinite Loop!')
@@ -129,6 +191,9 @@
 
         // update data to parent component
         this.$emit('update:content', newVal)
+      },
+      whoHaveMe (newVal) {
+        this.Owners = this.updateLastestData(newVal)
       }
     }
   }

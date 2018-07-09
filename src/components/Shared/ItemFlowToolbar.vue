@@ -91,7 +91,7 @@ export default {
     },
     itemflowObj () {
       return this.$store.getters.loadedItemFlowObj(this.id)
-    },
+    }
   },
   methods: {
     switchType () {
