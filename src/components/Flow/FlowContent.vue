@@ -112,10 +112,18 @@
         let len = newVal ? newVal.length : 0
         for (let i = 0; i < len; i++) {
           if (newVal[i].id === this.$route.params.id) {
-            let error = 'Can not put itself into Labels!'
+            let error = 'Can not put into itself!'
             this.$store.dispatch('setErrorText', error)
             this.remove(i)
             return
+          }
+          for (let j = i + 1; j < len; j++) {
+            if (newVal[i].id === newVal[j].id) {
+              let error = 'Aready had!'
+              this.$store.dispatch('setErrorText', error)
+              this.remove(j)
+              return
+            }
           }
         }
 
