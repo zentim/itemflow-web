@@ -210,7 +210,7 @@ export default {
         let target = getters.loadedItemFlowObj(targets[i].id)
         if (!target) {
           console.log(
-            'addWhoHaveMe alert: target (' + targets[i].id + ') is not exited'
+            'addWhoHaveMe alert: target (' + targets[i].id + ') is not existed'
           )
           continue
         }
@@ -221,7 +221,7 @@ export default {
         for (j = 0; j < targetWhoHaveMeLen; j++) {
           if (targetWhoHaveMe[j].id === updatedData.id) {
             console.log(
-              'addWhoHaveMe error: updatedData is already exited targetWhoHaveMe'
+              'addWhoHaveMe error: updatedData is already existed targetWhoHaveMe'
             )
             isExisted = true
             break
@@ -258,7 +258,7 @@ export default {
         let target = getters.loadedItemFlowObj(targets[i].id)
         if (!target) {
           console.log(
-            'addLabelsFrom error: target (' + targets[i].id + ') is not exited'
+            'addLabelsFrom error: target (' + targets[i].id + ') is not existed'
           )
           continue
         }
@@ -270,7 +270,7 @@ export default {
         for (j = 0; j < targetLabelsFromLen; j++) {
           if (targetLabelsFrom[j].id === updatedData.id) {
             console.log(
-              'addLabelsFrom error: updatedData is already exited targetLabelsFrom'
+              'addLabelsFrom error: updatedData is already existed targetLabelsFrom'
             )
             isExisted = true
             break
