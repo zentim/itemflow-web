@@ -155,7 +155,7 @@
     computed: {
       menuItemsTop () {
         return [
-          { icon: 'add', title: 'Add Item', link: '/item/new' }
+          { icon: 'add', title: 'Add Item', link: '/new' }
         ]
       },
       menuItemsMiddle () {

@@ -35,7 +35,7 @@
         sm6
         md4
         lg3
-        v-for="(obj, index) in Objects"
+        v-for="(obj, index) in itemflow"
         :key="index"
         class="pb-1 pr-1">
           <itemflow-card
@@ -46,7 +46,13 @@
           :selectedList.sync="selectedList"></itemflow-card>
       </v-flex>
     </v-layout>
-
+    <v-layout align-center v-if="!(itemflow.length < amount)">
+      <v-flex xs12 text-xs-center>
+        <div>
+          <v-btn @click="amount = amount * 2">more</v-btn>
+        </div>
+      </v-flex>
+    </v-layout>
 
     <template>
       <!-- toolbar -->
@@ -145,7 +151,7 @@
   export default {
     data () {
       return {
-        count: 120,
+        amount: 120,
         selectedList: [],
         dialog: false
       }
@@ -175,25 +181,10 @@
           return this.$store.getters.searchResults
         }
 
-        return this.$store.getters.loadedItemFlow
-      },
-      Objects () {
-        var objs = []
-        let i = 0
-        let length = this.count > this.itemflow.length ? this.itemflow.length : this.count
-        for (i = 0; i < length; i++) {
-          objs[i] = this.itemflow[i]
-        }
-        return objs
+        return this.$store.getters.loadedItemflowByAmount(this.amount)
       }
     },
     methods: {
-      handleScroll (event) {
-        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-        if (scrollTop + window.innerHeight >= document.body.clientHeight) {
-          this.count += 120
-        }
-      },
       clearAllSelected () {
         this.selectedList = []
       },
@@ -224,12 +215,6 @@
         }
         this.dialog = false
       }
-    },
-    created () {
-      window.addEventListener('scroll', this.handleScroll)
-    },
-    destroyed () {
-      window.removeEventListener('scroll', this.handleScroll)
     }
   }
 </script>

@@ -22,6 +22,14 @@
       </v-flex>
 
     </draggable>
+
+    <v-layout align-center v-if="!(loadedItemFlow.length < amount)">
+      <v-flex xs12 text-xs-center>
+        <div>
+          <v-btn @click="amount = amount * 2">more</v-btn>
+        </div>
+      </v-flex>
+    </v-layout>
   </v-layout>
 </template>
 
@@ -31,7 +39,8 @@
     data () {
       return {
         // labels: [],
-        itemflow: null
+        itemflow: null,
+        amount: 120
       }
     },
     computed: {
@@ -45,7 +54,7 @@
         if (this.searching) {
           return this.$store.getters.searchResults
         } else {
-          return this.$store.getters.loadedItemFlow
+          return this.$store.getters.loadedItemflowByAmount(this.amount)
         }
       }
     },

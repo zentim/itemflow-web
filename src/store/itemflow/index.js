@@ -73,6 +73,11 @@ export default {
         })
       }
     },
+    loadedItemflowByAmount (state, getters) {
+      return amount => {
+        return getters.loadedItemFlow.slice(0, amount)
+      }
+    },
     loadedItems (state, getters) {
       return getters.loadedItemFlow.filter(obj => obj.type === 'item')
     },
