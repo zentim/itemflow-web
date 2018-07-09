@@ -489,7 +489,8 @@ export default {
           editedDate: data[key].editedDate,
           createdDate: data[key].createdDate,
           deletedDate: data[key].deletedDate || false,
-          favorite: data[key].favorite || false
+          favorite: data[key].favorite || false,
+          whoHaveMe: data[key].whoHaveMe || []
         }
         contentstore[key] = {
           itemContent: data[key].itemContent || '',
