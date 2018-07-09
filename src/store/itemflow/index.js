@@ -381,6 +381,7 @@ export default {
         })
     },
     importData ({ commit, getters }, payload) {
+      commit('setImporting', true)
       const user = getters.user
       if (!user) {
         console.log('error: no user before importData')
@@ -405,33 +406,25 @@ export default {
           itemContent: data[key].itemContent || '',
           flowContent: data[key].flowContent || []
         }
+
+        let updates = {}
+        updates['/MetadataStore/' + user.id + '/' + key] = metatdatastore[key]
+        updates['/ContentStore/' + user.id + '/' + key] = contentstore[key]
+        firebase
+        .database()
+        .ref()
+        .update(updates, function (error) {
+          console.log(key)
+          if (error) {
+            // The write failed...
+            console.log('The write failed...')
+          } else {
+            // Data saved successfully!
+            console.log('Data saved successfully!')
+          }
+          commit('setImporting', false)
+        })
       }
-      firebase
-        .database()
-        .ref('MetadataStore')
-        .child(user.id)
-        .update(metatdatastore, function (error) {
-          if (error) {
-            // The write failed...
-            console.log('MetadataStore: The write failed...')
-          } else {
-            // Data saved successfully!
-            console.log('MetadataStore: Data saved successfully!')
-          }
-        })
-      firebase
-        .database()
-        .ref('ContentStore')
-        .child(user.id)
-        .update(contentstore, function (error) {
-          if (error) {
-            // The write failed...
-            console.log('ContentStore: The write failed...')
-          } else {
-            // Data saved successfully!
-            console.log('ContentStore: Data saved successfully!')
-          }
-        })
     }
   }
 }

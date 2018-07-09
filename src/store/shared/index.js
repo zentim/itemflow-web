@@ -3,7 +3,8 @@ export default {
     loading: false,
     error: null,
     errorText: null,
-    searching: false
+    searching: false,
+    importing: false
   },
   getters: {
     loading (state) {
@@ -17,6 +18,9 @@ export default {
     },
     searching (state) {
       return state.searching
+    },
+    importing (state) {
+      return state.importing
     }
   },
   mutations: {
@@ -34,6 +38,9 @@ export default {
     },
     setSearching (state, payload) {
       state.searching = payload
+    },
+    setImporting (state, payload) {
+      state.importing = payload
     }
   },
   actions: {
@@ -42,6 +49,9 @@ export default {
     },
     clearError ({ commit }) {
       commit('clearError')
+    },
+    setImporting ({commit}, payload) {
+      commit('setImporting', payload)
     }
   }
 }
