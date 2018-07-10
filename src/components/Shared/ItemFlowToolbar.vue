@@ -63,6 +63,7 @@
               <p>Created: {{ itemflowObj.createdDate }}</p>
               <p>Favorite: {{ itemflowObj.favorite }} </p>
               <p>Deleted: {{ itemflowObj.deletedDate }}</p>
+              <p>ClickRate: {{ itemflowObj.clickRate }}</p>
             </v-card-text>
 
             <v-divider></v-divider>
@@ -167,24 +168,24 @@ export default {
     },
     // for whoOwnMe
     updateLastestData (newVal) {
-        let lastestData = []
-        let len = newVal ? newVal.length : 0
-        for (let i = 0; i < len; i++) {
-          // get lastest data
-          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
-          if (obj) {
-            lastestData.push({
-              id: obj.id,
-              type: obj.type,
-              title: obj.title || '',
-              message: obj.message || ''
-            })
-          } else {
-            // pass this obj because it not existed in firebase
-          }
+      let lastestData = []
+      let len = newVal ? newVal.length : 0
+      for (let i = 0; i < len; i++) {
+        // get lastest data
+        let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+        if (obj) {
+          lastestData.push({
+            id: obj.id,
+            type: obj.type,
+            title: obj.title || '',
+            message: obj.message || ''
+          })
+        } else {
+          // pass this obj because it not existed in firebase
         }
-        return lastestData
       }
+      return lastestData
+    }
   },
   watch: {
     itemflowObj (newVal) {

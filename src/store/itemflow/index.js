@@ -122,11 +122,10 @@ export default {
         title: payload.title || '',
         message: payload.message || '',
         labels: payload.labels || [],
-        itemContent: payload.itemContent || '',
-        flowContent: payload.flowContent || [],
         createdDate: new Date().toISOString(),
         editedDate: new Date().toISOString(),
-        favorite: false
+        favorite: false,
+        clickRate: 0
       }
       const createdObj = firebase
         .database()
@@ -173,7 +172,8 @@ export default {
         whoOwnMe: payload.whoOwnMe || [],
         editedDate: new Date().toISOString(),
         deletedDate: payload.deletedDate || false,
-        favorite: payload.favorite || false
+        favorite: payload.favorite || false,
+        clickRate: payload.clickRate + 1
       }
       firebase
         .database()
@@ -392,7 +392,8 @@ export default {
               createdDate: itemflow[key].createdDate,
               editedDate: itemflow[key].editedDate,
               deletedDate: itemflow[key].deletedDate,
-              favorite: itemflow[key].favorite || false
+              favorite: itemflow[key].favorite || false,
+              clickRate: itemflow[key].clickRate || 0
             })
           }
           commit('setLoadedItemFlow', newItemFlow)
@@ -490,6 +491,7 @@ export default {
           createdDate: data[key].createdDate,
           deletedDate: data[key].deletedDate || false,
           favorite: data[key].favorite || false,
+          clickRate: data[key].clickRate || 0,
           whoHaveMe: data[key].whoHaveMe || []
         }
         contentstore[key] = {

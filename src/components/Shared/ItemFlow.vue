@@ -49,7 +49,8 @@
           flowContent: [],
           whoOwnMe: [],
           favorite: null,
-          deletedDate: null
+          deletedDate: null,
+          clickRate: 0
         },
         isDeleted: false
       }
@@ -81,6 +82,7 @@
       this.obj.editedDate = this.itemflowObj.editedDate
       this.obj.favorite = this.itemflowObj.favorite || false
       this.obj.deletedDate = this.itemflowObj.deletedDate || false
+      this.obj.clickRate = this.itemflowObj.clickRate || 0
 
       this.obj.itemContent = this.loadedContent.itemContent || ''
       this.obj.flowContent = this.loadedContent.flowContent || []
@@ -97,6 +99,7 @@
         this.obj.editedDate = newVal.editedDate
         this.obj.favorite = newVal.favorite || false
         this.obj.deletedDate = newVal.deletedDate || false
+        this.obj.clickRate = newVal.clickRate || 0
       },
       loadedContent (newVal) {
         this.obj.itemContent = newVal.itemContent || ''
