@@ -28,7 +28,7 @@
 
 <script>
   export default {
-    props: ['content', 'whoHaveMe'],
+    props: ['content', 'whoOwnMe'],
     data () {
       return {
         flows: [],
@@ -43,7 +43,7 @@
         this.flows.splice(index, 1)
         this.flows = [...this.flows]
 
-        // remove this from removedItemflow's whoHaveMe
+        // remove this from removedItemflow's whoOwnMe
         this.$store.dispatch('removeWhoHaveMe', {
           targetId: removedItemflowId,
           removedObjId: this.$route.params.id
@@ -71,7 +71,7 @@
     },
     mounted () {
       this.flows = this.updateLastestData(this.content)
-      this.Owners = this.updateLastestData(this.whoHaveMe)
+      this.Owners = this.updateLastestData(this.whoOwnMe)
     },
     watch: {
       content (newVal) {
@@ -141,7 +141,7 @@
         // update data to parent component
         this.$emit('update:content', newVal)
       },
-      whoHaveMe (newVal) {
+      whoOwnMe (newVal) {
         this.Owners = this.updateLastestData(newVal)
       }
     }

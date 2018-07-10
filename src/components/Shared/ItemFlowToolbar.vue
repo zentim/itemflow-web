@@ -25,10 +25,10 @@
               details
             </v-list-tile-title>
           </v-list-tile>
-          <v-list-tile class="purple--text" @click="whoHaveMeDialog = !whoHaveMeDialog">
+          <v-list-tile class="purple--text" @click="whoOwnMeDialog = !whoOwnMeDialog">
             <v-list-tile-title>
               <v-icon class="purple--text">assignment</v-icon>
-              whoHaveMe
+              whoOwnMe
             </v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="moveToTrash">
@@ -81,11 +81,11 @@
       </div>
     </template>
 
-    <!-- whoHaveMe dialog -->
+    <!-- whoOwnMe dialog -->
     <template>
       <div class="text-xs-center">
         <v-dialog
-          v-model="whoHaveMeDialog"
+          v-model="whoOwnMeDialog"
           width="500"
         >
           <v-card>
@@ -93,11 +93,11 @@
               class="headline grey lighten-2"
               primary-title
             >
-              whoHaveMe
+              whoOwnMe
             </v-card-title>
 
             <v-card-text v-if="Owners.length === 0">
-              no one have me
+              no one own me
             </v-card-text>
 
             <v-flex
@@ -119,7 +119,7 @@
               <v-spacer></v-spacer>
               <v-btn
                 flat
-                @click="whoHaveMeDialog = false"
+                @click="whoOwnMeDialog = false"
               >
                 Close
               </v-btn>
@@ -137,7 +137,7 @@ export default {
   data () {
     return {
       detailsDialog: false,
-      whoHaveMeDialog: false,
+      whoOwnMeDialog: false,
       Owners: []
     }
   },
@@ -165,7 +165,7 @@ export default {
       }
       this.$router.push('/')
     },
-    // for whoHaveMe
+    // for whoOwnMe
     updateLastestData (newVal) {
         let lastestData = []
         let len = newVal ? newVal.length : 0
@@ -188,8 +188,8 @@ export default {
   },
   watch: {
     itemflowObj (newVal) {
-      this.whoHaveMeDialog = false
-      this.Owners = this.updateLastestData(newVal.whoHaveMe)
+      this.whoOwnMeDialog = false
+      this.Owners = this.updateLastestData(newVal.whoOwnMe)
     }
   }
 }
