@@ -170,7 +170,7 @@ export default {
         labelsFrom: payload.labelsFrom || [],
         itemContent: payload.itemContent || '',
         flowContent: payload.flowContent || [],
-        whoHaveMe: payload.whoHaveMe || [],
+        whoOwnMe: payload.whoOwnMe || [],
         editedDate: new Date().toISOString(),
         deletedDate: payload.deletedDate || false,
         favorite: payload.favorite || false
@@ -214,7 +214,7 @@ export default {
           )
           continue
         }
-        let targetWhoHaveMe = target.whoHaveMe || []
+        let targetWhoHaveMe = target.whoOwnMe || []
         let j = 0
         let isExisted = false
         let targetWhoHaveMeLen = targetWhoHaveMe ? targetWhoHaveMe.length : 0
@@ -234,7 +234,7 @@ export default {
         firebase
           .database()
           .ref('MetadataStore/' + user.id + '/' + target.id)
-          .child('whoHaveMe')
+          .child('whoOwnMe')
           .set(targetWhoHaveMe)
       }
     },
@@ -302,11 +302,11 @@ export default {
         )
         return
       }
-      if (!target.whoHaveMe) {
-        console.log('removeWhoHaveMe error: target whoHaveMe is empty')
+      if (!target.whoOwnMe) {
+        console.log('removeWhoHaveMe error: target whoOwnMe is empty')
         return
       }
-      let targetWhoHaveMe = target.whoHaveMe
+      let targetWhoHaveMe = target.whoOwnMe
       let i = 0
       let len = targetWhoHaveMe.length
       for (i = 0; i < len; i++) {
@@ -324,7 +324,7 @@ export default {
       firebase
         .database()
         .ref('MetadataStore/' + user.id + '/' + target.id)
-        .child('whoHaveMe')
+        .child('whoOwnMe')
         .set(targetWhoHaveMe)
     },
     removeLabelsFrom ({ commit, getters }, payload) {
@@ -388,7 +388,7 @@ export default {
               message: itemflow[key].message || '',
               labels: itemflow[key].labels || [],
               labelsFrom: itemflow[key].labelsFrom || [],
-              whoHaveMe: itemflow[key].whoHaveMe || [],
+              whoOwnMe: itemflow[key].whoOwnMe || [],
               createdDate: itemflow[key].createdDate,
               editedDate: itemflow[key].editedDate,
               deletedDate: itemflow[key].deletedDate,

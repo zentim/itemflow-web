@@ -19,10 +19,16 @@
               {{ isFavorite ? 'undo favorite' : 'Favorite'}}
             </v-list-tile-title>
           </v-list-tile>
-          <v-list-tile class="purple--text" @click="dialog = !dialog">
+          <v-list-tile class="purple--text" @click="detailsDialog = !detailsDialog">
             <v-list-tile-title>
               <v-icon class="purple--text">details</v-icon>
               details
+            </v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile class="purple--text" @click="whoOwnMeDialog = !whoOwnMeDialog">
+            <v-list-tile-title>
+              <v-icon class="purple--text">assignment</v-icon>
+              whoOwnMe
             </v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="moveToTrash">
@@ -40,7 +46,7 @@
     <template>
       <div class="text-xs-center">
         <v-dialog
-          v-model="dialog"
+          v-model="detailsDialog"
           width="500"
         >
           <v-card>
@@ -65,7 +71,55 @@
               <v-spacer></v-spacer>
               <v-btn
                 flat
-                @click="dialog = false"
+                @click="detailsDialog = false"
+              >
+                Close
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </div>
+    </template>
+
+    <!-- whoOwnMe dialog -->
+    <template>
+      <div class="text-xs-center">
+        <v-dialog
+          v-model="whoOwnMeDialog"
+          width="500"
+        >
+          <v-card>
+            <v-card-title
+              class="headline grey lighten-2"
+              primary-title
+            >
+              whoOwnMe
+            </v-card-title>
+
+            <v-card-text v-if="Owners.length === 0">
+              no one own me
+            </v-card-text>
+
+            <v-flex
+              v-for="(obj, index) in Owners"
+              :key="index"
+              class="pb-1">
+              <itemflow-card
+                :id="obj.id"
+                :type="obj.type"
+                :title="obj.title"
+                :message="obj.message"></itemflow-card>
+            </v-flex>
+            <!-- fix cannot scroll list in small size screen.  -->
+            <div class="coverArea hidden-md-and-up"></div>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                flat
+                @click="whoOwnMeDialog = false"
               >
                 Close
               </v-btn>
@@ -82,7 +136,9 @@ export default {
   props: ['id', 'type', 'isFavorite', 'isDeleted', 'deletedDate'],
   data () {
     return {
-      dialog: false
+      detailsDialog: false,
+      whoOwnMeDialog: false,
+      Owners: []
     }
   },
   computed: {
@@ -108,6 +164,32 @@ export default {
         this.$emit('update:deletedDate', new Date().toISOString())
       }
       this.$router.push('/')
+    },
+    // for whoOwnMe
+    updateLastestData (newVal) {
+        let lastestData = []
+        let len = newVal ? newVal.length : 0
+        for (let i = 0; i < len; i++) {
+          // get lastest data
+          let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+          if (obj) {
+            lastestData.push({
+              id: obj.id,
+              type: obj.type,
+              title: obj.title || '',
+              message: obj.message || ''
+            })
+          } else {
+            // pass this obj because it not existed in firebase
+          }
+        }
+        return lastestData
+      }
+  },
+  watch: {
+    itemflowObj (newVal) {
+      this.whoOwnMeDialog = false
+      this.Owners = this.updateLastestData(newVal.whoOwnMe)
     }
   }
 }

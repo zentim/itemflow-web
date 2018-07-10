@@ -26,7 +26,7 @@
       </v-flex>
       <v-flex xs12 md8>
         <item-content :content.sync="obj.itemContent" v-if="obj.type === 'item'"></item-content>
-        <flow-content :content.sync="obj.flowContent" :whoHaveMe.sync="obj.whoHaveMe" v-if="obj.type === 'flow'"></flow-content>
+        <flow-content :content.sync="obj.flowContent" :whoOwnMe.sync="obj.whoOwnMe" v-if="obj.type === 'flow'"></flow-content>
       </v-flex>
     </v-layout>
 
@@ -47,7 +47,7 @@
           labelsFrom: [],
           itemContent: '',
           flowContent: [],
-          whoHaveMe: [],
+          whoOwnMe: [],
           favorite: null,
           deletedDate: null
         },
@@ -77,7 +77,7 @@
       this.obj.message = this.itemflowObj.message || ''
       this.obj.labels = this.itemflowObj.labels || []
       this.obj.labelsFrom = this.itemflowObj.labelsFrom || []
-      this.obj.whoHaveMe = this.itemflowObj.whoHaveMe || []
+      this.obj.whoOwnMe = this.itemflowObj.whoOwnMe || []
       this.obj.editedDate = this.itemflowObj.editedDate
       this.obj.favorite = this.itemflowObj.favorite || false
       this.obj.deletedDate = this.itemflowObj.deletedDate || false
@@ -93,7 +93,7 @@
         this.obj.message = newVal.message || ''
         this.obj.labels = newVal.labels || []
         this.obj.labelsFrom = newVal.labelsFrom || []
-        this.obj.whoHaveMe = newVal.whoHaveMe || []
+        this.obj.whoOwnMe = newVal.whoOwnMe || []
         this.obj.editedDate = newVal.editedDate
         this.obj.favorite = newVal.favorite || false
         this.obj.deletedDate = newVal.deletedDate || false
