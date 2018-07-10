@@ -19,6 +19,7 @@
         @click.native.stop="toggleSelectCard"
         v-show="cardHover || isSelected"
         style="width: 24px; height: 24px; left: -12px; top: -12px;"
+        v-if="$route.name === 'Home'"
       >
         <v-icon>done</v-icon>
       </v-btn>
