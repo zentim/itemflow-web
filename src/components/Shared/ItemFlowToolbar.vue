@@ -19,16 +19,16 @@
               {{ isFavorite ? 'undo favorite' : 'Favorite'}}
             </v-list-tile-title>
           </v-list-tile>
-          <v-list-tile class="purple--text" @click="detailsDialog = !detailsDialog">
-            <v-list-tile-title>
-              <v-icon class="purple--text">details</v-icon>
-              details
-            </v-list-tile-title>
-          </v-list-tile>
           <v-list-tile class="purple--text" @click="whoOwnMeDialog = !whoOwnMeDialog">
             <v-list-tile-title>
               <v-icon class="purple--text">assignment</v-icon>
               whoOwnMe
+            </v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile class="purple--text" @click="detailsDialog = !detailsDialog">
+            <v-list-tile-title>
+              <v-icon class="purple--text">details</v-icon>
+              details
             </v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="moveToTrash">
@@ -59,8 +59,8 @@
 
             <v-card-text>
               <p>Type: {{ itemflowObj.type }}</p>
-              <p>Edited: {{ itemflowObj.editedDate }}</p>
               <p>Created: {{ itemflowObj.createdDate }}</p>
+              <p>Edited: {{ itemflowObj.editedDate }}</p>
               <p>Favorite: {{ itemflowObj.favorite }} </p>
               <p>Deleted: {{ itemflowObj.deletedDate }}</p>
               <p>ClickRate: {{ itemflowObj.clickRate }}</p>
