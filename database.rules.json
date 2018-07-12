@@ -1,6 +1,16 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "MetadataStore": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "ContentStore": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    },
   }
 }
