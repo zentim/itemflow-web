@@ -221,7 +221,7 @@ export default {
         for (j = 0; j < targetWhoHaveMeLen; j++) {
           if (targetWhoHaveMe[j].id === updatedData.id) {
             console.log(
-              'addWhoHaveMe error: updatedData is already existed targetWhoHaveMe'
+              'addWhoHaveMe alert: updatedData is already existed targetWhoHaveMe'
             )
             isExisted = true
             break
@@ -258,7 +258,7 @@ export default {
         let target = getters.loadedItemFlowObj(targets[i].id)
         if (!target) {
           console.log(
-            'addLabelsFrom error: target (' + targets[i].id + ') is not existed'
+            'addLabelsFrom alert: target (' + targets[i].id + ') is not existed'
           )
           continue
         }
@@ -270,7 +270,7 @@ export default {
         for (j = 0; j < targetLabelsFromLen; j++) {
           if (targetLabelsFrom[j].id === updatedData.id) {
             console.log(
-              'addLabelsFrom error: updatedData is already existed targetLabelsFrom'
+              'addLabelsFrom alert: updatedData is already existed targetLabelsFrom'
             )
             isExisted = true
             break
@@ -298,12 +298,12 @@ export default {
       let removedObjId = payload.removedObjId
       if (!target) {
         console.log(
-          'removeWhoHaveMe error: target(' + payload.id + ') not existed'
+          'removeWhoHaveMe alert: target(' + payload.id + ') not existed'
         )
         return
       }
       if (!target.whoOwnMe) {
-        console.log('removeWhoHaveMe error: target whoOwnMe is empty')
+        console.log('removeWhoHaveMe alert: target whoOwnMe is empty')
         return
       }
       let targetWhoHaveMe = target.whoOwnMe
@@ -337,12 +337,12 @@ export default {
       let removedObjId = payload.removedObjId
       if (!target) {
         console.log(
-          'removeLabelsFrom error: target(' + payload.id + ') not existed'
+          'removeLabelsFrom alert: target(' + payload.id + ') not existed'
         )
         return
       }
       if (!target.labelsFrom) {
-        console.log('removeLabelsFrom error: target labelsFrom is empty')
+        console.log('removeLabelsFrom alert: target labelsFrom is empty')
         return
       }
       let targetLabelsFrom = target.labelsFrom
@@ -370,7 +370,7 @@ export default {
       commit('setLoading', true)
       const user = getters.user
       if (!user) {
-        console.log('error: no user before loadItemFlow')
+        console.log('alert: no user before loadItemFlow')
         return
       }
       firebase
@@ -403,7 +403,7 @@ export default {
     loadContent ({ commit, getters }, payload) {
       const user = getters.user
       if (!user) {
-        console.log('error: no user before loadItemFlow')
+        console.log('alert: no user before loadItemFlow')
         return
       }
       var objId = payload
@@ -439,7 +439,7 @@ export default {
     exportData ({ commit, getters }) {
       const user = getters.user
       if (!user) {
-        console.log('error: no user before loadItemFlow')
+        console.log('alert: no user before loadItemFlow')
         return
       }
       var loadeditemflow = getters.loadedItemFlow
@@ -474,7 +474,7 @@ export default {
       commit('setImporting', true)
       const user = getters.user
       if (!user) {
-        console.log('error: no user before importData')
+        console.log('alert: no user before importData')
         return
       }
       var data = payload
