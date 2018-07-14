@@ -471,7 +471,6 @@ export default {
         })
     },
     importData ({ commit, getters }, payload) {
-      commit('setImporting', true)
       const user = getters.user
       if (!user) {
         console.log('alert: no user before importData')
@@ -481,6 +480,7 @@ export default {
       var metatdatastore = {}
       var contentstore = {}
       for (var key in data) {
+        commit('setImporting', true)
         metatdatastore[key] = {
           type: data[key].type,
           title: data[key].title || '',
