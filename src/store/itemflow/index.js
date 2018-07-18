@@ -3,53 +3,10 @@ import fuzzysort from 'fuzzysort'
 
 export default {
   state: {
-    loadedItemFlow: [
-      // {
-      //   id: 'itemId001',
-      //   type: 'item',
-      //   title: 'this is itemId001 title',
-      //   message: 'itemId001 message',
-      //   labels: [
-      //     {
-      //       id: 'itemId002',
-      //       type: 'item',
-      //       title: 'this is itemId002 title',
-      //       message: 'itemId002 message'
-      //     },
-      //     {
-      //       id: 'itemId003',
-      //       type: 'item',
-      //       title: 'this is itemId003 title',
-      //       message: 'itemId003 message'
-      //     },
-      //     {
-      //       id: 'itemId004',
-      //       type: 'item',
-      //       title: 'this is itemId004 title',
-      //       message: 'itemId004 message'
-      //     }
-      //   ],
-      //   date: new Date()
-      // }
-    ],
-    loadedContent: {
-      //   itemContent: 'itemId001 content',
-      //   flowContent: [
-      //     {
-      //       id: 'itemId001',
-      //       type: 'item',
-      //       title: 'this is itemId001 title',
-      //       message: 'itemId001 message'
-      //     }
-      //   ],
-    },
-    searchResults: [
-      // {
-      //   target: 'apple',
-      //   obj: {...},
-      //   score: -4,
-      // }
-    ]
+    loadedItemFlow: [],
+    loadedContent: {},
+    searchResults: [],
+    searchKeyword: ''
   },
   getters: {
     allItemflow (state) {
@@ -93,6 +50,9 @@ export default {
     searchResults (getters) {
       return getters.searchResults
     },
+    searchKeyword (state) {
+      return state.searchKeyword
+    },
     searchResultsItems (state, getters) {
       return getters.searchResults.filter(obj => obj.type === 'item')
     },
@@ -112,6 +72,9 @@ export default {
     },
     setSearchResults (state, payload) {
       state.searchResults = payload
+    },
+    setSearchKeyword (state, payload) {
+      state.searchKeyword = payload
     }
   },
   actions: {
@@ -417,8 +380,9 @@ export default {
           commit('setLoadedContent', obj)
         })
     },
-    searchItemFlow ({ commit, getters }, payload) {
-      if (!payload) {
+    searchItemFlow ({ commit, getters }) {
+      let keyword = getters.searchKeyword
+      if (!keyword) {
         commit('setSearching', false)
         return
       }
@@ -426,7 +390,8 @@ export default {
 
       // [fuzzysort](https://github.com/farzher/fuzzysort)
       // Fast SublimeText-like fuzzy search for JavaScript.
-      let result = fuzzysort.go(payload, getters.loadedItemFlow, {
+      let dataset = getters.loadedItemFlow
+      let result = fuzzysort.go(keyword, dataset, {
         keys: ['title', 'message']
       })
       let searchResults = []

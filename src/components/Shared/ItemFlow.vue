@@ -64,6 +64,9 @@
       },
       loading () {
         return this.$store.getters.loading
+      },
+      searching () {
+        return this.$store.getters.searching
       }
     },
     methods: {
@@ -135,6 +138,9 @@
             message: this.obj.message
           }
         })
+        if (this.searching) {
+          this.$store.dispatch('searchItemFlow')
+        }
         next()
       }
     },
@@ -165,6 +171,9 @@
             message: this.obj.message
           }
         })
+        if (this.searching) {
+          this.$store.dispatch('searchItemFlow')
+        }
         next()
       }
     }

@@ -38,9 +38,8 @@
   export default {
     data () {
       return {
-        // labels: [],
         itemflow: null,
-        amount: 120
+        amount: 40
       }
     },
     computed: {
@@ -72,7 +71,7 @@
           }
           objs.push(obj)
         }
-        this.itemflow = JSON.parse(JSON.stringify(objs))
+        this.itemflow = Object.assign(objs)
       }
     }
   }

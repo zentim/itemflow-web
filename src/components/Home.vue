@@ -151,7 +151,7 @@
   export default {
     data () {
       return {
-        amount: 120,
+        amount: 40,
         selectedList: [],
         dialog: false
       }
@@ -168,16 +168,15 @@
       },
       itemflow () {
         this.selectedList = []
-        let routeName = this.$route.name
-        if (routeName === 'Favorite') {
+        if (this.$route.name === 'Favorite') {
           return this.$store.getters.favoriteItemFlow
         }
 
-        if (routeName === 'Trash') {
+        if (this.$route.name === 'Trash') {
           return this.$store.getters.deletedItemflow
         }
 
-        if (this.searching && routeName === 'Home') {
+        if (this.$route.name === 'Home' && this.searching) {
           return this.$store.getters.searchResults
         }
 
@@ -201,6 +200,9 @@
           obj.deletedDate = new Date().toISOString()
           this.$store.dispatch('updateItemFlow', obj)
         }
+        if (this.searching) {
+          this.$store.dispatch('searchItemFlow')
+        }
       },
       restoreFromTrashSeleted () {
         for (let i = 0; i < this.selectedList.length; i++) {
@@ -208,12 +210,18 @@
           obj.deletedDate = false
           this.$store.dispatch('updateItemFlow', obj)
         }
+        if (this.searching) {
+          this.$store.dispatch('searchItemFlow')
+        }
       },
       removeForeverSeleted () {
         for (let i = 0; i < this.selectedList.length; i++) {
           this.$store.dispatch('removeItemFlow', { 'id': this.selectedList[i] })
         }
         this.dialog = false
+        if (this.searching) {
+          this.$store.dispatch('searchItemFlow')
+        }
       }
     }
   }
