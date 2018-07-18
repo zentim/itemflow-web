@@ -10,7 +10,7 @@ export default {
   },
   getters: {
     allItemflow (state) {
-      return state.loadedItemFlow.filter(obj => !!obj.deletedDate === false)
+      return state.loadedItemFlow.filter(obj => !obj.deletedDate)
     },
     loadedItemFlow (state, getters) {
       return getters.allItemflow.sort(function (a, b) {
@@ -134,7 +134,7 @@ export default {
         flowContent: payload.flowContent || [],
         whoOwnMe: payload.whoOwnMe || [],
         editedDate: new Date().toISOString(),
-        deletedDate: payload.deletedDate || false,
+        deletedDate: payload.deletedDate || '',
         favorite: payload.favorite || false,
         clickRate: payload.clickRate + 1
       }
@@ -354,7 +354,7 @@ export default {
               whoOwnMe: itemflow[key].whoOwnMe || [],
               createdDate: itemflow[key].createdDate,
               editedDate: itemflow[key].editedDate,
-              deletedDate: itemflow[key].deletedDate,
+              deletedDate: itemflow[key].deletedDate || '',
               favorite: itemflow[key].favorite || false,
               clickRate: itemflow[key].clickRate || 0
             })

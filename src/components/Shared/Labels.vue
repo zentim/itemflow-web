@@ -24,15 +24,15 @@
             id="tab-from">
             <v-card flat>
               <!-- labels -->
-              <div v-for="(obj, index) in chipsFrom" :key="`index + 1000`" style="display: inline">
+              <div v-for="(obj, index) in chipsFrom" :key="obj.id" style="display: inline">
                 <v-chip
                   :color="itemflowColor(obj.type)"
-                  :key="`index + 1000`">
+                  :key="obj.id">
                   <router-link
                     :to="'/'+ obj.id"
                     tag="span"
                     style="cursor: pointer"
-                    :key="`obj.id + from`">
+                    :key="obj.id">
                     {{ handleText(obj.title) || 'no title' }}
                   </router-link>
                 </v-chip>
@@ -81,7 +81,16 @@
 
 <script>
   export default {
-    props: ['labels', 'labelsFrom'],
+    props: {
+      labels: {
+        type: Array,
+        default: () => []
+      },
+      labelsFrom: {
+        type: Array,
+        default: () => []
+      }
+    },
     data () {
       return {
         chips: [

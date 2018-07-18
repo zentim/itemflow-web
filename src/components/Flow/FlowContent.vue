@@ -28,7 +28,16 @@
 
 <script>
   export default {
-    props: ['content', 'whoOwnMe'],
+    props: {
+      content: {
+        type: Array,
+        default: () => []
+      },
+      whoOwnMe: {
+        type: Array,
+        default: () => []
+      }
+    },
     data () {
       return {
         flows: [],

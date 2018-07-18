@@ -33,7 +33,25 @@
 
 <script>
   export default {
-    props: ['id', 'type', 'title', 'message', 'selectedList'],
+    props: {
+      id: String,
+      type: {
+        type: String,
+        default: 'item'
+      },
+      title: {
+        type: String,
+        default: ''
+      },
+      message: {
+        type: String,
+        default: ''
+      },
+      selectedList: {
+        type: Array,
+        default: () => []
+      }
+    },
     data () {
       return {
         cardHover: false,

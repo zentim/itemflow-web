@@ -134,7 +134,19 @@
 
 <script>
 export default {
-  props: ['id', 'type', 'isFavorite', 'isDeleted', 'deletedDate'],
+  props: {
+    id: String,
+    type: {
+      type: String,
+      default: 'item'
+    },
+    isFavorite: Boolean,
+    isDeleted: Boolean,
+    deletedDate: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       detailsDialog: false,
@@ -160,7 +172,7 @@ export default {
     },
     moveToTrash () {
       if (this.deletedDate) {
-        this.$emit('update:deletedDate', false)
+        this.$emit('update:deletedDate', '')
       } else {
         this.$emit('update:deletedDate', new Date().toISOString())
       }

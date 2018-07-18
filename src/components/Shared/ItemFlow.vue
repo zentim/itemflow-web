@@ -36,7 +36,9 @@
 
 <script>
   export default {
-    props: ['id'],
+    props: {
+      id: String
+    },
     data () {
       return {
         obj: {
@@ -84,7 +86,7 @@
       this.obj.whoOwnMe = this.itemflowObj.whoOwnMe || []
       this.obj.editedDate = this.itemflowObj.editedDate
       this.obj.favorite = this.itemflowObj.favorite || false
-      this.obj.deletedDate = this.itemflowObj.deletedDate || false
+      this.obj.deletedDate = this.itemflowObj.deletedDate || ''
       this.obj.clickRate = this.itemflowObj.clickRate || 0
 
       this.obj.itemContent = this.loadedContent.itemContent || ''
@@ -101,7 +103,7 @@
         this.obj.whoOwnMe = newVal.whoOwnMe || []
         this.obj.editedDate = newVal.editedDate
         this.obj.favorite = newVal.favorite || false
-        this.obj.deletedDate = newVal.deletedDate || false
+        this.obj.deletedDate = newVal.deletedDate || ''
         this.obj.clickRate = newVal.clickRate || 0
       },
       loadedContent (newVal) {

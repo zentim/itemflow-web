@@ -34,7 +34,25 @@
 
 <script>
 export default {
-  props: ['id', 'title', 'message', 'labels', 'labelsFrom'],
+  props: {
+    id: String,
+    title: {
+      type: String,
+      default: ''
+    },
+    message: {
+      type: String,
+      default: ''
+    },
+    labels: {
+      type: Array,
+      default: () => []
+    },
+    labelsFrom: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       outlineTitle: '',
