@@ -15,8 +15,7 @@
         </v-tab>
         <v-tab
           key="tab-to"
-          href="#tab-to"
-        >
+          href="#tab-to">
           To
         </v-tab>
         <v-tabs-items v-model="model">

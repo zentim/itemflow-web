@@ -169,11 +169,11 @@
       itemflow () {
         this.selectedList = []
         if (this.$route.name === 'Favorite') {
-          return this.$store.getters.favoriteItemFlow
+          return this.$store.getters.loadedItemFlow.filter(obj => obj.favorite)
         }
 
         if (this.$route.name === 'Trash') {
-          return this.$store.getters.deletedItemflow
+          return this.$store.state.itemflow.loadedItemFlow.filter(obj => obj.deletedDate)
         }
 
         if (this.$route.name === 'Home' && this.searching) {

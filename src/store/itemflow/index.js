@@ -9,19 +9,18 @@ export default {
     searchKeyword: ''
   },
   getters: {
-    allItemflow (state) {
-      return state.loadedItemFlow.filter(obj => !obj.deletedDate)
-    },
     loadedItemFlow (state, getters) {
-      return getters.allItemflow.sort(function (a, b) {
-        if (a.editedDate < b.editedDate) {
-          return 1
-        }
-        if (a.editedDate > b.editedDate) {
-          return -1
-        }
-        return 0
-      })
+      return state.loadedItemFlow
+        .filter(obj => !obj.deletedDate)
+        .sort(function (a, b) {
+          if (a.editedDate < b.editedDate) {
+            return 1
+          }
+          if (a.editedDate > b.editedDate) {
+            return -1
+          }
+          return 0
+        })
     },
     loadedItemFlowObj (state) {
       return ObjId => {
@@ -35,29 +34,11 @@ export default {
         return getters.loadedItemFlow.slice(0, amount)
       }
     },
-    loadedItems (state, getters) {
-      return getters.loadedItemFlow.filter(obj => obj.type === 'item')
-    },
-    loadedFlows (state, getters) {
-      return getters.loadedItemFlow.filter(obj => obj.type === 'flow')
-    },
-    favoriteItemFlow (state, getters) {
-      return getters.loadedItemFlow.filter(obj => obj.favorite === true)
-    },
-    deletedItemflow (state, getters) {
-      return state.loadedItemFlow.filter(obj => !!obj.deletedDate === true)
-    },
     searchResults (getters) {
       return getters.searchResults
     },
     searchKeyword (state) {
       return state.searchKeyword
-    },
-    searchResultsItems (state, getters) {
-      return getters.searchResults.filter(obj => obj.type === 'item')
-    },
-    searchResultsFlows (state, getters) {
-      return getters.searchResults.filter(obj => obj.type === 'flow')
     },
     loadedContent (state) {
       return state.loadedContent
@@ -79,37 +60,38 @@ export default {
   },
   actions: {
     createItemFlow ({ commit, getters }, payload) {
-      const user = getters.user
-      const obj = {
-        type: payload.type,
-        title: payload.title || '',
-        message: payload.message || '',
-        labels: payload.labels || [],
-        createdDate: new Date().toISOString(),
-        editedDate: new Date().toISOString(),
-        favorite: false,
-        clickRate: 0
-      }
-      const createdObj = firebase
+      let user = getters.user
+
+      let key = firebase
         .database()
         .ref('MetadataStore')
         .child(user.id)
-        .push(obj)
+        .push()
+        .key
 
-      const createdObjKey = createdObj.key
-      const objContent = {
-        itemContent: payload.itemContent || '',
-        flowContent: payload.flowContent || []
-      }
+      let obj = _formatMetadataStoreObj(payload)
+      obj.id = key
+      let objContent = _formatContentStoreObj(payload)
+
+      let updates = {}
+      updates['/MetadataStore/' + user.id + '/' + obj.id] = obj
+      updates['/ContentStore/' + user.id + '/' + obj.id] = objContent
       firebase
-        .database()
-        .ref('ContentStore')
-        .child(user.id + '/' + createdObjKey)
-        .update(objContent)
+      .database()
+      .ref()
+      .update(updates, function (error) {
+        if (error) {
+          // The write failed...
+          console.log('Store Error: create ' + obj.id + ' fail!')
+        } else {
+          // Data saved successfully!
+          console.log('Create: ' + obj.id)
+        }
+      })
     },
     removeItemFlow ({ commit, getters }, payload) {
-      const userId = getters.user.id
-      const objId = payload.id
+      let userId = getters.user.id
+      let objId = payload.id
       firebase
         .database()
         .ref('MetadataStore/' + userId)
@@ -122,36 +104,19 @@ export default {
         .remove()
     },
     updateItemFlow ({ commit, getters }, payload) {
-      const user = getters.user
-      const objId = payload.id
-      const obj = {
-        type: payload.type,
-        title: payload.title || '',
-        message: payload.message || '',
-        labels: payload.labels || [],
-        labelsFrom: payload.labelsFrom || [],
-        itemContent: payload.itemContent || '',
-        flowContent: payload.flowContent || [],
-        whoOwnMe: payload.whoOwnMe || [],
-        editedDate: new Date().toISOString(),
-        deletedDate: payload.deletedDate || '',
-        favorite: payload.favorite || false,
-        clickRate: payload.clickRate + 1
-      }
+      let user = getters.user
+      let obj = _formatMetadataStoreObj(payload)
       firebase
         .database()
         .ref('MetadataStore/' + user.id)
-        .child(objId)
+        .child(obj.id)
         .update(obj)
 
-      const objContent = {
-        itemContent: payload.itemContent || '',
-        flowContent: payload.flowContent || []
-      }
+      let objContent = _formatContentStoreObj(payload)
       firebase
         .database()
         .ref('ContentStore')
-        .child(user.id + '/' + objId)
+        .child(user.id + '/' + obj.id)
         .update(objContent)
     },
     addWhoHaveMe ({ commit, getters }, payload) {
@@ -164,7 +129,7 @@ export default {
       //     message: ''
       //   }
       // }
-      const user = getters.user
+      let user = getters.user
       let targets = payload.targets
       let updatedData = payload.updatedData
       let i = 0
@@ -211,7 +176,7 @@ export default {
       //     message: ''
       //   }
       // }
-      const user = getters.user
+      let user = getters.user
       let targets = payload.targets
       let updatedData = payload.updatedData
 
@@ -256,7 +221,7 @@ export default {
       //   targetId: removedChip.id,
       //   removedObjId: this.$route.params.id
       // }
-      const user = getters.user
+      let user = getters.user
       let target = getters.loadedItemFlowObj(payload.targetId)
       let removedObjId = payload.removedObjId
       if (!target) {
@@ -295,7 +260,7 @@ export default {
       //   targetId: removedChip.id,
       //   removedObjId: this.$route.params.id
       // }
-      const user = getters.user
+      let user = getters.user
       let target = getters.loadedItemFlowObj(payload.targetId)
       let removedObjId = payload.removedObjId
       if (!target) {
@@ -331,7 +296,7 @@ export default {
     },
     loadItemFlow ({ commit, getters }) {
       commit('setLoading', true)
-      const user = getters.user
+      let user = getters.user
       if (!user) {
         console.log('alert: no user before loadItemFlow')
         return
@@ -344,27 +309,16 @@ export default {
           let newItemFlow = []
           let itemflow = data.val()
           for (let key in itemflow) {
-            newItemFlow.push({
-              id: key,
-              type: itemflow[key].type,
-              title: itemflow[key].title || '',
-              message: itemflow[key].message || '',
-              labels: itemflow[key].labels || [],
-              labelsFrom: itemflow[key].labelsFrom || [],
-              whoOwnMe: itemflow[key].whoOwnMe || [],
-              createdDate: itemflow[key].createdDate,
-              editedDate: itemflow[key].editedDate,
-              deletedDate: itemflow[key].deletedDate || '',
-              favorite: itemflow[key].favorite || false,
-              clickRate: itemflow[key].clickRate || 0
-            })
+            let obj = _formatMetadataStoreObj(itemflow[key])
+            obj.id = key
+            newItemFlow.push(obj)
           }
           commit('setLoadedItemFlow', newItemFlow)
           commit('setLoading', false)
         })
     },
     loadContent ({ commit, getters }, payload) {
-      const user = getters.user
+      let user = getters.user
       if (!user) {
         console.log('alert: no user before loadItemFlow')
         return
@@ -402,7 +356,7 @@ export default {
       commit('setSearchResults', searchResults)
     },
     exportData ({ commit, getters }) {
-      const user = getters.user
+      let user = getters.user
       if (!user) {
         console.log('alert: no user before loadItemFlow')
         return
@@ -436,7 +390,7 @@ export default {
         })
     },
     importData ({ commit, getters }, payload) {
-      const user = getters.user
+      let user = getters.user
       if (!user) {
         console.log('alert: no user before importData')
         return
@@ -446,27 +400,12 @@ export default {
       var contentstore = {}
       for (var key in data) {
         commit('setImporting', true)
-        metatdatastore[key] = {
-          type: data[key].type,
-          title: data[key].title || '',
-          message: data[key].message || '',
-          labels: data[key].labels || [],
-          labelsFrom: data[key].labelsFrom || [],
-          editedDate: data[key].editedDate,
-          createdDate: data[key].createdDate,
-          deletedDate: data[key].deletedDate || false,
-          favorite: data[key].favorite || false,
-          clickRate: data[key].clickRate || 0,
-          whoHaveMe: data[key].whoHaveMe || []
-        }
-        contentstore[key] = {
-          itemContent: data[key].itemContent || '',
-          flowContent: data[key].flowContent || []
-        }
+        metatdatastore[key] = _formatMetadataStoreObj(data[key])
+        contentstore[key] = _formatContentStoreObj(data[key])
 
         let updates = {}
-        updates['/MetadataStore/' + user.id + '/' + key] = metatdatastore[key]
-        updates['/ContentStore/' + user.id + '/' + key] = contentstore[key]
+        updates['/MetadataStore/' + user.id + '/' + metatdatastore[key].id] = metatdatastore[key]
+        updates['/ContentStore/' + user.id + '/' + metatdatastore[key].id] = contentstore[key]
         firebase
         .database()
         .ref()
@@ -484,4 +423,48 @@ export default {
       }
     }
   }
+}
+
+// [如何用 JavaScript 產生 UUID / GUID？](https://cythilya.github.io/2017/03/12/uuid/)
+// Return: String
+function _uuid () {
+  var d = Date.now()
+  if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+    d += performance.now() // use high-precision timer if available
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = (d + Math.random() * 16) % 16 | 0
+    d = Math.floor(d / 16)
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
+  })
+}
+
+// create data structure for metadataStore
+// Return: Ojbect
+function _formatMetadataStoreObj (payload) {
+  let obj = {
+    id: payload.id ? payload.id : _uuid(),
+    type: payload.type ? payload.type : 'item',
+    title: payload.title ? payload.title : '',
+    message: payload.message ? payload.message : '',
+    labels: Array.isArray(payload.labels) ? payload.labels : [],
+    labelsFrom: Array.isArray(payload.labelsFrom) ? payload.labelsFrom : [],
+    whoOwnMe: Array.isArray(payload.whoOwnMe) ? payload.whoOwnMe : [],
+    createdDate: payload.createdDate ? payload.createdDate : new Date().toISOString(),
+    editedDate: payload.editedDate ? payload.editedDate : new Date().toISOString(),
+    deletedDate: payload.deletedDate ? payload.deletedDate : '',
+    favorite: payload.favorite ? payload.favorite : false,
+    clickRate: payload.clickRate ? payload.clickRate : 0
+  }
+  return obj
+}
+
+// create data structure for contentStore
+// Return: Ojbect
+function _formatContentStoreObj (payload) {
+  let obj = {
+    itemContent: payload.itemContent ? payload.itemContent : '',
+    flowContent: Array.isArray(payload.flowContent) ? payload.flowContent : []
+  }
+  return obj
 }
