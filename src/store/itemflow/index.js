@@ -24,9 +24,14 @@ export default {
     },
     loadedItemFlowObj (state) {
       return ObjId => {
-        return state.loadedItemFlow.find(obj => {
+        // 回傳第一個滿足所提供之測試函式的元素值，否則回傳 undefined
+        let targetObj = state.loadedItemFlow.find(obj => {
           return obj.id === ObjId
         })
+        if (targetObj === undefined) {
+          console.log('Getters Alert: can not find ' + ObjId + ', return undefined')
+        }
+        return Object.assign({}, targetObj)
       }
     },
     loadedItemflowByAmount (state, getters) {
@@ -41,7 +46,7 @@ export default {
       return state.searchKeyword
     },
     loadedContent (state) {
-      return state.loadedContent
+      return Object.assign({}, state.loadedContent)
     }
   },
   mutations: {
@@ -106,6 +111,8 @@ export default {
     updateItemFlow ({ commit, getters }, payload) {
       let user = getters.user
       let obj = _formatMetadataStoreObj(payload)
+      obj.editedDate = new Date().toISOString()
+      obj.clickRate = (obj.clickRate + 1)
       firebase
         .database()
         .ref('MetadataStore/' + user.id)

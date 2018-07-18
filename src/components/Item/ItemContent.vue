@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <div>
     <tinymce
       id="d1"
       v-model="data"
@@ -9,7 +9,7 @@
       :plugins="editerPlugins"
       :toolbar1="editerToolbar1"
       :other_options="editerOptions"></tinymce>
-  </v-card>
+  </div>
 </template>
 
 

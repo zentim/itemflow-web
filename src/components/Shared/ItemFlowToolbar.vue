@@ -135,16 +135,34 @@
 <script>
 export default {
   props: {
-    id: String,
+    id: {
+      type: String,
+      required: true
+    },
     type: {
       type: String,
       default: 'item'
     },
     isFavorite: Boolean,
-    isDeleted: Boolean,
-    deletedDate: {
-      type: String,
-      default: ''
+    deletedDate: String,
+    itemflowObj: {
+      type: Object,
+      default: () => {
+        return {
+          type: 'item',
+          title: '',
+          message: '',
+          labels: [],
+          labelsFrom: [],
+          whoOwnMe: [],
+          favorite: false,
+          editedDate: '',
+          deletedDate: '',
+          clickRate: 0,
+          itemContent: '',
+          flowContent: []
+        }
+      }
     }
   },
   data () {
@@ -157,9 +175,6 @@ export default {
   computed: {
     switchTypeBtnColor () {
       return this.type === 'item' ? 'blue--text' : 'green--text'
-    },
-    itemflowObj () {
-      return this.$store.getters.loadedItemFlowObj(this.id)
     }
   },
   methods: {

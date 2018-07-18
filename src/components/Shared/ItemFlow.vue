@@ -15,7 +15,8 @@
             :type.sync="obj.type"
             :isFavorite.sync="obj.favorite"
             :isDeleted.sync="isDeleted"
-            :deletedDate.sync="obj.deletedDate"></app-toolbar>
+            :deletedDate.sync="obj.deletedDate"
+            :itemflowObj="obj"></app-toolbar>
           <item-flow-outline
             :id="id"
             :title.sync="obj.title"
@@ -25,8 +26,8 @@
         </v-card>
       </v-flex>
       <v-flex xs12 md8>
-        <item-content :content.sync="obj.itemContent" v-if="obj.type === 'item'"></item-content>
-        <flow-content :content.sync="obj.flowContent" :whoOwnMe.sync="obj.whoOwnMe" v-if="obj.type === 'flow'"></flow-content>
+        <item-content :content.sync="obj.itemContent" v-show="obj.type === 'item'"></item-content>
+        <flow-content :content.sync="obj.flowContent" :whoOwnMe.sync="obj.whoOwnMe" v-show="obj.type === 'flow'"></flow-content>
       </v-flex>
     </v-layout>
 
@@ -37,22 +38,27 @@
 <script>
   export default {
     props: {
-      id: String
+      id: {
+        type: String,
+        required: true
+      }
     },
     data () {
       return {
         obj: {
-          type: '',
+          type: 'item',
           title: '',
           message: '',
           labels: [],
           labelsFrom: [],
-          itemContent: '',
-          flowContent: [],
           whoOwnMe: [],
-          favorite: null,
-          deletedDate: null,
-          clickRate: 0
+          favorite: false,
+          createdDate: '',
+          editedDate: '',
+          deletedDate: '',
+          clickRate: 0,
+          itemContent: '',
+          flowContent: []
         },
         isDeleted: false
       }
@@ -77,38 +83,64 @@
       }
     },
     mounted () {
-      this.loadContent()
-      this.obj.type = this.itemflowObj.type
-      this.obj.title = this.itemflowObj.title || ''
-      this.obj.message = this.itemflowObj.message || ''
-      this.obj.labels = this.itemflowObj.labels || []
-      this.obj.labelsFrom = this.itemflowObj.labelsFrom || []
-      this.obj.whoOwnMe = this.itemflowObj.whoOwnMe || []
-      this.obj.editedDate = this.itemflowObj.editedDate
-      this.obj.favorite = this.itemflowObj.favorite || false
-      this.obj.deletedDate = this.itemflowObj.deletedDate || ''
-      this.obj.clickRate = this.itemflowObj.clickRate || 0
+      this.$nextTick(function () {
+        // Code that will run only after the
+        // entire view has been rendered
+        let target = this.itemflowObj
 
-      this.obj.itemContent = this.loadedContent.itemContent || ''
-      this.obj.flowContent = this.loadedContent.flowContent || []
+        if (target === undefined || Object.getOwnPropertyNames(target).length === 0) {
+          console.log('Alert: target is undefined or emtyp object')
+          return
+        }
+
+        this.loadContent()
+        this.obj.type = target.type
+        this.obj.title = target.title
+        this.obj.message = target.message
+        this.obj.labels = target.labels
+        this.obj.labelsFrom = target.labelsFrom
+        this.obj.whoOwnMe = target.whoOwnMe
+        this.obj.createdDate = target.createdDate
+        this.obj.editedDate = target.editedDate
+        this.obj.deletedDate = target.deletedDate
+        this.obj.favorite = target.favorite
+        this.obj.clickRate = target.clickRate
+
+        this.obj.itemContent = this.loadedContent.itemContent
+        this.obj.flowContent = this.loadedContent.flowContent
+      })
     },
     watch: {
       itemflowObj (newVal) {
+        let target = newVal
+        if (target === undefined || Object.getOwnPropertyNames(target).length === 0) {
+          console.log('Alert: target is undefined or emtyp object')
+          return
+        }
         this.loadContent()
-        this.obj.type = newVal.type
-        this.obj.title = newVal.title || ''
-        this.obj.message = newVal.message || ''
-        this.obj.labels = newVal.labels || []
-        this.obj.labelsFrom = newVal.labelsFrom || []
-        this.obj.whoOwnMe = newVal.whoOwnMe || []
-        this.obj.editedDate = newVal.editedDate
-        this.obj.favorite = newVal.favorite || false
-        this.obj.deletedDate = newVal.deletedDate || ''
-        this.obj.clickRate = newVal.clickRate || 0
+        this.obj.type = target.type
+        this.obj.title = target.title
+        this.obj.message = target.message
+        this.obj.labels = target.labels
+        this.obj.labelsFrom = target.labelsFrom
+        this.obj.whoOwnMe = target.whoOwnMe
+        this.obj.createdDate = target.createdDate
+        this.obj.editedDate = target.editedDate
+        this.obj.deletedDate = target.deletedDate
+        this.obj.favorite = target.favorite
+        this.obj.clickRate = target.clickRate
+
+        this.obj.itemContent = this.loadedContent.itemContent
+        this.obj.flowContent = this.loadedContent.flowContent
       },
       loadedContent (newVal) {
-        this.obj.itemContent = newVal.itemContent || ''
-        this.obj.flowContent = newVal.flowContent || []
+        let target = newVal
+        if (target === undefined || Object.getOwnPropertyNames(target).length === 0) {
+          console.log('Alert: target is undefined or emtyp object')
+          return
+        }
+        this.obj.itemContent = target.itemContent
+        this.obj.flowContent = target.flowContent
       }
     },
     beforeRouteUpdate (to, from, next) {
