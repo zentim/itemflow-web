@@ -64,12 +64,12 @@ new Vue({
   created () {
     // firebase init
     firebase.initializeApp({
-      apiKey: "AIzaSyDV9-13hWJOSYqYA-tYYt9J2MzvBcD1wl0",
-      authDomain: "itemflow-web.firebaseapp.com",
-      databaseURL: "https://itemflow-web.firebaseio.com",
-      projectId: "itemflow-web",
-      storageBucket: "itemflow-web.appspot.com",
-      messagingSenderId: "454122897289"
+      apiKey: 'AIzaSyDV9-13hWJOSYqYA-tYYt9J2MzvBcD1wl0',
+      authDomain: 'itemflow-web.firebaseapp.com',
+      databaseURL: 'https://itemflow-web.firebaseio.com',
+      projectId: 'itemflow-web',
+      storageBucket: 'itemflow-web.appspot.com',
+      messagingSenderId: '454122897289'
     })
 
     // // FirebaseUI config.
