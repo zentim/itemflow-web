@@ -197,9 +197,10 @@ export default {
     updateLastestData (newVal) {
       let lastestData = []
       let len = newVal ? newVal.length : 0
+
       for (let i = 0; i < len; i++) {
         // get lastest data
-        let obj = this.$store.getters.loadedItemFlowObj(newVal[i].id)
+        let obj = this.$store.getters.itemflowStoreObj(newVal[i].id)
         if (obj) {
           lastestData.push({
             id: obj.id,
@@ -211,13 +212,22 @@ export default {
           // pass this obj because it not existed in firebase
         }
       }
+
       return lastestData
     }
   },
-  watch: {
-    itemflowObj (newVal) {
+  mounted () {
+    this.$nextTick(function () {
+      // Code that will run only after the
+      // entire view has been rendered
       this.whoOwnMeDialog = false
-      this.Owners = this.updateLastestData(newVal.whoOwnMe)
+      this.Owners = this.updateLastestData(this.itemflowObj.whoOwnMe)
+    })
+  },
+  watch: {
+    id (newVal) {
+      this.whoOwnMeDialog = false
+      this.Owners = this.updateLastestData(this.itemflowObj.whoOwnMe)
     }
   }
 }

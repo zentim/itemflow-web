@@ -65,21 +65,13 @@
     },
     computed: {
       itemflowObj () {
-        return this.$store.getters.loadedItemFlowObj(this.id)
-      },
-      loadedContent () {
-        return this.$store.getters.loadedContent
+        return this.$store.getters.itemflowStoreObj(this.id)
       },
       loading () {
         return this.$store.getters.loading
       },
       searching () {
         return this.$store.getters.searching
-      }
-    },
-    methods: {
-      loadContent () {
-        this.$store.dispatch('loadContent', this.id)
       }
     },
     mounted () {
@@ -93,7 +85,6 @@
           return
         }
 
-        this.loadContent()
         this.obj.type = target.type
         this.obj.title = target.title
         this.obj.message = target.message
@@ -106,8 +97,8 @@
         this.obj.favorite = target.favorite
         this.obj.clickRate = target.clickRate
 
-        this.obj.itemContent = this.loadedContent.itemContent
-        this.obj.flowContent = this.loadedContent.flowContent
+        this.obj.itemContent = target.itemContent
+        this.obj.flowContent = target.flowContent
       })
     },
     watch: {
@@ -117,7 +108,7 @@
           console.log('Alert: target is undefined or emtyp object')
           return
         }
-        this.loadContent()
+
         this.obj.type = target.type
         this.obj.title = target.title
         this.obj.message = target.message
@@ -130,15 +121,6 @@
         this.obj.favorite = target.favorite
         this.obj.clickRate = target.clickRate
 
-        this.obj.itemContent = this.loadedContent.itemContent
-        this.obj.flowContent = this.loadedContent.flowContent
-      },
-      loadedContent (newVal) {
-        let target = newVal
-        if (target === undefined || Object.getOwnPropertyNames(target).length === 0) {
-          console.log('Alert: target is undefined or emtyp object')
-          return
-        }
         this.obj.itemContent = target.itemContent
         this.obj.flowContent = target.flowContent
       }
@@ -163,7 +145,7 @@
             message: this.obj.message
           }
         })
-        this.$store.dispatch('addWhoHaveMe', {
+        this.$store.dispatch('addWhoOwnMe', {
           targets: this.obj.flowContent,
           updatedData: {
             id: this.id,
@@ -196,7 +178,7 @@
             message: this.obj.message
           }
         })
-        this.$store.dispatch('addWhoHaveMe', {
+        this.$store.dispatch('addWhoOwnMe', {
           targets: this.obj.flowContent,
           updatedData: {
             id: this.id,

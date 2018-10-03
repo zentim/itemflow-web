@@ -49,17 +49,17 @@
         return this.$store.getters.user
       },
       itemflowLength () {
-        return this.$store.getters.loadedItemFlow.filter(obj => {
+        return this.$store.getters.itemflowStore.filter(obj => {
           return !obj.deletedDate
         }).length
       },
       itemsLength () {
-        return this.$store.getters.loadedItemFlow.filter(obj => {
+        return this.$store.getters.itemflowStore.filter(obj => {
           return obj.type === 'item' && !obj.deletedDate
         }).length
       },
       flowsLength () {
-        return this.$store.getters.loadedItemFlow.filter(obj => {
+        return this.$store.getters.itemflowStore.filter(obj => {
           return obj.type === 'flow' && !obj.deletedDate
         }).length
       },

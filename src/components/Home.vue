@@ -169,11 +169,11 @@
       itemflow () {
         this.selectedList = []
         if (this.$route.name === 'Favorite') {
-          return this.$store.getters.loadedItemFlow.filter(obj => obj.favorite)
+          return this.$store.getters.itemflowStore.filter(obj => obj.favorite)
         }
 
         if (this.$route.name === 'Trash') {
-          return this.$store.state.itemflow.loadedItemFlow.filter(obj => obj.deletedDate)
+          return this.$store.state.itemflow.itemflowStore.filter(obj => obj.deletedDate)
         }
 
         if (this.$route.name === 'Home' && this.searching) {
@@ -196,7 +196,7 @@
       },
       moveToTrashSeleted () {
         for (let i = 0; i < this.selectedList.length; i++) {
-          let obj = this.$store.getters.loadedItemFlowObj(this.selectedList[i])
+          let obj = this.$store.getters.itemflowStoreObj(this.selectedList[i])
           obj.deletedDate = new Date().toISOString()
           this.$store.dispatch('updateItemFlow', obj)
         }
@@ -206,7 +206,7 @@
       },
       restoreFromTrashSeleted () {
         for (let i = 0; i < this.selectedList.length; i++) {
-          let obj = this.$store.getters.loadedItemFlowObj(this.selectedList[i])
+          let obj = this.$store.getters.itemflowStoreObj(this.selectedList[i])
           obj.deletedDate = false
           this.$store.dispatch('updateItemFlow', obj)
         }
