@@ -336,13 +336,21 @@ export default {
         return
       }
 
-      for (let key in dataset) {
-        let data = {
-          id: key,
-          ...dataset[key]
-        }
-        commit('updateItemFlow', _itemflowStructureObj(data))
-      }
+      let updates = {}
+      dataset.forEach(data => {
+        updates[data.id] = data
+      })
+
+      firebase.database().ref('ItemflowStore/' + user.id)
+        .update(updates, function (error) {
+          if (error) {
+            // The write failed...
+            console.log('The write failed...')
+          } else {
+            // Data saved successfully!
+            console.log('Data saved successfully!')
+          }
+        })
 
       commit('setImporting', false)
     }
