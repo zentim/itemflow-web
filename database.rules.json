@@ -1,16 +1,10 @@
 {
   "rules": {
-    "MetadataStore": {
+    "ItemflowStore": {
       "$uid": {
         ".read": "$uid === auth.uid",
         ".write": "$uid === auth.uid"
       }
-    },
-    "ContentStore": {
-      "$uid": {
-        ".read": "$uid === auth.uid",
-        ".write": "$uid === auth.uid"
-      }
-    },
+    }
   }
 }
