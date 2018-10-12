@@ -33,21 +33,30 @@
         ],
         editerToolbar1: 'undo redo bold mark hr bullist numlist table codesample removeformat ',
         editerOptions: {
-          height: 520,
+          height: 550,
           menubar: false,
-          content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px}',
+          content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} .mce-content-body img {max-width:100%;height:auto;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px;}',
           setup: function (editor) {
             editor.addButton('mark', {
               text: 'H',
               icon: false,
               onclick: function () {
-                var toggleFormat = function (name, value) {
+                let toggleFormat = function (name, value) {
                   editor.formatter.toggle(name, value ? { value: value } : undefined)
                   editor.nodeChanged()
-                  console.log('hi')
                 }
                 toggleFormat('hilitecolor', 'yellow')
+                console.log(editor)
               }
+            })
+
+            editor.shortcuts.add('ctrl+h', 'To highlight', function () {
+              let toggleFormat = function (name, value) {
+                editor.formatter.toggle(name, value ? { value: value } : undefined)
+                editor.nodeChanged()
+              }
+              toggleFormat('hilitecolor', 'yellow')
+              console.log(editor)
             })
           }
         }
