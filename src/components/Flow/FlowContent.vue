@@ -67,7 +67,8 @@
           // get lastest data
           let obj = this.$store.getters.itemflowStoreObj(newVal[i].id)
 
-          if (obj & !obj.deletedDate) {
+          if (obj && !obj.deletedDate) {
+            console.log('tes')
             lastestData.push({
               id: obj.id,
               type: obj.type,
