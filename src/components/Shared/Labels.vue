@@ -138,17 +138,18 @@
         for (let i = 0; i < len; i++) {
           // get lastest data
           let obj = this.$store.getters.itemflowStoreObj(newVal[i].id)
-          if (obj) {
+
+          if (obj & !obj.deletedDate) {
             lastestData.push({
               id: obj.id,
               type: obj.type,
               title: obj.title || '',
-              message: obj.message || ''
-            })
+              message: obj.message || ''})
           } else {
-            // pass this obj because it not existed in firebase
+            // pass this obj because it not existed in firebase or was deleted
           }
         }
+
         return lastestData
       }
     },

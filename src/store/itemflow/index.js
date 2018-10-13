@@ -89,11 +89,8 @@ export default {
     },
     updateItemFlow ({ commit, getters }, payload) {
       let user = getters.user
-      console.log('before:')
-      console.log(payload)
       let obj = _itemflowStructureObj(payload)
-      console.log('after:')
-      console.log(obj)
+
       obj.editedDate = new Date().toISOString()
       obj.clickRate = (obj.clickRate + 1)
       firebase.database().ref('ItemflowStore/' + user.id).child(obj.id)
