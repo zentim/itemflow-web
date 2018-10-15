@@ -170,7 +170,9 @@ export default {
       let len = targets ? targets.length : 0
       for (i = 0; i < len; i++) {
         let target = getters.itemflowStoreObj(targets[i].id)
-        if (!target) {
+
+        if (!target || Object.getOwnPropertyNames(target).length === 0) {
+          console.log('i = ' + i)
           console.log(
             'addLabelsFrom alert: target (' + targets[i].id + ') is not existed'
           )

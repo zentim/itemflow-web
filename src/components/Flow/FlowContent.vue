@@ -55,7 +55,7 @@
         this.flows = [...this.flows]
 
         // remove this from removedItemflow's whoOwnMe
-        this.$store.dispatch('removeWhoHaveMe', {
+        this.$store.dispatch('removeWhoOwnMe', {
           targetId: removedItemflowId,
           removedObjId: this.$route.params.id
         })
@@ -67,7 +67,7 @@
           // get lastest data
           let obj = this.$store.getters.itemflowStoreObj(newVal[i].id)
 
-          if (obj && !obj.deletedDate) {
+          if (obj.id && !obj.deletedDate) {
             lastestData.push({
               id: obj.id,
               type: obj.type,
