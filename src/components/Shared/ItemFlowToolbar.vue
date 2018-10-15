@@ -145,6 +145,10 @@ export default {
     },
     isFavorite: Boolean,
     deletedDate: String,
+    whoOwnMe: {
+      type: Array,
+      default: () => []
+    },
     itemflowObj: {
       type: Object,
       default: () => {
@@ -201,7 +205,7 @@ export default {
       for (let i = 0; i < len; i++) {
         // get lastest data
         let obj = this.$store.getters.itemflowStoreObj(newVal[i].id)
-        if (obj) {
+        if (obj.id && !obj.deletedDate) {
           lastestData.push({
             id: obj.id,
             type: obj.type,
@@ -225,9 +229,9 @@ export default {
     })
   },
   watch: {
-    id (newVal) {
+    whoOwnMe (newVal) {
       this.whoOwnMeDialog = false
-      this.Owners = this.updateLastestData(this.itemflowObj.whoOwnMe)
+      this.Owners = this.updateLastestData(newVal)
     }
   }
 }

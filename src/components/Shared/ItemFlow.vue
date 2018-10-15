@@ -16,6 +16,7 @@
             :isFavorite.sync="obj.favorite"
             :isDeleted.sync="isDeleted"
             :deletedDate.sync="obj.deletedDate"
+            :whoOwnMe="obj.whoOwnMe"
             :itemflowObj="obj"></app-toolbar>
           <item-flow-outline
             :id="id"
