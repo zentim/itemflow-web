@@ -33,7 +33,7 @@
         ],
         editerToolbar1: 'undo redo bold mark hr bullist numlist table codesample removeformat ',
         editerOptions: {
-          height: 550,
+          height: this.getWindowHeight(),
           menubar: false,
           content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} .mce-content-body img {max-width:100%;height:auto;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px;}',
           setup: function (editor) {
@@ -68,6 +68,12 @@
         // console.log('init', e)
         e.setContent(this.data)
         // this.$refs.tm.editor.setContent(this.itemContent)
+      },
+      getWindowHeight () {
+        let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+        height = (height - 120)
+        console.log(height)
+        return height
       }
     },
     watch: {
