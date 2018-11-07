@@ -71,9 +71,8 @@
       },
       getWindowHeight () {
         let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
-        height = (height - 120)
-        console.log(height)
-        return height
+
+        return height * 0.84
       }
     },
     watch: {

@@ -122,7 +122,7 @@ export default {
       let len = targets ? targets.length : 0
       for (i = 0; i < len; i++) {
         let target = getters.itemflowStoreObj(targets[i].id)
-        if (!target) {
+        if (!target || Object.getOwnPropertyNames(target).length === 0) {
           console.log(
             'addWhoOwnMe alert: target (' + targets[i].id + ') is not existed'
           )
@@ -172,7 +172,6 @@ export default {
         let target = getters.itemflowStoreObj(targets[i].id)
 
         if (!target || Object.getOwnPropertyNames(target).length === 0) {
-          console.log('i = ' + i)
           console.log(
             'addLabelsFrom alert: target (' + targets[i].id + ') is not existed'
           )
@@ -212,7 +211,7 @@ export default {
       let user = getters.user
       let target = getters.itemflowStoreObj(payload.targetId)
       let removedObjId = payload.removedObjId
-      if (!target) {
+      if (!target || Object.getOwnPropertyNames(target).length === 0) {
         console.log(
           'removeWhoOwnMe alert: target(' + payload.id + ') not existed'
         )
@@ -251,7 +250,7 @@ export default {
       let user = getters.user
       let target = getters.itemflowStoreObj(payload.targetId)
       let removedObjId = payload.removedObjId
-      if (!target) {
+      if (!target || Object.getOwnPropertyNames(target).length === 0) {
         console.log(
           'removeLabelsFrom alert: target(' + payload.id + ') not existed'
         )
@@ -315,6 +314,22 @@ export default {
       let jsonData = JSON.stringify(data)
       let a = document.createElement('a')
       let file = new Blob([jsonData], {type: 'text/plain'})
+      a.href = URL.createObjectURL(file)
+      a.download = 'itemflow_' + Date.now() + '.json'
+      a.click()
+    },
+    exportSelectedData ({ commit, getters }, payload) {
+      let exportSelectedData = payload
+      let dataset = []
+
+      exportSelectedData.forEach(element => {
+        dataset.push(getters.itemflowStoreObj(element))
+      })
+
+      // output file
+      var jsonData = JSON.stringify(dataset)
+      var a = document.createElement('a')
+      var file = new Blob([jsonData], {type: 'text/plain'})
       a.href = URL.createObjectURL(file)
       a.download = 'itemflow_' + Date.now() + '.json'
       a.click()
