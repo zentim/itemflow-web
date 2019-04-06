@@ -11,7 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "firebase": "^4.10.1",
+    "firebase": "^4.13.1",
     "firebaseui": "^2.6.3",
     "fuzzysort": "^1.1.1",
     "vue": "^2.5.2",
