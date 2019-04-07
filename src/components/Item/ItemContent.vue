@@ -35,6 +35,7 @@
         editerOptions: {
           height: this.getWindowHeight(),
           menubar: false,
+          paste_data_images: true,
           content_style: '.mce-content-body {font-size:10pt;font-family:sans-serif;} .mce-content-body img {max-width:100%;height:auto;} p{-webkit-margin-before: 0px;-webkit-margin-after: 0px;}',
           setup: function (editor) {
             editor.addButton('mark', {
