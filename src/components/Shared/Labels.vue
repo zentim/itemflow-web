@@ -115,15 +115,7 @@
         return text
       },
       remove (index) {
-        let removedChipId = this.chips[index].id
         this.chips.splice(index, 1)
-        this.chips = [...this.chips]
-
-        // remove this from removedChip's labelsFrom
-        this.$store.dispatch('removeLabelsFrom', {
-          targetId: removedChipId,
-          removedObjId: this.$route.params.id
-        })
       },
       itemflowColor (type) {
         if (type === 'item') {
@@ -131,55 +123,19 @@
         } else if (type === 'flow') {
           return 'LogoFlowColor'
         }
-      },
-      updateLastestData (newVal) {
-        let lastestData = []
-        let len = newVal ? newVal.length : 0
-        for (let i = 0; i < len; i++) {
-          // get lastest data
-          let obj = this.$store.getters.itemflowStoreObj(newVal[i].id)
-
-          if (obj.id && !obj.deletedDate) {
-            lastestData.push({
-              id: obj.id,
-              type: obj.type,
-              title: obj.title || '',
-              message: obj.message || ''})
-          } else {
-            // pass this obj because it not existed in firebase or was deleted
-          }
-        }
-
-        return lastestData
       }
     },
     mounted () {
-      this.chips = this.updateLastestData(this.labels)
-      this.chipsFrom = this.updateLastestData(this.labelsFrom)
+      this.$nextTick(function () {
+        // Code that will run only after the
+        // entire view has been rendered
+        this.chips = this.labels
+        this.chipsFrom = this.labelsFrom
+      })
     },
     watch: {
       labels (newVal) {
-        // for develope debug
-        if (this.preventInfiniteLoop > 50) {
-          console.log('Error: Infinite Loop!')
-          return
-        } else {
-          this.preventInfiniteLoop++
-        }
-
-        // Avoid cannot read property 'lenght' of undefined
-        if (!newVal) {
-          newVal = []
-        }
-
-        let newLabels = this.updateLastestData(newVal)
-
-        // Avoid infinite loop
-        let chipsLength = this.chips ? this.chips.length : 0
-        let newLabelsLenght = newLabels ? newLabels.length : 0
-        if (chipsLength !== newLabelsLenght) {
-          this.chips = newLabels || []
-        }
+        this.chips = newVal
       },
       chips (newVal) {
         // for develope debug
@@ -217,7 +173,7 @@
         this.$emit('update:labels', newVal)
       },
       labelsFrom (newVal) {
-        this.chipsFrom = this.updateLastestData(newVal)
+        this.chipsFrom = newVal
       }
     }
   }

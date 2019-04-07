@@ -50,15 +50,7 @@
     },
     methods: {
       remove (index) {
-        let removedItemflowId = this.flows[index].id
         this.flows.splice(index, 1)
-        this.flows = [...this.flows]
-
-        // remove this from removedItemflow's whoOwnMe
-        this.$store.dispatch('removeWhoOwnMe', {
-          targetId: removedItemflowId,
-          removedObjId: this.$route.params.id
-        })
       },
       updateLastestData (newVal) {
         let lastestData = []

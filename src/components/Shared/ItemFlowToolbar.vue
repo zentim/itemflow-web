@@ -97,12 +97,12 @@
               whoOwnMe
             </v-card-title>
 
-            <v-card-text v-if="Owners.length === 0">
+            <v-card-text v-if="itemflowObj.whoOwnMe.length === 0">
               no one own me
             </v-card-text>
 
             <v-flex
-              v-for="(obj, index) in Owners"
+              v-for="(obj, index) in itemflowObj.whoOwnMe"
               :key="index"
               class="pb-1">
               <itemflow-card
@@ -172,8 +172,7 @@ export default {
   data () {
     return {
       detailsDialog: false,
-      whoOwnMeDialog: false,
-      Owners: []
+      whoOwnMeDialog: false
     }
   },
   computed: {
@@ -196,42 +195,11 @@ export default {
         this.$emit('update:deletedDate', new Date().toISOString())
       }
       this.$router.push('/')
-    },
-    // for whoOwnMe
-    updateLastestData (newVal) {
-      let lastestData = []
-      let len = newVal ? newVal.length : 0
-
-      for (let i = 0; i < len; i++) {
-        // get lastest data
-        let obj = this.$store.getters.itemflowStoreObj(newVal[i].id)
-        if (obj.id && !obj.deletedDate) {
-          lastestData.push({
-            id: obj.id,
-            type: obj.type,
-            title: obj.title || '',
-            message: obj.message || ''
-          })
-        } else {
-          // pass this obj because it not existed in firebase
-        }
-      }
-
-      return lastestData
     }
   },
-  mounted () {
-    this.$nextTick(function () {
-      // Code that will run only after the
-      // entire view has been rendered
-      this.whoOwnMeDialog = false
-      this.Owners = this.updateLastestData(this.itemflowObj.whoOwnMe)
-    })
-  },
   watch: {
-    whoOwnMe (newVal) {
+    id (newVal) {
       this.whoOwnMeDialog = false
-      this.Owners = this.updateLastestData(newVal)
     }
   }
 }

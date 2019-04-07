@@ -89,9 +89,9 @@
         this.obj.type = target.type
         this.obj.title = target.title
         this.obj.message = target.message
-        this.obj.labels = target.labels
-        this.obj.labelsFrom = target.labelsFrom
-        this.obj.whoOwnMe = target.whoOwnMe
+        this.obj.labels = this.updateTargetsInfo(target.labels, 'labels')
+        this.obj.labelsFrom = this.updateTargetsInfo(target.labelsFrom, 'labelsFrom')
+        this.obj.whoOwnMe = this.updateTargetsInfo(target.whoOwnMe, 'whoOwnMe')
         this.obj.createdDate = target.createdDate
         this.obj.editedDate = target.editedDate
         this.obj.deletedDate = target.deletedDate
@@ -113,9 +113,9 @@
         this.obj.type = target.type
         this.obj.title = target.title
         this.obj.message = target.message
-        this.obj.labels = target.labels
-        this.obj.labelsFrom = target.labelsFrom
-        this.obj.whoOwnMe = target.whoOwnMe
+        this.obj.labels = this.updateTargetsInfo(target.labels, 'labels')
+        this.obj.labelsFrom = this.updateTargetsInfo(target.labelsFrom, 'labelsFrom')
+        this.obj.whoOwnMe = this.updateTargetsInfo(target.whoOwnMe, 'whoOwnMe')
         this.obj.createdDate = target.createdDate
         this.obj.editedDate = target.editedDate
         this.obj.deletedDate = target.deletedDate
@@ -124,6 +124,59 @@
 
         this.obj.itemContent = target.itemContent
         this.obj.flowContent = target.flowContent
+      }
+    },
+    methods: {
+      updateTargetsInfo (targets, targetsName) {
+        // targets is empty will return newTargets, that meaning return []
+        let newTargets = []
+        let thisId = this.id
+        targets.forEach(target => {
+          // skip if the target id is undefined
+          if (target.id === undefined) {
+            return
+          }
+          // skip if the targetObj does not exist
+          let targetObj = this.$store.getters.itemflowStoreObj(target.id)
+          if (targetObj === undefined || Object.getOwnPropertyNames(targetObj).length === 0) {
+            console.log('Alert: target is undefined or emtyp object')
+            return
+          }
+          // check for labelsFrom or whoOwnMe,
+          // skip if this does not exist in the targetObj labels or flowContent
+          if (targetsName === 'labelsFrom' || targetsName === 'whoOwnMe') {
+            // arrIndex return -1 is meaning checkId does not exist in arr
+            let arr = (targetsName === 'labelsFrom') ? targetObj.labels : targetObj.flowContent
+            let checkId = thisId
+            if (arr === undefined) {
+              console.log('Alert: target is undefined')
+              return
+            }
+            let arrIndex = arr.map((item, index) => {
+              return item.id
+            }).indexOf(checkId)
+            if (arrIndex === -1) {
+              return
+            }
+          }
+          // arrIndex return -1 is meaning checkId does not exist in arr
+          let arr = newTargets
+          let checkId = target.id
+          let arrIndex = arr.map((item, index) => {
+            return item.id
+          }).indexOf(checkId)
+          // check for duplicates, only push it into when it
+          // does not exist in newTargets
+          if (arrIndex === -1) {
+            newTargets.push({
+              id: targetObj.id,
+              type: targetObj.type,
+              title: targetObj.title,
+              message: targetObj.message
+            })
+          }
+        })
+        return newTargets
       }
     },
     beforeRouteUpdate (to, from, next) {
