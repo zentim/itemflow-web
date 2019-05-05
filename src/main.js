@@ -19,6 +19,7 @@ import tinymce from 'vue-tinymce-editor'
 import ItemContent from './components/Item/ItemContent'
 import FlowContent from './components/Flow/FlowContent'
 import Labels from './components/Shared/Labels'
+import GraphArea from './components/Shared/GraphArea'
 
 Vue.use(Vuetify,
   {
@@ -53,6 +54,7 @@ Vue.component('tinymce', tinymce)
 Vue.component('item-content', ItemContent)
 Vue.component('flow-content', FlowContent)
 Vue.component('app-labels', Labels)
+Vue.component('graph-area', GraphArea)
 
 /* eslint-disable no-new */
 new Vue({

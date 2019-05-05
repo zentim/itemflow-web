@@ -11,6 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "d3": "^5.9.2",
     "firebase": "^5.9.3",
     "firebaseui": "^3.5.2",
     "fuzzysort": "^1.1.1",
