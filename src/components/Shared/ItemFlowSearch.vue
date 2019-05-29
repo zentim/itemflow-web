@@ -18,6 +18,11 @@ export default {
       searchInput: ''
     }
   },
+  computed: {
+    searchKeyword () {
+      return this.$store.getters.searchKeyword
+    }
+  },
   methods: {
     clearSearchInput () {
       this.searchInput = ''
@@ -32,6 +37,9 @@ export default {
       if (newVal === '') {
         this.searchItemflow()
       }
+    },
+    searchKeyword (newVal) {
+      this.searchInput = newVal
     }
   }
 }
