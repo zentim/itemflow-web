@@ -13,6 +13,7 @@
       app
       dense
       v-if="userIsAuthenticated"
+      class="vtoolbar"
     >
       <div class="ml-1 hidden-lg-and-up" v-if="$route.name === 'Home'">
         <v-toolbar-side-icon class="mx-0 px-0" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
@@ -172,5 +173,8 @@ export default {
   top: 100px;
   right: 0;
   z-index: 10;
+}
+.vtoolbar .v-toolbar__content {
+  padding: 0;
 }
 </style>
