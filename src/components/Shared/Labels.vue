@@ -6,7 +6,7 @@
         <v-tab key="tab-from" href="#tab-from">From</v-tab>
         <v-tab key="tab-to" href="#tab-to">To</v-tab>
         <v-tabs-items v-model="model">
-          <v-tab-item id="tab-from">
+          <v-tab-item value="tab-from">
             <div style="min-height: 120px;border-bottom: 1px solid #ccc;background-color: #fff;">
               <v-card
                 flat
@@ -27,7 +27,7 @@
             </div>
           </v-tab-item>
 
-          <v-tab-item id="tab-to">
+          <v-tab-item value="tab-to">
             <div style="min-height: 120px;border-bottom: 1px solid #ccc;background-color: #fff;">
               <v-card flat>
                 <!-- drag area -->

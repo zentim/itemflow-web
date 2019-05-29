@@ -1,12 +1,12 @@
 <template>
   <v-text-field
-    prepend-icon="search"
+    prepend-inner-icon="search"
     label="Search..."
     solo-inverted
     flat
     v-model="searchInput"
     append-icon="close"
-    :append-icon-cb="clearSearchInput"
+    @click:append="clearSearchInput"
     @keyup.enter.native="searchItemflow"
   ></v-text-field>
 </template>

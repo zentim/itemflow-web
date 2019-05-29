@@ -1,34 +1,34 @@
 <template>
   <v-card color="white" flat>
-      <v-text-field
-        placeholder="Add title here..."
-        v-model="outlineTitle"
-        counter
-        max="120"
-        rows="3"
-        full-width
-        multi-line
-        hide-details
-        class="itemflow-title py-0"
-      ></v-text-field>
+    <v-textarea
+      placeholder="Add title here..."
+      full-width
+      hide-details
+      v-model="outlineTitle"
+      class="itemflow-title py-0"
+      rows="3"
+    ></v-textarea>
+    <v-textarea
+      placeholder="Add message here..."
+      full-width
+      hide-details
+      v-model="outlineMessage"
+      :class="hiddenClass"
+    ></v-textarea>
 
-      <v-text-field
-        placeholder="Add message here..."
-        v-model="outlineMessage"
-        counter
-        max="120"
-        rows="8"
-        full-width
-        multi-line
-        hide-details
-        class="itemflow-message"
-        :class="hiddenClass"
-      ></v-text-field>
-
-      <v-divider class="my-3" :class="hiddenClass"></v-divider>
-      <h4 :class="hiddenClass"><v-icon color="primary">local_offer</v-icon> Labels:</h4>
-      <app-labels :labels.sync="outlineLabels" :labelsFrom="outlineLabelsFrom" :key="id" :class="hiddenClass"></app-labels>
-      <v-btn class="hidden-md-and-up mb-3" color="info" block dark @click.stop="show = !show" large><v-icon>{{show ? 'expand_less' : 'expand_more'}}</v-icon></v-btn>
+    <v-divider class="my-3" :class="hiddenClass"></v-divider>
+    <h4 :class="hiddenClass">
+      <v-icon color="primary">local_offer</v-icon>Labels:
+    </h4>
+    <app-labels
+      :labels.sync="outlineLabels"
+      :labelsFrom="outlineLabelsFrom"
+      :key="id"
+      :class="hiddenClass"
+    ></app-labels>
+    <v-btn class="hidden-md-and-up mb-3" color="info" block dark @click.stop="show = !show" large>
+      <v-icon>{{show ? 'expand_less' : 'expand_more'}}</v-icon>
+    </v-btn>
   </v-card>
 </template>
 

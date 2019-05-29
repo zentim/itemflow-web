@@ -45,7 +45,6 @@
       clipped
       right
       :value="rightDrawer"
-      :hide-overlay="rightDrawer"
       width="250"
       style="z-index: 200"
       v-show="this.$route.name !== 'Home'"
