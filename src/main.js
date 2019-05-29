@@ -21,23 +21,21 @@ import FlowContent from './components/Flow/FlowContent'
 import Labels from './components/Shared/Labels'
 import GraphArea from './components/Shared/GraphArea'
 
-Vue.use(Vuetify,
-  {
-    theme: {
-      primary: '#ee44aa',
-      secondary: '#ececec',
-      accent: '#82B1FF',
-      error: '#FF5252',
-      info: '#2196F3',
-      success: '#4CAF50',
-      warning: '#FFC107',
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#ee44aa',
+    secondary: '#fff',
+    accent: '#82B1FF',
+    error: '#FF5252',
+    info: '#2196F3',
+    success: '#4CAF50',
+    warning: '#FFC107',
 
-      // logo color
-      LogoItemColor: '#5FB878',
-      LogoFlowColor: '#1E9FFF'
-    }
+    // logo color
+    LogoItemColor: '#5FB878',
+    LogoFlowColor: '#1E9FFF'
   }
-)
+})
 
 Vue.config.productionTip = false
 

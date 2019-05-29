@@ -20,9 +20,10 @@
       </div>
 
       <!-- Search -->
-      <v-spacer class="hidden-md-and-down"></v-spacer>
-      <app-search class="mx-1"></app-search>
-      <v-spacer class="hidden-md-and-down"></v-spacer>
+      <app-search
+        class="mx-1"
+        v-show="this.$route.name === 'Home' || this.$route.name === 'Favorite' || this.$route.name === 'Trash'"
+      ></app-search>
 
       <!-- nav right part -->
       <!-- <router-link to="/profile" tag="span" style="cursor: pointer" class="pr-2 hidden-lg-and-up">
@@ -40,7 +41,7 @@
     </v-toolbar>
 
     <!-- main -->
-    <v-content style="background-color: #ececec">
+    <v-content style="background-color: #fff">
       <router-view></router-view>
     </v-content>
 
@@ -63,7 +64,7 @@
           large
           @click.stop="rightDrawer = !rightDrawer"
         >keyboard_tab</v-icon>
-        <v-card class="hidden-lg-and-up" color="secondary" flat>
+        <v-card color="secondary" flat>
           <app-search></app-search>
         </v-card>
         <right-drawer-content></right-drawer-content>
