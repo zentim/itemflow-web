@@ -48,12 +48,12 @@ export default {
         return this.$store.getters.searchResults
       } else {
         let lastTrashNum = 0
-        let trashNum = this.$store.getters.itemflowStoreByAmount(this.amount).filter(obj => obj.deletedDate).length
+        let trashNum = this.$store.getters.loadedItemflowByAmount(this.amount).filter(obj => obj.deletedDate).length
         while (lastTrashNum !== trashNum) {
           lastTrashNum = trashNum
-          trashNum = this.$store.getters.itemflowStoreByAmount(this.amount + trashNum).filter(obj => obj.deletedDate).length
+          trashNum = this.$store.getters.loadedItemflowByAmount(this.amount + trashNum).filter(obj => obj.deletedDate).length
         }
-        return this.$store.getters.itemflowStoreByAmount(this.amount + trashNum).filter(obj => !obj.deletedDate)
+        return this.$store.getters.loadedItemflowByAmount(this.amount + trashNum).filter(obj => !obj.deletedDate)
       }
     }
   }
