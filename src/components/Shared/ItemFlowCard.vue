@@ -3,6 +3,7 @@
     <v-card
       :color="type === 'item' ? 'LogoItemColor' : 'LogoFlowColor'"
       :class="{ selectedCard: isSelected }"
+      @click.native="toggleSelectCard"
       @mouseover="cardHover = true"
       @mouseleave="cardHover = false"
     >
@@ -56,9 +57,12 @@ export default {
     }
   },
   methods: {
-    toggleSelectCard () {
+    toggleSelectCard (event) {
+      if (this.selectedList.length > 0) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
       let newArray = []
-
       if (this.selectedList.includes(this.id)) {
         for (let i = 0; i < this.selectedList.length; i++) {
           if (this.selectedList[i] !== this.id) {
