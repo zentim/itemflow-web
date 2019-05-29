@@ -5,7 +5,8 @@ export default {
   state: {
     itemflowStore: [],
     searchResults: [],
-    searchKeyword: ''
+    searchKeyword: '',
+    rightDrawerItemflow: []
   },
   getters: {
     itemflowStore (state, getters) {
@@ -28,7 +29,9 @@ export default {
           return obj.id === ObjId
         })
         if (targetObj === undefined) {
-          console.log('Getters Alert: can not find ' + ObjId + ', return undefined')
+          console.log(
+            'Getters Alert: can not find ' + ObjId + ', return undefined'
+          )
         }
         return Object.assign({}, targetObj)
       }
@@ -43,6 +46,9 @@ export default {
     },
     searchKeyword (state) {
       return state.searchKeyword
+    },
+    rightDrawerItemflow (state) {
+      return state.rightDrawerItemflow
     }
   },
   mutations: {
@@ -64,7 +70,10 @@ export default {
         console.log('error: no user before loadItemFlow')
         return
       }
-      firebase.database().ref('ItemflowStore').child(user.id)
+      firebase
+        .database()
+        .ref('ItemflowStore')
+        .child(user.id)
         .on('value', data => {
           let loadedItemflowStore = []
           let itemflowStore = data.val()
@@ -80,20 +89,31 @@ export default {
       let user = getters.user
       let obj = _itemflowStructureObj(payload)
 
-      firebase.database().ref('ItemflowStore/' + user.id).child(obj.id).update(obj)
+      firebase
+        .database()
+        .ref('ItemflowStore/' + user.id)
+        .child(obj.id)
+        .update(obj)
     },
     removeItemFlow ({ commit, getters }, payload) {
       let userId = getters.user.id
       let objId = payload.id
-      firebase.database().ref('ItemflowStore/' + userId).child(objId).remove()
+      firebase
+        .database()
+        .ref('ItemflowStore/' + userId)
+        .child(objId)
+        .remove()
     },
     updateItemFlow ({ commit, getters }, payload) {
       let user = getters.user
       let obj = _itemflowStructureObj(payload)
 
       obj.editedDate = new Date().toISOString()
-      obj.clickRate = (obj.clickRate + 1)
-      firebase.database().ref('ItemflowStore/' + user.id).child(obj.id)
+      obj.clickRate = obj.clickRate + 1
+      firebase
+        .database()
+        .ref('ItemflowStore/' + user.id)
+        .child(obj.id)
         .update(obj, function (error) {
           console.log(obj.id)
           if (error) {
@@ -229,9 +249,7 @@ export default {
           let removedObj = targetWhoOwnMe.splice(i, 1)
           console.log(removedObj)
           targetWhoOwnMe = [...targetWhoOwnMe]
-          console.log(
-            'remove successd: ' + removedObj[0].title + ' is removed'
-          )
+          console.log('remove successd: ' + removedObj[0].title + ' is removed')
           console.log(targetWhoOwnMe)
           break
         }
@@ -268,9 +286,7 @@ export default {
           let removedObj = targetLabelsFrom.splice(i, 1)
           console.log(removedObj)
           targetLabelsFrom = [...targetLabelsFrom]
-          console.log(
-            'remove successd: ' + removedObj[0].title + ' is removed'
-          )
+          console.log('remove successd: ' + removedObj[0].title + ' is removed')
           console.log(targetLabelsFrom)
           break
         }
@@ -332,7 +348,7 @@ export default {
       // output file
       let jsonData = JSON.stringify(data)
       let a = document.createElement('a')
-      let file = new Blob([jsonData], {type: 'text/plain'})
+      let file = new Blob([jsonData], { type: 'text/plain' })
       a.href = URL.createObjectURL(file)
       a.download = 'itemflow_' + Date.now() + '.json'
       a.click()
@@ -348,7 +364,7 @@ export default {
       // output file
       var jsonData = JSON.stringify(dataset)
       var a = document.createElement('a')
-      var file = new Blob([jsonData], {type: 'text/plain'})
+      var file = new Blob([jsonData], { type: 'text/plain' })
       a.href = URL.createObjectURL(file)
       a.download = 'itemflow_' + Date.now() + '.json'
       a.click()
@@ -362,7 +378,7 @@ export default {
       }
       let dataset = payload
 
-      if ((typeof dataset !== 'object') || (dataset === null)) {
+      if (typeof dataset !== 'object' || dataset === null) {
         let error = 'Error: is not object or is null'
         dispatch('clearError')
         dispatch('setErrorText', error)
@@ -374,7 +390,9 @@ export default {
         updates[data.id] = data
       })
 
-      firebase.database().ref('ItemflowStore/' + user.id)
+      firebase
+        .database()
+        .ref('ItemflowStore/' + user.id)
         .update(updates, function (error) {
           if (error) {
             // The write failed...
@@ -394,13 +412,16 @@ export default {
 // Return: String
 function _uuid () {
   var d = Date.now()
-  if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+  if (
+    typeof performance !== 'undefined' &&
+    typeof performance.now === 'function'
+  ) {
     d += performance.now() // use high-precision timer if available
   }
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = (d + Math.random() * 16) % 16 | 0
+    var r = ((d + Math.random() * 16) % 16) | 0
     d = Math.floor(d / 16)
-    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16)
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16)
   })
 }
 
@@ -415,8 +436,12 @@ function _itemflowStructureObj (payload) {
     labels: Array.isArray(payload.labels) ? payload.labels : [],
     labelsFrom: Array.isArray(payload.labelsFrom) ? payload.labelsFrom : [],
     whoOwnMe: Array.isArray(payload.whoOwnMe) ? payload.whoOwnMe : [],
-    createdDate: payload.createdDate ? payload.createdDate : new Date().toISOString(),
-    editedDate: payload.editedDate ? payload.editedDate : new Date().toISOString(),
+    createdDate: payload.createdDate
+      ? payload.createdDate
+      : new Date().toISOString(),
+    editedDate: payload.editedDate
+      ? payload.editedDate
+      : new Date().toISOString(),
     deletedDate: payload.deletedDate ? payload.deletedDate : '',
     favorite: payload.favorite ? payload.favorite : false,
     clickRate: payload.clickRate ? payload.clickRate : 0,

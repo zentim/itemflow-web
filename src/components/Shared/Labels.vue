@@ -7,23 +7,28 @@
         <v-tab key="tab-to" href="#tab-to">To</v-tab>
         <v-tabs-items v-model="model">
           <v-tab-item id="tab-from">
-            <v-card flat style="min-height: 120px;border: 1px solid #888;background-color: #fff;">
-              <!-- labels -->
-              <div v-for="(obj) in chipsFrom" :key="obj.id" style="display: inline">
-                <v-chip :color="itemflowColor(obj.type)" :key="obj.id">
-                  <router-link
-                    :to="'/'+ obj.id"
-                    tag="span"
-                    style="cursor: pointer"
-                    :key="obj.id"
-                  >{{ handleText(obj.title) || 'no title' }}</router-link>
-                </v-chip>
-              </div>
-            </v-card>
+            <div style="min-height: 120px;border-bottom: 1px solid #ccc;background-color: #fff;">
+              <v-card
+                flat
+                style="min-height: 120px;border-bottom: 1px solid #ccc;background-color: #fff;"
+              >
+                <!-- labels -->
+                <div v-for="(obj) in chipsFrom" :key="obj.id" style="display: inline">
+                  <v-chip :color="itemflowColor(obj.type)" :key="obj.id">
+                    <router-link
+                      :to="'/'+ obj.id"
+                      tag="span"
+                      style="cursor: pointer"
+                      :key="obj.id"
+                    >{{ handleText(obj.title) || 'no title' }}</router-link>
+                  </v-chip>
+                </div>
+              </v-card>
+            </div>
           </v-tab-item>
 
           <v-tab-item id="tab-to">
-            <v-card flat>
+            <div style="min-height: 120px;border-bottom: 1px solid #ccc;background-color: #fff;">
               <v-card flat>
                 <!-- drag area -->
                 <draggable v-model="chips" class="dragArea" :options="{group: 'itemflow'}">
@@ -45,7 +50,7 @@
                   </div>
                 </draggable>
               </v-card>
-            </v-card>
+            </div>
           </v-tab-item>
         </v-tabs-items>
       </v-tabs>

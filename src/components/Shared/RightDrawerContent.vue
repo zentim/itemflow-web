@@ -1,20 +1,14 @@
 <template>
   <v-layout row wrap justify-center>
-
     <draggable
-      v-model="itemflow"
-      class="dragArea "
+      v-model="itemflowStore"
+      class="dragArea"
       :options="{group:{ name:'itemflow',  pull:'clone', put:false }}"
-      v-if="!loading">
-
-      <v-flex v-for="(obj, index) in itemflow" :key="index" class="pt-1" style="width: 220px">
-        <itemflow-card
-          :id="obj.id"
-          :type="obj.type"
-          :title="obj.title"
-          :message="obj.message"></itemflow-card>
+      v-if="!loading"
+    >
+      <v-flex v-for="(obj, index) in itemflowStore" :key="index" class="pt-1" style="width: 220px">
+        <itemflow-card :id="obj.id" :type="obj.type" :title="obj.title" :message="obj.message"></itemflow-card>
       </v-flex>
-
     </draggable>
 
     <v-layout align-center v-if="!(loadedItemFlow.length < amount)">
@@ -29,53 +23,48 @@
 
 
 <script>
-  export default {
-    data () {
-      return {
-        itemflow: null,
-        amount: 40
+export default {
+  data () {
+    return {
+      amount: 40
+    }
+  },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    },
+    searching () {
+      return this.$store.getters.searching
+    },
+    loadedItemFlow () {
+      if (this.searching) {
+        return this.$store.getters.searchResults
+      } else {
+        return this.$store.getters.loadedItemflowByAmount(this.amount)
       }
     },
-    computed: {
-      loading () {
-        return this.$store.getters.loading
-      },
-      searching () {
-        return this.$store.getters.searching
-      },
-      loadedItemFlow () {
-        if (this.searching) {
-          return this.$store.getters.searchResults
-        } else {
-          return this.$store.getters.loadedItemflowByAmount(this.amount)
+    itemflowStore () {
+      if (this.searching) {
+        return this.$store.getters.searchResults
+      } else {
+        let lastTrashNum = 0
+        let trashNum = this.$store.getters.itemflowStoreByAmount(this.amount).filter(obj => obj.deletedDate).length
+        while (lastTrashNum !== trashNum) {
+          lastTrashNum = trashNum
+          trashNum = this.$store.getters.itemflowStoreByAmount(this.amount + trashNum).filter(obj => obj.deletedDate).length
         }
-      }
-    },
-    watch: {
-      loadedItemFlow (newVal) {
-        // this.itemflow = JSON.parse(JSON.stringify(newVal))
-        let objs = []
-        let len = newVal ? newVal.length : 0
-        for (let i = 0; i < len; i++) {
-          let obj = {
-            id: newVal[i].id,
-            type: newVal[i].type,
-            title: newVal[i].title,
-            message: newVal[i].message
-          }
-          objs.push(obj)
-        }
-        this.itemflow = Object.assign(objs)
+        return this.$store.getters.itemflowStoreByAmount(this.amount + trashNum).filter(obj => !obj.deletedDate)
       }
     }
   }
+}
 </script>
 
 <style scoped>
 .word-overflow-hidden {
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .coverArea {
   background-color: red;
@@ -85,6 +74,6 @@
   top: 100px;
   right: 0;
   bottom: 0;
-  z-index: 100
+  z-index: 100;
 }
 </style>

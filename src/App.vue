@@ -4,10 +4,16 @@
     <app-snackbar></app-snackbar>
 
     <!-- nav -->
-    <v-toolbar light fixed flat color="secondary" app dense v-if="userIsAuthenticated">
-      <div class="ml-1 hidden-md-and-down mx-0 px-0" v-if="$route.name === 'Home'">
-        <v-icon large class="mx-0 px-0">home</v-icon>
-      </div>
+    <v-toolbar
+      light
+      fixed
+      flat
+      clipped-right
+      color="secondary"
+      app
+      dense
+      v-if="userIsAuthenticated"
+    >
       <div class="ml-1 hidden-lg-and-up" v-if="$route.name === 'Home'">
         <v-toolbar-side-icon class="mx-0 px-0" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       </div>
@@ -19,11 +25,23 @@
         <router-link to="/" tag="span" style="cursor: pointer" class="title">Itemflow</router-link>
       </div>
 
-      <!-- Search -->
-      <app-search
+      <!-- RightDrawerController -->
+      <v-spacer v-show="$route.name === 'Itemflow' || $route.name === 'New'"></v-spacer>
+      <v-icon
         class="mx-1"
-        v-show="this.$route.name === 'Home' || this.$route.name === 'Favorite' || this.$route.name === 'Trash'"
-      ></app-search>
+        large
+        style="cursor: pointer"
+        @click.stop="toggleRightDrawer"
+        v-show="$route.name === 'Itemflow' || $route.name === 'New'"
+      >chrome_reader_mode</v-icon>
+
+      <!-- Search -->
+      <div
+        :style="$route.name === 'Itemflow' || $route.name === 'New' ? 'width: 250px; margin-right: 0px' : 'width: 100%; margin-right: 0px'"
+        v-show="rightDrawer || $route.name !== 'Itemflow'"
+      >
+        <app-search></app-search>
+      </div>
 
       <!-- nav right part -->
       <!-- <router-link to="/profile" tag="span" style="cursor: pointer" class="pr-2 hidden-lg-and-up">
@@ -32,46 +50,12 @@
       <router-link to="/star" tag="span" style="cursor: pointer" class="hidden-lg-and-up">
         <v-icon>star</v-icon>
       </router-link>-->
-      <v-icon
-        class="hidden-lg-and-up mx-1"
-        large
-        style="cursor: pointer"
-        @click.stop="rightDrawer = !rightDrawer"
-      >chrome_reader_mode</v-icon>
     </v-toolbar>
 
     <!-- main -->
     <v-content style="background-color: #fff">
       <router-view></router-view>
     </v-content>
-
-    <!-- right -->
-    <!-- z-index is fixing flow content delete show problem in small size screen.  -->
-    <v-navigation-drawer
-      fixed
-      right
-      :value="rightDrawer"
-      :hide-overlay="rightDrawer"
-      width="250"
-      v-if="userIsAuthenticated"
-      style="z-index: 200"
-      v-show="this.$route.name !== 'Home'"
-    >
-      <div style="position: relative">
-        <v-icon
-          class="hidden-lg-and-up px-2 py-2"
-          style="cursor: pointer"
-          large
-          @click.stop="rightDrawer = !rightDrawer"
-        >keyboard_tab</v-icon>
-        <v-card color="secondary" flat>
-          <app-search></app-search>
-        </v-card>
-        <right-drawer-content></right-drawer-content>
-        <!-- fix cannot scroll list in small size screen.  -->
-        <div class="coverArea hidden-md-and-up"></div>
-      </div>
-    </v-navigation-drawer>
 
     <!-- left -->
     <v-navigation-drawer fixed :mini-variant="mini" light class="secondary" v-model="drawer" app>
@@ -130,7 +114,6 @@ export default {
   data () {
     return {
       drawer: true,
-      rightDrawer: null,
       mini: true
     }
   },
@@ -153,6 +136,9 @@ export default {
     },
     userIsAuthenticated () {
       return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    },
+    rightDrawer () {
+      return this.$store.getters.rightDrawer
     }
   },
   methods: {
@@ -162,6 +148,10 @@ export default {
       } else {
         this.$router.push('/')
       }
+    },
+    toggleRightDrawer () {
+      let rightDrawer = this.rightDrawer
+      this.$store.dispatch('setRightDrawer', !rightDrawer)
     }
   }
 }
