@@ -6,6 +6,7 @@
       @click.native="toggleSelectCard"
       @mouseover="cardHover = true"
       @mouseleave="cardHover = false"
+      height="80px"
     >
       <v-btn
         absolute

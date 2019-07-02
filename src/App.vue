@@ -9,6 +9,7 @@
       fixed
       flat
       clipped-right
+      clipped-left
       color="secondary"
       app
       dense
@@ -22,12 +23,34 @@
         <v-icon large color="primary" style="cursor: pointer" @click="goto">arrow_back</v-icon>
       </div>
       <!-- nav - logo -->
-      <div class="mx-1">
+      <v-btn flat class="text-lowercase">
         <router-link to="/" tag="span" style="cursor: pointer" class="title">Itemflow</router-link>
+      </v-btn>
+
+      <!-- Search -->
+      <div v-if="$route.name === 'Home'" style="width: 100%">
+        <app-search></app-search>
       </div>
 
-      <!-- RightDrawerController -->
-      <v-spacer v-show="$route.name === 'Itemflow' || $route.name === 'New'"></v-spacer>
+      <v-spacer></v-spacer>
+
+      <!-- nav right part -->
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat to="/new">
+          <v-icon>add</v-icon>
+        </v-btn>
+        <v-btn flat to="/favorite">
+          <v-icon>star</v-icon>
+        </v-btn>
+        <v-btn flat to="/profile">
+          <v-icon>account_box</v-icon>
+        </v-btn>
+        <v-btn flat to="/trash">
+          <v-icon>delete</v-icon>
+        </v-btn>
+      </v-toolbar-items>
+
+      <!-- DrawerController -->
       <v-icon
         class="mx-1"
         large
@@ -42,22 +65,13 @@
         @click.stop="toggleRightDrawer"
         v-show="($route.name === 'Itemflow' || $route.name === 'New') && rightDrawer"
       >keyboard_tab</v-icon>
-
       <!-- Search -->
       <div
-        :style="$route.name === 'Itemflow' || $route.name === 'New' ? 'width: 250px; margin-right: 0px' : 'width: 100%; margin-right: 0px'"
-        v-show="rightDrawer || $route.name !== 'Itemflow'"
+        style="width: 250px; margin-right: 0px"
+        v-show="rightDrawer && ($route.name === 'Itemflow' || $route.name === 'New')"
       >
         <app-search></app-search>
       </div>
-
-      <!-- nav right part -->
-      <!-- <router-link to="/profile" tag="span" style="cursor: pointer" class="pr-2 hidden-lg-and-up">
-        <v-icon>account_box</v-icon>
-      </router-link>
-      <router-link to="/star" tag="span" style="cursor: pointer" class="hidden-lg-and-up">
-        <v-icon>star</v-icon>
-      </router-link>-->
     </v-toolbar>
 
     <!-- main -->
@@ -66,7 +80,14 @@
     </v-content>
 
     <!-- left -->
-    <v-navigation-drawer fixed :mini-variant="mini" light class="secondary" v-model="drawer" app>
+    <v-navigation-drawer
+      fixed
+      :mini-variant="mini"
+      light
+      class="secondary hidden-md-and-up"
+      v-model="drawer"
+      app
+    >
       <v-list v-if="!userIsAuthenticated">
         <v-list-tile to="/">
           <v-list-tile-action>
@@ -121,7 +142,7 @@
 export default {
   data () {
     return {
-      drawer: true,
+      drawer: false,
       mini: true
     }
   },

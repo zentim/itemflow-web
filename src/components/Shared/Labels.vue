@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-flex>
-      <v-tabs dark color="cyan" centered v-model="model">
+      <v-tabs dark grow color="cyan" centered v-model="model">
         <v-tabs-slider color="yellow"></v-tabs-slider>
         <v-tab key="tab-from" href="#tab-from">From</v-tab>
         <v-tab key="tab-to" href="#tab-to">To</v-tab>

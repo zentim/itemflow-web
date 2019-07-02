@@ -50,17 +50,13 @@
       v-show="this.$route.name !== 'Home'"
       app
     >
-      <div style="position: relative">
-        <v-icon
-          class="hidden-lg-and-up px-2 py-2"
-          style="cursor: pointer"
-          large
-          @click.stop="toggleRightDrawer"
-        >keyboard_tab</v-icon>
-        <right-drawer-content></right-drawer-content>
-        <!-- fix cannot scroll list in small size screen.  -->
-        <div class="coverArea hidden-md-and-up"></div>
-      </div>
+      <v-icon
+        class="hidden-lg-and-up px-2 py-2"
+        style="cursor: pointer"
+        large
+        @click.stop="toggleRightDrawer"
+      >keyboard_tab</v-icon>
+      <right-drawer-content></right-drawer-content>
     </v-navigation-drawer>
   </v-layout>
 </template>
