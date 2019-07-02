@@ -54,7 +54,8 @@ export default {
             id: obj.id,
             type: obj.type,
             title: obj.title || '',
-            message: obj.message || ''          })
+            message: obj.message || ''
+          })
         } else {
           // pass this obj because it not existed in firebase or was deleted
         }
