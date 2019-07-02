@@ -1,61 +1,52 @@
 <template>
-  <v-layout>
-    <v-flex>
-      <v-tabs dark grow color="cyan" centered v-model="model">
-        <v-tabs-slider color="yellow"></v-tabs-slider>
-        <v-tab key="tab-from" href="#tab-from">From</v-tab>
-        <v-tab key="tab-to" href="#tab-to">To</v-tab>
-        <v-tabs-items v-model="model">
-          <v-tab-item value="tab-from">
-            <div style="min-height: 120px;border-bottom: 1px solid #ccc;background-color: #fff;">
-              <v-card
-                flat
-                style="min-height: 120px;border-bottom: 1px solid #ccc;background-color: #fff;"
-              >
-                <!-- labels -->
-                <div v-for="(obj) in chipsFrom" :key="obj.id" style="display: inline">
-                  <v-chip :color="itemflowColor(obj.type)" :key="obj.id">
-                    <router-link
-                      :to="'/'+ obj.id"
-                      tag="span"
-                      style="cursor: pointer"
-                      :key="obj.id"
-                    >{{ handleText(obj.title) || 'no title' }}</router-link>
-                  </v-chip>
-                </div>
-              </v-card>
-            </div>
-          </v-tab-item>
+  <v-flex d-flex xs12>
+    <v-tabs dark grow color="cyan" centered v-model="model">
+      <v-tabs-slider color="yellow"></v-tabs-slider>
+      <v-tab key="tab-from" href="#tab-from">From</v-tab>
+      <v-tab key="tab-to" href="#tab-to">To</v-tab>
+      <v-tabs-items v-model="model">
+        <v-tab-item id="tab-from">
+          <div class="label-area">
+            <!-- labels -->
+            <v-chip v-for="(obj) in chipsFrom" :key="obj.id" :color="itemflowColor(obj.type)">
+              <router-link
+                :to="'/'+ obj.id"
+                tag="span"
+                style="cursor: pointer"
+                :key="obj.id"
+              >{{ handleText(obj.title) || 'no title' }}</router-link>
+            </v-chip>
+          </div>
+        </v-tab-item>
 
-          <v-tab-item value="tab-to">
-            <div style="min-height: 120px;border-bottom: 1px solid #ccc;background-color: #fff;">
-              <v-card flat>
-                <!-- drag area -->
-                <draggable v-model="chips" class="dragArea" :options="{group: 'itemflow'}">
-                  <!-- labels -->
-                  <div v-for="(obj, index) in chips" :key="index" style="display: inline">
-                    <v-chip
-                      close
-                      :color="itemflowColor(obj.type)"
-                      @input="remove(index)"
-                      :key="index"
-                    >
-                      <router-link
-                        :to="'/' + obj.id"
-                        tag="span"
-                        style="cursor: pointer"
-                        :key="obj.id"
-                      >{{ handleText(obj.title) || 'no title' }}</router-link>
-                    </v-chip>
-                  </div>
-                </draggable>
-              </v-card>
-            </div>
-          </v-tab-item>
-        </v-tabs-items>
-      </v-tabs>
-    </v-flex>
-  </v-layout>
+        <v-tab-item id="tab-to">
+          <!-- drag area -->
+          <draggable
+            v-model="chips"
+            :options="{group: 'itemflow'}"
+            style="height: 100%; background-color: #eee;"
+            class="label-area"
+          >
+            <!-- labels -->
+            <v-chip
+              v-for="(obj, index) in chips"
+              close
+              :color="itemflowColor(obj.type)"
+              @input="remove(index)"
+              :key="index"
+            >
+              <router-link
+                :to="'/' + obj.id"
+                tag="span"
+                style="cursor: pointer"
+                :key="obj.id"
+              >{{ handleText(obj.title) || 'no title' }}</router-link>
+            </v-chip>
+          </draggable>
+        </v-tab-item>
+      </v-tabs-items>
+    </v-tabs>
+  </v-flex>
 </template>
 
 
@@ -82,13 +73,12 @@ export default {
         // }
       ],
       chipsFrom: [],
-      preventInfiniteLoop: 0,  // for develope debug
       model: 'tab-to'
     }
   },
   methods: {
     handleText (text) {
-      let maxLength = 30
+      let maxLength = 23
       let textLength = text ? text.length : 0
       if (textLength > maxLength) {
         return text.slice(0, maxLength - 3) + '...'
@@ -104,6 +94,11 @@ export default {
       } else if (type === 'flow') {
         return 'LogoFlowColor'
       }
+    },
+    doresize () {
+      let ht = document.getElementsByClassName('label-area')[1].parentNode.parentNode.parentNode.parentNode.offsetHeight + 96
+      document.getElementsByClassName('label-area')[0].style.minHeight = ht + 'px'
+      document.getElementsByClassName('label-area')[1].style.minHeight = ht + 'px'
     }
   },
   mounted () {
@@ -112,6 +107,7 @@ export default {
       // entire view has been rendered
       this.chips = this.labels
       this.chipsFrom = this.labelsFrom
+      this.doresize()
     })
   },
   watch: {
@@ -119,31 +115,17 @@ export default {
       this.chips = newVal
     },
     chips (newVal) {
-      // for develope debug
-      if (this.preventInfiniteLoop > 50) {
-        console.log('Error: Infinite Loop!')
-        return
-      } else {
-        this.preventInfiniteLoop++
-      }
-
-      // Avoid cannot read property 'lenght' of undefined
-      if (!newVal) {
-        newVal = []
-      }
-
-      // remove same label
-      let len = newVal ? newVal.length : 0
-      for (let i = 0; i < len; i++) {
+      // prevent from adding same labels or itself
+      for (let i = 0; i < newVal.length; i++) {
         if (newVal[i].id === this.$route.params.id) {
-          let error = 'Can not put itself into Labels!'
+          let error = 'Can not put itself into labels!'
           this.$store.dispatch('setErrorText', error)
           this.remove(i)
           return
         }
-        for (let j = i + 1; j < len; j++) {
+        for (let j = i + 1; j < newVal.length; j++) {
           if (newVal[i].id === newVal[j].id) {
-            let error = 'Aready had!'
+            let error = 'Aready has this label!'
             this.$store.dispatch('setErrorText', error)
             this.remove(j)
             return
@@ -159,11 +141,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.dragArea {
-  min-height: 120px;
-  border: 1px solid #888;
-  background-color: #fff;
-}
-</style>

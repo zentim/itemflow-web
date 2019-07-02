@@ -86,6 +86,7 @@
       light
       class="secondary hidden-md-and-up"
       v-model="drawer"
+      v-if="drawer"
       app
     >
       <v-list v-if="!userIsAuthenticated">
@@ -120,20 +121,6 @@
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
-
-      <!-- <v-list  class="my-5 py-5" v-if="userIsAuthenticated">
-        <v-list-tile
-          v-for="item in menuItemsBottom"
-          :key="item.title"
-          :to="item.link">
-          <v-list-tile-action>
-            <v-tooltip right>
-              <v-icon large slot="activator">{{ item.icon }}</v-icon>
-              <span>{{ item.title }}</span>
-            </v-tooltip>
-          </v-list-tile-action>
-        </v-list-tile>
-      </v-list>-->
     </v-navigation-drawer>
   </v-app>
 </template>

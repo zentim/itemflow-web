@@ -20,7 +20,7 @@ import { Segment, useDefault } from 'segmentit'
 import stopwords from './stopwords/stopwords'
 export default {
   props: {
-    content: {
+    itemcontent: {
       type: String,
       default: ''
     }
@@ -29,7 +29,7 @@ export default {
     return {
       recommendIndex: 0,
       recommendResult: [],
-      data: this.content,
+      data: this.itemcontent,
       editerHtmlClass: '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
       editerPlugins: [
         'autolink lists link image charmap print preview hr anchor pagebreak',
@@ -137,13 +137,13 @@ export default {
     }
   },
   watch: {
-    content (newVal) {
+    itemcontent (newVal) {
       this.data = newVal
       this.recommendIndex = 0
       this.recommendResult = []
     },
     data (newVal) {
-      this.$emit('update:content', newVal)
+      this.$emit('update:itemcontent', newVal)
     }
   }
 }
