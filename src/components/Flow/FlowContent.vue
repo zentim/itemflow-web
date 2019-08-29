@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="d-flex" style="position: relative">
-      <draggable v-model="flows" class="dragArea" :options="{group: 'itemflow'}">
+      <draggable :list="flows" group="itemflow" class="dragArea">
         <v-flex v-for="(obj, index) in flows" :key="index" class="pb-1">
           <div style="position: relative;">
             <div style="position: absolute; top: 10px; right: 0; z-index: 100; cursor: pointer;">
@@ -19,7 +19,11 @@
 
 
 <script>
+import draggable from 'vuedraggable'
 export default {
+  components: {
+    draggable,
+  },
   props: {
     content: {
       type: Array,

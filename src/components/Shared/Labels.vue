@@ -26,7 +26,7 @@
             <v-card flat>
               <v-card flat>
                 <!-- drag area -->
-                <draggable v-model="chips" class="dragArea" :options="{group: 'itemflow'}">
+                <draggable :list="chips" group="itemflow" class="dragArea">
                   <!-- labels -->
                   <div v-for="(obj, index) in chips" :key="index" style="display: inline">
                     <v-chip
@@ -55,7 +55,11 @@
 
 
 <script>
+import draggable from 'vuedraggable'
 export default {
+  components: {
+    draggable,
+  },
   props: {
     labels: {
       type: Array,

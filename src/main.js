@@ -12,7 +12,6 @@ import Alert from './components/Shared/Alert'
 import Snackbar from './components/Shared/Snackbar'
 import ItemFlowSearch from './components/Shared/ItemFlowSearch'
 import ItemFlowCard from './components/Shared/ItemFlowCard'
-import Draggable from 'vuedraggable'
 import RightDrawerContent from './components/Shared/RightDrawerContent'
 import ItemFlowToolbar from './components/Shared/ItemFlowToolbar'
 import ItemFlowOutline from './components/Shared/ItemFlowOutline'
@@ -29,7 +28,6 @@ Vue.component('app-alert', Alert)
 Vue.component('app-snackbar', Snackbar)
 Vue.component('app-search', ItemFlowSearch)
 Vue.component('itemflow-card', ItemFlowCard)
-Vue.component('draggable', Draggable)
 Vue.component('right-drawer-content', RightDrawerContent)
 Vue.component('app-toolbar', ItemFlowToolbar)
 Vue.component('item-flow-outline', ItemFlowOutline)
