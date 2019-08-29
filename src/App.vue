@@ -52,7 +52,7 @@
 
     <!-- main -->
     <v-content style="background-color: white">
-      <v-container fluid class="mt-5 pt-5">
+      <v-container>
         <router-view></router-view>
       </v-container>
     </v-content>

@@ -71,7 +71,31 @@ export default {
     getOptions () {
       return { name: 'itemflow', pull: 'clone', put: false }
     }
-  }
+  },
+  beforeCreate () {
+    window.console.log('beforeCreate')
+  },
+  created () {
+    window.console.log('created')
+  },
+  beforeMount () {
+    window.console.log('beforeMount')
+  },
+  mounted () {
+    window.console.log('mounted')
+  },
+  beforeUpdate () {
+    window.console.log('beforeUpdate')
+  },
+  updated () {
+    window.console.log('updated')
+  },
+  beforeDestroy () {
+    window.console.log('beforeDestroy')
+  },
+  destroyed () {
+    window.console.log('destroyed')
+  },
 }
 </script>
 

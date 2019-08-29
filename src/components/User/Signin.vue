@@ -49,42 +49,6 @@ export default {
     userIsAuthenticated () {
       return this.$store.getters.user !== null && this.$store.getters.user !== undefined
     }
-    // user () {
-    //   return this.$store.getters.user
-    // }
-  },
-  watch: {
-    user (value) {
-      if (value !== null && value !== undefined) {
-        if (this.$route.name === 'Signin') {
-          this.$router.push('/')
-        }
-      }
-    }
-  },
-  beforeCreate () {
-    window.console.log('beforeCreate')
-  },
-  created () {
-    window.console.log('created')
-  },
-  beforeMount () {
-    window.console.log('beforeMount')
-  },
-  mounted () {
-    window.console.log('mounted')
-  },
-  beforeUpdate () {
-    window.console.log('beforeUpdate')
-  },
-  updated () {
-    window.console.log('updated')
-  },
-  beforeDestroy () {
-    window.console.log('beforeDestroy')
-  },
-  destroyed () {
-    window.console.log('destroyed')
-  },
+  }
 }
 </script>
