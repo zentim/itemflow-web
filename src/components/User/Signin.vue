@@ -1,10 +1,7 @@
 <template>
-  <v-container>
-    <v-flex x12 class="text-xs-center" v-if="!userIsAuthenticated">
-      <h2>Welcome to ItemFlow</h2>
-      <div id="firebaseui-auth-container"></div>
-    </v-flex>
-  </v-container>
+  <v-flex height="800" width="400" class="mx-auto" v-if="!userIsAuthenticated">
+    <div id="firebaseui-auth-container"></div>
+  </v-flex>
 </template>
 
 <script>

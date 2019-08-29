@@ -83,6 +83,7 @@ new Vue({
       if (user) {
         this.$store.dispatch('autoSignIn', user)
         this.$store.dispatch('loadItemFlow')
+        router.push('/')
       }
     })
   }
