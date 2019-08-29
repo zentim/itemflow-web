@@ -2,7 +2,7 @@
 export const signinRouter = {
   path: '/signin',
   name: 'Signin',
-  component: () => import('@/components/User/Signin')
+  component: () => import('@/pages/User/Signin')
 }
 
 // Main
@@ -10,33 +10,33 @@ export const appRouter = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/components/Home')
+    component: () => import('@/pages/Home')
   },
   {
     path: '/new',
     name: 'New',
-    component: () => import('@/components/Shared/CreateItemFlow')
+    component: () => import('@/pages/CreateItemFlow')
   },
   {
     path: '/favorite',
     name: 'Favorite',
-    component: () => import('@/components/Home')
+    component: () => import('@/pages/Home')
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('@/components/User/Profile')
+    component: () => import('@/pages/User/Profile')
   },
   {
     path: '/trash',
     name: 'Trash',
-    component: () => import('@/components/Home')
+    component: () => import('@/pages/Home')
   },
   {
     path: '/:id',
     name: 'Itemflow',
     props: true,
-    component: () => import('@/components/Shared/ItemFlow')
+    component: () => import('@/pages/ItemFlow')
   }
 ]
 
