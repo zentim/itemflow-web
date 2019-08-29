@@ -1,19 +1,9 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <!-- snackbar -->
     <app-snackbar></app-snackbar>
 
-
-    <!-- nav -->
-    <v-toolbar
-      light
-      fixed
-      flat
-      color="secondary"
-      app
-      dense
-      v-if="userIsAuthenticated"
-    >
+    <v-app-bar app>
       <div class="ml-1 hidden-md-and-down mx-0 px-0" v-if="$route.name === 'Home'">
         <v-icon large class="mx-0 px-0">home</v-icon>
       </div>
@@ -25,9 +15,7 @@
       </div>
       <!-- nav - logo -->
       <div class="mx-1">
-        <router-link to="/" tag="span" style="cursor: pointer" class="title">
-          Itemflow
-        </router-link>
+        <router-link to="/" tag="span" style="cursor: pointer" class="title">Itemflow</router-link>
       </div>
 
       <!-- Search -->
@@ -41,19 +29,19 @@
       </router-link>
       <router-link to="/star" tag="span" style="cursor: pointer" class="hidden-lg-and-up">
         <v-icon>star</v-icon>
-      </router-link> -->
-      <v-icon class="hidden-lg-and-up mx-1" large style="cursor: pointer" @click.stop="rightDrawer = !rightDrawer">chrome_reader_mode</v-icon>
-    </v-toolbar>
-
-
-
-
+      </router-link>-->
+      <v-icon
+        class="hidden-lg-and-up mx-1"
+        large
+        style="cursor: pointer"
+        @click.stop="rightDrawer = !rightDrawer"
+      >chrome_reader_mode</v-icon>
+    </v-app-bar>
 
     <!-- main -->
     <v-content style="background-color: #ececec">
       <router-view></router-view>
     </v-content>
-
 
     <!-- right -->
     <!-- z-index is fixing flow content delete show problem in small size screen.  -->
@@ -68,7 +56,12 @@
       style="z-index: 200"
     >
       <div style="position: relative">
-        <v-icon class="hidden-lg-and-up px-2 py-2" style="cursor: pointer" large @click.stop="rightDrawer = !rightDrawer">keyboard_tab</v-icon>
+        <v-icon
+          class="hidden-lg-and-up px-2 py-2"
+          style="cursor: pointer"
+          large
+          @click.stop="rightDrawer = !rightDrawer"
+        >keyboard_tab</v-icon>
         <v-card class="hidden-lg-and-up" color="secondary" flat>
           <app-search></app-search>
         </v-card>
@@ -79,14 +72,7 @@
     </v-navigation-drawer>
 
     <!-- left -->
-    <v-navigation-drawer
-      fixed
-      :mini-variant="mini"
-      light
-      class="secondary"
-      v-model="drawer"
-      app
-    >
+    <!-- <v-navigation-drawer fixed :mini-variant="mini" light class="secondary" v-model="drawer" app>
       <v-list v-if="!userIsAuthenticated">
         <v-list-tile to="/">
           <v-list-tile-action>
@@ -99,10 +85,7 @@
       </v-list>
 
       <v-list class="my-5 py-5" v-if="userIsAuthenticated">
-        <v-list-tile
-          v-for="item in menuItemsTop"
-          :key="item.title"
-          :to="item.link">
+        <v-list-tile v-for="item in menuItemsTop" :key="item.title" :to="item.link">
           <v-list-tile-action>
             <v-tooltip right>
               <v-icon large slot="activator">{{ item.icon }}</v-icon>
@@ -113,10 +96,7 @@
       </v-list>
 
       <v-list class="my-5 py-5" v-if="userIsAuthenticated">
-        <v-list-tile
-          v-for="item in menuItemsMiddle"
-          :key="item.title"
-          :to="item.link">
+        <v-list-tile v-for="item in menuItemsMiddle" :key="item.title" :to="item.link">
           <v-list-tile-action>
             <v-tooltip right>
               <v-icon large slot="activator">{{ item.icon }}</v-icon>
@@ -125,65 +105,51 @@
           </v-list-tile-action>
         </v-list-tile>
       </v-list>
-
-      <!-- <v-list  class="my-5 py-5" v-if="userIsAuthenticated">
-        <v-list-tile
-          v-for="item in menuItemsBottom"
-          :key="item.title"
-          :to="item.link">
-          <v-list-tile-action>
-            <v-tooltip right>
-              <v-icon large slot="activator">{{ item.icon }}</v-icon>
-              <span>{{ item.title }}</span>
-            </v-tooltip>
-          </v-list-tile-action>
-        </v-list-tile>
-      </v-list> -->
-    </v-navigation-drawer>
+    </v-navigation-drawer>-->
   </v-app>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        drawer: true,
-        rightDrawer: null,
-        mini: true
-      }
+export default {
+  name: 'App',
+  data: () => ({
+    drawer: true,
+    rightDrawer: null,
+    mini: true
+  }),
+  computed: {
+    menuItemsTop () {
+      return [
+        { icon: 'add', title: 'Add Item', link: '/new' }
+      ]
     },
-    computed: {
-      menuItemsTop () {
-        return [
-          { icon: 'add', title: 'Add Item', link: '/new' }
-        ]
-      },
-      menuItemsMiddle () {
-        return [
-          { icon: 'home', title: 'Home', link: '/' },
-          { icon: 'star', title: 'Favorite', link: '/favorite' },
-          { icon: 'account_box', title: 'Profile', link: '/profile' },
-          { icon: 'delete', title: 'Trash', link: '/trash' }
-        ]
-      },
-      menuItemsBottom () {
-        return [{ icon: 'account_box', title: 'Profile', link: '/profile' }]
-      },
-      userIsAuthenticated () {
-        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
-      }
+    menuItemsMiddle () {
+      return [
+        { icon: 'home', title: 'Home', link: '/' },
+        { icon: 'star', title: 'Favorite', link: '/favorite' },
+        { icon: 'account_box', title: 'Profile', link: '/profile' },
+        { icon: 'delete', title: 'Trash', link: '/trash' }
+      ]
     },
-    methods: {
-      goto () {
-        if (this.$route.name === 'Itemflow') {
-          this.$router.go(-1)
-        } else {
-          this.$router.push('/')
-        }
+    menuItemsBottom () {
+      return [{ icon: 'account_box', title: 'Profile', link: '/profile' }]
+    },
+    userIsAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    }
+  },
+  methods: {
+    goto () {
+      if (this.$route.name === 'Itemflow') {
+        this.$router.go(-1)
+      } else {
+        this.$router.push('/')
       }
     }
   }
+};
 </script>
+
 <style scoped>
 .coverArea {
   background-color: rgba(0, 0, 0, 0.1);
@@ -192,6 +158,6 @@
   position: absolute;
   top: 100px;
   right: 0;
-  z-index: 10
+  z-index: 10;
 }
 </style>

@@ -1,4 +1,4 @@
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
 
 export default {
   state: {
@@ -37,7 +37,7 @@ export default {
           error => {
             commit('setLoading', false)
             commit('setError', error)
-            console.log(error)
+            window.console.log(error)
           }
         )
     },
@@ -59,7 +59,7 @@ export default {
           error => {
             commit('setLoading', false)
             commit('setError', error)
-            console.log(error)
+            window.console.log(error)
           }
         )
     },

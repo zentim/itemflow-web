@@ -8,8 +8,10 @@
 </template>
 
 <script>
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import * as firebaseui from 'firebaseui'
+import "firebaseui/dist/firebaseui.css";
 // FirebaseUI config.
 var uiConfig = {
   signInSuccessUrl: '/',
@@ -62,6 +64,30 @@ export default {
         }
       }
     }
-  }
+  },
+  beforeCreate () {
+    window.console.log('beforeCreate')
+  },
+  created () {
+    window.console.log('created')
+  },
+  beforeMount () {
+    window.console.log('beforeMount')
+  },
+  mounted () {
+    window.console.log('mounted')
+  },
+  beforeUpdate () {
+    window.console.log('beforeUpdate')
+  },
+  updated () {
+    window.console.log('updated')
+  },
+  beforeDestroy () {
+    window.console.log('beforeDestroy')
+  },
+  destroyed () {
+    window.console.log('destroyed')
+  },
 }
 </script>

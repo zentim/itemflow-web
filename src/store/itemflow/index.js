@@ -1,4 +1,4 @@
-import * as firebase from 'firebase'
+import firebase from 'firebase/app'
 import fuzzysort from 'fuzzysort'
 
 export default {
@@ -8,7 +8,7 @@ export default {
     searchKeyword: ''
   },
   getters: {
-    itemflowStore (state, getters) {
+    itemflowStore (state) {
       return state.itemflowStore
         .filter(obj => !obj.deletedDate)
         .sort(function (a, b) {
@@ -28,7 +28,7 @@ export default {
           return obj.id === ObjId
         })
         if (targetObj === undefined) {
-          console.log('Getters Alert: can not find ' + ObjId + ', return undefined')
+          window.window.console.log('Getters Alert: can not find ' + ObjId + ', return undefined')
         }
         return Object.assign({}, targetObj)
       }
@@ -61,7 +61,7 @@ export default {
       commit('setLoading', true)
       const user = getters.user
       if (!user) {
-        console.log('error: no user before loadItemFlow')
+        window.console.log('error: no user before loadItemFlow')
         return
       }
       firebase.database().ref('ItemflowStore').child(user.id)
@@ -76,18 +76,18 @@ export default {
           commit('setLoading', false)
         })
     },
-    createItemFlow ({ commit, getters }, payload) {
+    createItemFlow ({ getters }, payload) {
       let user = getters.user
       let obj = _itemflowStructureObj(payload)
 
       firebase.database().ref('ItemflowStore/' + user.id).child(obj.id).update(obj)
     },
-    removeItemFlow ({ commit, getters }, payload) {
+    removeItemFlow ({ getters }, payload) {
       let userId = getters.user.id
       let objId = payload.id
       firebase.database().ref('ItemflowStore/' + userId).child(objId).remove()
     },
-    updateItemFlow ({ commit, getters }, payload) {
+    updateItemFlow ({ getters }, payload) {
       let user = getters.user
       let obj = _itemflowStructureObj(payload)
 
@@ -95,17 +95,17 @@ export default {
       obj.clickRate = (obj.clickRate + 1)
       firebase.database().ref('ItemflowStore/' + user.id).child(obj.id)
         .update(obj, function (error) {
-          console.log(obj.id)
+          window.console.log(obj.id)
           if (error) {
             // The write failed...
-            console.log('The write failed...')
+            window.console.log('The write failed...')
           } else {
             // Data saved successfully!
-            console.log('Data saved successfully!')
+            window.console.log('Data saved successfully!')
           }
         })
     },
-    addWhoOwnMe ({ commit, getters }, payload) {
+    addWhoOwnMe ({ getters }, payload) {
       // payload = {
       //   targets: [{}, {}],
       //   updatedData: {
@@ -123,7 +123,7 @@ export default {
       for (i = 0; i < len; i++) {
         let target = getters.itemflowStoreObj(targets[i].id)
         if (!target || Object.getOwnPropertyNames(target).length === 0) {
-          console.log(
+          window.console.log(
             'addWhoOwnMe alert: target (' + targets[i].id + ') is not existed'
           )
           continue
@@ -134,7 +134,7 @@ export default {
         let targetWhoOwnMeLen = targetWhoOwnMe ? targetWhoOwnMe.length : 0
         for (j = 0; j < targetWhoOwnMeLen; j++) {
           if (targetWhoOwnMe[j].id === updatedData.id) {
-            console.log(
+            window.console.log(
               'addWhoOwnMe alert: updatedData is already existed targetWhoOwnMe'
             )
             isExisted = true
@@ -143,7 +143,7 @@ export default {
         }
         if (!isExisted) {
           targetWhoOwnMe = [...targetWhoOwnMe, updatedData]
-          console.log(target.title + ': addWhoOwnMe successd')
+          window.console.log(target.title + ': addWhoOwnMe successd')
         }
         firebase
           .database()
@@ -152,7 +152,7 @@ export default {
           .set(targetWhoOwnMe)
       }
     },
-    addLabelsFrom ({ commit, getters }, payload) {
+    addLabelsFrom ({ getters }, payload) {
       // payload = {
       //   targets: [{}, {}],
       //   updatedData: {
@@ -172,7 +172,7 @@ export default {
         let target = getters.itemflowStoreObj(targets[i].id)
 
         if (!target || Object.getOwnPropertyNames(target).length === 0) {
-          console.log(
+          window.console.log(
             'addLabelsFrom alert: target (' + targets[i].id + ') is not existed'
           )
           continue
@@ -184,7 +184,7 @@ export default {
         let targetLabelsFromLen = targetLabelsFrom ? targetLabelsFrom.length : 0
         for (j = 0; j < targetLabelsFromLen; j++) {
           if (targetLabelsFrom[j].id === updatedData.id) {
-            console.log(
+            window.console.log(
               'addLabelsFrom alert: updatedData is already existed targetLabelsFrom'
             )
             isExisted = true
@@ -194,7 +194,7 @@ export default {
 
         if (!isExisted) {
           targetLabelsFrom = [...targetLabelsFrom, updatedData]
-          console.log(target.title + ': addLabelsFrom successd')
+          window.console.log(target.title + ': addLabelsFrom successd')
         }
         firebase
           .database()
@@ -203,7 +203,7 @@ export default {
           .set(targetLabelsFrom)
       }
     },
-    removeWhoOwnMe ({ commit, getters }, payload) {
+    removeWhoOwnMe ({ getters }, payload) {
       // payload = {
       //   targetId: removedChip.id,
       //   removedObjId: this.$route.params.id
@@ -212,13 +212,13 @@ export default {
       let target = getters.itemflowStoreObj(payload.targetId)
       let removedObjId = payload.removedObjId
       if (!target || Object.getOwnPropertyNames(target).length === 0) {
-        console.log(
+        window.console.log(
           'removeWhoOwnMe alert: target(' + payload.id + ') not existed'
         )
         return
       }
       if (!target.whoOwnMe) {
-        console.log('removeWhoOwnMe alert: target whoOwnMe is empty')
+        window.console.log('removeWhoOwnMe alert: target whoOwnMe is empty')
         return
       }
       let targetWhoOwnMe = target.whoOwnMe
@@ -227,12 +227,12 @@ export default {
       for (i = 0; i < len; i++) {
         if (targetWhoOwnMe[i].id === removedObjId) {
           let removedObj = targetWhoOwnMe.splice(i, 1)
-          console.log(removedObj)
+          window.console.log(removedObj)
           targetWhoOwnMe = [...targetWhoOwnMe]
-          console.log(
+          window.console.log(
             'remove successd: ' + removedObj[0].title + ' is removed'
           )
-          console.log(targetWhoOwnMe)
+          window.console.log(targetWhoOwnMe)
           break
         }
       }
@@ -242,7 +242,7 @@ export default {
         .child('whoOwnMe')
         .set(targetWhoOwnMe)
     },
-    removeLabelsFrom ({ commit, getters }, payload) {
+    removeLabelsFrom ({ getters }, payload) {
       // payload = {
       //   targetId: removedChip.id,
       //   removedObjId: this.$route.params.id
@@ -251,13 +251,13 @@ export default {
       let target = getters.itemflowStoreObj(payload.targetId)
       let removedObjId = payload.removedObjId
       if (!target || Object.getOwnPropertyNames(target).length === 0) {
-        console.log(
+        window.console.log(
           'removeLabelsFrom alert: target(' + payload.id + ') not existed'
         )
         return
       }
       if (!target.labelsFrom) {
-        console.log('removeLabelsFrom alert: target labelsFrom is empty')
+        window.console.log('removeLabelsFrom alert: target labelsFrom is empty')
         return
       }
       let targetLabelsFrom = target.labelsFrom
@@ -266,12 +266,12 @@ export default {
       for (i = 0; i < len; i++) {
         if (targetLabelsFrom[i].id === removedObjId) {
           let removedObj = targetLabelsFrom.splice(i, 1)
-          console.log(removedObj)
+          window.console.log(removedObj)
           targetLabelsFrom = [...targetLabelsFrom]
-          console.log(
+          window.console.log(
             'remove successd: ' + removedObj[0].title + ' is removed'
           )
-          console.log(targetLabelsFrom)
+          window.console.log(targetLabelsFrom)
           break
         }
       }
@@ -321,10 +321,10 @@ export default {
       }
       commit('setSearchResults', searchResults)
     },
-    exportData ({ commit, getters }) {
+    exportData ({ getters }) {
       let user = getters.user
       if (!user) {
-        console.log('alert: no user before loadItemFlow')
+        window.console.log('alert: no user before loadItemFlow')
         return
       }
       let data = getters.itemflowStore
@@ -337,7 +337,7 @@ export default {
       a.download = 'itemflow_' + Date.now() + '.json'
       a.click()
     },
-    exportSelectedData ({ commit, getters }, payload) {
+    exportSelectedData ({ getters }, payload) {
       let exportSelectedData = payload
       let dataset = []
 
@@ -357,7 +357,7 @@ export default {
       commit('setImporting', true)
       let user = getters.user
       if (!user) {
-        console.log('alert: no user before importData')
+        window.console.log('alert: no user before importData')
         return
       }
       let dataset = payload
@@ -378,10 +378,10 @@ export default {
         .update(updates, function (error) {
           if (error) {
             // The write failed...
-            console.log('The write failed...')
+            window.console.log('The write failed...')
           } else {
             // Data saved successfully!
-            console.log('Data saved successfully!')
+            window.console.log('Data saved successfully!')
           }
         })
 

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import App from './App'
-import * as firebase from 'firebase'
-// import * as firebaseui from 'firebaseui'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import { store } from './store'
 import router from './router'
-import Vuetify from 'vuetify'
+import vuetify from './plugins/vuetify';
 import 'vuetify/dist/vuetify.min.css'
 import Loading from './components/Shared/Loading'
 import Alert from './components/Shared/Alert'
@@ -20,24 +20,6 @@ import ItemContent from './components/Item/ItemContent'
 import FlowContent from './components/Flow/FlowContent'
 import Labels from './components/Shared/Labels'
 import GraphArea from './components/Shared/GraphArea'
-
-Vue.use(Vuetify,
-  {
-    theme: {
-      primary: '#ee44aa',
-      secondary: '#ececec',
-      accent: '#82B1FF',
-      error: '#FF5252',
-      info: '#2196F3',
-      success: '#4CAF50',
-      warning: '#FFC107',
-
-      // logo color
-      LogoItemColor: '#5FB878',
-      LogoFlowColor: '#1E9FFF'
-    }
-  }
-)
 
 Vue.config.productionTip = false
 
@@ -61,8 +43,8 @@ new Vue({
   el: '#app',
   store,
   router,
-  components: { App },
-  template: '<App/>',
+  render: h => h(App),
+  vuetify,
   created () {
     // firebase init
     firebase.initializeApp({
@@ -100,8 +82,6 @@ new Vue({
       if (user) {
         this.$store.dispatch('autoSignIn', user)
         this.$store.dispatch('loadItemFlow')
-      } else {
-        this.$router.push('/signin')
       }
     })
   }

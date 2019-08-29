@@ -12,7 +12,7 @@ const router = new VueRouter({
 
 // auth-guard
 router.beforeEach((to, from, next) => {
-  if (!store.getters.user && to.name !== 'Signin' && to.name !== 'Home') {
+  if (!store.getters.user && to.name !== 'Signin') {
     next({
       name: 'Signin'
     })
