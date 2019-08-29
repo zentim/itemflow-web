@@ -41,7 +41,11 @@
 
       <div class="flex-grow-1"></div>
 
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+      <v-btn
+        icon
+        @click.stop="rightDrawer = !rightDrawer"
+        v-if="userIsAuthenticated && ($route.name == 'Itemflow' || $route.name == 'New')"
+      >
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
     </v-app-bar>
@@ -61,7 +65,7 @@
       :value="rightDrawer"
       hide-overlay
       width="250"
-      v-if="userIsAuthenticated"
+      v-if="userIsAuthenticated && ($route.name == 'Itemflow' || $route.name == 'New')"
       app
     >
       <div style="position: relative">
