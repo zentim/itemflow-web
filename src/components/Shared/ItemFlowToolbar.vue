@@ -1,48 +1,28 @@
 <template>
   <v-layout>
     <v-toolbar color="white" height="40px" tail flat>
+      <v-btn icon @click="favorite" v-if="!deletedDate">
+        <v-icon class="orange--text">star</v-icon>
+      </v-btn>
+
+      <v-btn icon @click="graphDialog = !graphDialog">
+        <v-icon class="purple--text">mdi-graphql</v-icon>
+      </v-btn>
+      <v-btn icon @click="detailsDialog = !detailsDialog">
+        <v-icon class="purple--text">details</v-icon>
+      </v-btn>
+      <v-btn icon @click="moveToTrash">
+        <v-icon v-if="!deletedDate">delete</v-icon>
+        <v-icon v-if="!!deletedDate">restore_from_trash</v-icon>
+      </v-btn>
+
       <v-spacer></v-spacer>
-      <v-menu left>
-        <v-btn icon slot="activator">
-          <v-icon>more_vert</v-icon>
-        </v-btn>
-        <v-list>
-          <v-list-tile :class="switchTypeBtnColor" @click="switchType">
-            <v-list-tile-title>
-              <v-icon :class="switchTypeBtnColor">swap_horiz</v-icon>
-              {{ type === 'item' ? 'become Flow' : 'become Item'}}
-            </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile class="orange--text" @click="favorite" v-if="!deletedDate">
-            <v-list-tile-title>
-              <v-icon class="orange--text">star</v-icon>
-              {{ isFavorite ? 'undo favorite' : 'Favorite'}}
-            </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile class="purple--text" @click="whoOwnMeDialog = !whoOwnMeDialog">
-            <v-list-tile-title>
-              <v-icon class="purple--text">assignment</v-icon>whoOwnMe
-            </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile class="purple--text" @click="graphDialog = !graphDialog">
-            <v-list-tile-title>
-              <v-icon class="purple--text">device_hub</v-icon>graph
-            </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile class="purple--text" @click="detailsDialog = !detailsDialog">
-            <v-list-tile-title>
-              <v-icon class="purple--text">details</v-icon>details
-            </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile @click="moveToTrash">
-            <v-list-tile-title>
-              <v-icon v-if="!deletedDate">delete</v-icon>
-              <v-icon v-if="!!deletedDate">restore_from_trash</v-icon>
-              {{ deletedDate ? 'restore from trash' : 'move to trash' }}
-            </v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
+      <v-btn icon @click="whoOwnMeDialog = !whoOwnMeDialog" v-if="!deletedDate">
+        <v-icon class="purple--text">mdi-source-branch</v-icon>
+      </v-btn>
+      <v-btn icon @click="switchType">
+        <v-icon :class="switchTypeBtnColor">swap_horiz</v-icon>
+      </v-btn>
     </v-toolbar>
 
     <!-- details dialog -->
