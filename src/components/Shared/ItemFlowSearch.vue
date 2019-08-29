@@ -1,13 +1,14 @@
 <template>
   <v-text-field
-    prepend-icon="search"
+    prepend-inner-icon="search"
     label="Search..."
-    solo-inverted
+    solo
     flat
+    hide-details
+    clearable
     v-model="searchInput"
-    append-icon="close"
-    :append-icon-cb="clearSearchInput"
     @keyup.enter.native="searchItemflow"
+    style="border: 1px solid #e8e8e8"
   ></v-text-field>
 </template>
 
@@ -19,9 +20,6 @@ export default {
     }
   },
   methods: {
-    clearSearchInput () {
-      this.searchInput = ''
-    },
     searchItemflow () {
       this.$store.commit('setSearchKeyword', this.searchInput)
       this.$store.dispatch('searchItemFlow')
@@ -29,7 +27,7 @@ export default {
   },
   watch: {
     searchInput (newVal) {
-      if (newVal === '') {
+      if (newVal === null) {
         this.searchItemflow()
       }
     }
