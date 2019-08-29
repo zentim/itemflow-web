@@ -6,6 +6,7 @@ import { store } from './store'
 import router from './router'
 import vuetify from './plugins/vuetify';
 import 'vuetify/dist/vuetify.min.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import Loading from './components/Shared/Loading'
 import Alert from './components/Shared/Alert'
 import Snackbar from './components/Shared/Snackbar'
